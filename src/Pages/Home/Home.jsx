@@ -1,5 +1,10 @@
+import Landing from '../../components/Landing';
+import './Home.css';
+
 export default function Home() {
     return (
-        <div className="bg-slate-400 min-h-screen">Home</div>
+        <div className="home-back min-h-screen">
+            <Landing />
+        </div>
     )
 }
