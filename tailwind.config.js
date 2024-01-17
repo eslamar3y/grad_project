@@ -15,7 +15,11 @@ export default {
         xs: "360px",
         ml: "900px",
       },
+      boxShadow: {
+        'custom': '0px 4px 4px 0px #00000040',
+      }
     },
   },
-  plugins: [],
+  // eslint-disable-next-line no-undef
+  plugins: [require('tailwind-scrollbar-hide')],
 };
