@@ -36,10 +36,10 @@ export default function FishDiseases() {
     }
 
     return (
-        <main className=" mb-20 bg-[#D9D9D9] pt-14 pb-14">
+        <main className=" bg-mainColor pt-16 pb-16">
             <h1 className="font-bold text-[42px] text-center">Fish Diseases</h1>
-            <section className='flex px-4 mt-12 mb-10 relative border-y-8 border-y-[#585EC7] rounded-xl mx-4'>
-                <button onClick={() => handelScroll(-AmountOfPosition)} className='bg-[#585EC7] px-4 text-white text-2xl relative right-4'><FaArrowLeft /></button>
+            <section className='flex px-4 mt-20 mb-20 relative border-y-8 border-y-secondColor rounded-xl mx-4'>
+                <button onClick={() => handelScroll(-AmountOfPosition)} className='bg-secondColor px-4 text-white text-2xl relative right-4'><FaArrowLeft /></button>
                 <div className="w-[95%] flex py-4 mx-auto overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide" ref={scrollRef}>
                     {diseaseData.map((disease) => {
                         return (
@@ -50,7 +50,7 @@ export default function FishDiseases() {
                         )
                     })}
                 </div>
-                <button onClick={() => handelScroll(AmountOfPosition)} className='bg-[#585EC7] px-4 text-white text-2xl relative left-4'><FaArrowRight /></button>
+                <button onClick={() => handelScroll(AmountOfPosition)} className='bg-secondColor px-4 text-white text-2xl relative left-4'><FaArrowRight /></button>
             </section>
             <section className='container mb-8 mx-auto text-center flex flex-col gap-10 xl:text-left xl:flex-row xl:justify-between xl:items-center'>
                 <div>
@@ -78,7 +78,7 @@ export default function FishDiseases() {
                     <img className='w-[135px] mx-auto xl:mx-0' src={chartImg} alt="chart" />
                 </div>
             </section>
-            <button className="block mx-auto rounded-[24px] bg-[#585EC7] text-white px-10 py-4 text-[20px] font-bold mt-10 shadow-custom">Detailed information</button>
+            <button className="block mx-auto rounded-[24px] bg-secondColor text-white px-10 py-4 text-[20px] font-bold mt-10 shadow-custom">Detailed information</button>
         </main>
     )
 }

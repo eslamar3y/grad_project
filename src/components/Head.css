@@ -2,18 +2,3 @@
     font-size: 18px;
     font-weight: 700;
 }
-
-.btn-signin {
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.22);
-}
-
-/* .menu::after {
-    content: '';
-    position: absolute;
-    border: 20px solid red gray green yellow;
-    top: 0;
-    left: 0;
-    width: 20px;
-    height: 20px;
-    background-color: aliceblue;
-} */
