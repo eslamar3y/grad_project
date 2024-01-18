@@ -12,7 +12,7 @@ export default function Footer() {
         <footer className="w-full overflow-x-hidden pt-96">
             <div className="min-h-[600px] bg-secondColor rounded-t-[50%] me-[-400px] ms-[-400px] p-6">
                 <div className="container mx-auto flex flex-col xl:flex-row xl:justify-between xl:items-center">
-                    <section className='bg-[#F0EDED] p-7 rounded-lg relative bottom-20 w-[350px] mx-auto xl:0 xl:w-[400px]'>
+                    <section className='bg-[#F0EDED] p-7 rounded-lg relative bottom-20 w-[350px] mx-auto xl:mx-0 xl:w-[400px]'>
                         <form action="" className='flex flex-col gap-4'>
                             <input type="text" name="userName" id="userName" placeholder='Name' className='border p-2 rounded outline-none' />
                             <input type="email" name="userMail" id="userMail" placeholder='Email' className='border p-2 rounded outline-none' />
