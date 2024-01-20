@@ -4,7 +4,7 @@ import Nav from './Nav';
 
 export default function Head() {
     return (
-        <header className='xl:flex xl:justify-between xl:items-center'>
+        <header className='xl:flex xl:justify-between px-0 xl:items-center xl:px-8'>
             <div className='flex justify-between items-center flex-wrap'>
                 <img className='xl:me-24' src={Logo} alt="logo" />
                 <Nav />

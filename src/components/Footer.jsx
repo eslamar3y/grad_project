@@ -10,9 +10,9 @@ import { FaApple } from "react-icons/fa";
 export default function Footer() {
     return (
         <footer className="w-full overflow-x-hidden pt-96">
-            <div className="min-h-[600px] bg-secondColor rounded-t-[50%] me-[-400px] ms-[-400px] p-6">
-                <div className="container mx-auto flex flex-col xl:flex-row xl:justify-between xl:items-center">
-                    <section className='bg-[#F0EDED] p-7 rounded-lg relative bottom-20 w-[350px] mx-auto xl:mx-0 xl:w-[400px]'>
+            <div className="min-h-[600px] bg-secondColor rounded-t-[50%] me-[-350px] ms-[-350px] p-6">
+                <div className="container mx-auto px-2 lg:px-8 flex flex-col xl:flex-row xl:justify-between xl:items-center">
+                    <section className='bg-[#F0EDED] p-7 rounded-lg relative bottom-20 w-[350px] mx-auto xl:mx-0'>
                         <form action="" className='flex flex-col gap-4'>
                             <input type="text" name="userName" id="userName" placeholder='Name' className='border p-2 rounded outline-none' />
                             <input type="email" name="userMail" id="userMail" placeholder='Email' className='border p-2 rounded outline-none' />

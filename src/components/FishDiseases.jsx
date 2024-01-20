@@ -34,25 +34,25 @@ export default function FishDiseases() {
             console.log(scrollRef.current);
         }
     }
-
+    // border-y-8 border-y-secondColor
     return (
         <main className=" bg-mainColor pt-16 pb-16">
             <h1 className="font-bold text-[42px] text-center">Fish Diseases</h1>
-            <section className='flex px-4 mt-20 mb-20 relative border-y-8 border-y-secondColor rounded-xl mx-4'>
-                <button onClick={() => handelScroll(-AmountOfPosition)} className='bg-secondColor px-4 text-white text-2xl relative right-4'><FaArrowLeft /></button>
-                <div className="w-[95%] flex py-4 mx-auto overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide" ref={scrollRef}>
+            <section className='flex mt-20 mb-20 relative rounded-xl'>
+                <button onClick={() => handelScroll(-AmountOfPosition)} className='bg-tranparent px-2 xl:px-3 text-white text-2xl relative left-0'><FaArrowLeft /></button>
+                <div className="flex py-4 mx-auto overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide" ref={scrollRef}>
                     {diseaseData.map((disease) => {
                         return (
                             <div className="p-4" key={disease.id}>
-                                <img className="min-w-[220px] h-60" src={disease.image} alt="disease-image" />
+                                <img className="min-w-[300px] h-60" src={disease.image} alt="disease-image" />
                                 <h2 className='text-center font-bold p-3'>{disease.name}</h2>
                             </div>
                         )
                     })}
                 </div>
-                <button onClick={() => handelScroll(AmountOfPosition)} className='bg-secondColor px-4 text-white text-2xl relative left-4'><FaArrowRight /></button>
+                <button onClick={() => handelScroll(AmountOfPosition)} className='bg-tranparent px-2 xl:px-3 text-white text-2xl relative right-0'><FaArrowRight /></button>
             </section>
-            <section className='container mb-8 mx-auto text-center flex flex-col gap-10 xl:text-left xl:flex-row xl:justify-between xl:items-center'>
+            <section className='container mb-8 px-8 mx-auto text-center flex flex-col gap-10 xl:text-left xl:flex-row xl:justify-between xl:items-center'>
                 <div>
                     <h2 className='text-[24] font-bold mb-2'>Bacterial Red disease (Aeromoniasis) :</h2>
                     <p className='text-[18]'>
@@ -66,7 +66,7 @@ export default function FishDiseases() {
                 </div>
                 <img className='w-[220px] mt-3 mx-auto xl:mx-0 xl:mt-0' src={deseas1} alt="fish" />
             </section>
-            <section className='container mx-auto'>
+            <section className='container mx-auto px-8'>
                 <h2 className=' text-[#94A3B8] font-bold'>Title</h2>
                 <span className='block w-[15%] h-[0.5px] bg-[#475569]'></span>
                 <div className='chart flex flex-col p-5 xl:flex-row xl:gap-52 xl:items-center'>
