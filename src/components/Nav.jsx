@@ -28,13 +28,14 @@ export default function Nav() {
     return (
         <>
             <nav>
-                <div className="hidden xl:flex xl:gap-6 xl:items-center">
+                <div className="hidden 2xl:flex 2xl:gap-6 2xl:items-center">
                     <NavLinks />
                 </div>
-                <button className=' flex align-top xl:hidden'><FaBars className='text-2xl' onClick={handleShowMenu} /></button>
+                <button className=' flex align-top 2xl:hidden'><FaBars className='text-2xl' onClick={handleShowMenu} /></button>
             </nav>
             {showMenu &&
-                <menu className="flex flex-col basis-full gap-5 mt-5 bg-white p-4 rounded-lg">
+                <menu className="flex flex-col w-full h-[610px] gap-5 mt-5 bg-white p-4 rounded-lg absolute top-5 right-0">
+                    <button className='mt-5 shadow-custom w-[158px] h-[48px] border-black bg-secondColor text-white rounded-2xl'>Signin</button>
                     <NavLinks />
                 </menu>
             }
