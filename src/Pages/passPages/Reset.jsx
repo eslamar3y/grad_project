@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
-import rectangleImage from "../../img/Rectangle.png";
-import rectangleImage5 from "../../img/Rectangle_6.png";
-import forgotandrew from "../../img/undraw_forgot_password.png";
+import rectangleImage from "../../assets/Rectangle.png";
+import rectangleImage5 from "../../assets/Rectangle_6.png";
+import forgotandrew from "../../assets/undraw_forgot_password.png";
 import { NavLink } from "react-router-dom";
 
 export default function Reset() {
