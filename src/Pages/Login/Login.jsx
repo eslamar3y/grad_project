@@ -58,10 +58,10 @@ export default function Login() {
             </div>
             <div className="flex flex-col mt-4">
               <a
-                href="#"
+                href="/forgot"
                 className="text-[#585EC7] text-sm font-popins font-semibold tracking-[0.84px] m-auto -mt-1 mb-8 xs:w-[260px] md:w-[364px] text-end "
               >
-                Forget Password ?
+                Forgot Password ?
               </a>
             </div>
             <div className="flex flex-col">

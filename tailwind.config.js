@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        'mainColor': '#D9D9D9',
-        'secondColor': '#585EC7',
+        mainColor: "#D9D9D9",
+        secondColor: "#585EC7",
       },
       fontFamily: {
         popins: ["Poppins", "sans-serif"],
@@ -16,11 +16,11 @@ export default {
         ml: "900px",
       },
       boxShadow: {
-        'custom': '0px 4px 4px 0px #00000040',
-        'blur': 'inset rgba(60, 70, 85, 0.5) 0px 0px 40px 0px, inset rgba(60, 70, 85, 0.5) 0px 0px 40px 0px, inset rgba(0, 0, 0, 1) 0px 0px 36px -24px'
-      }
+        custom: "0px 4px 4px 0px #00000040",
+        blur: "inset rgba(60, 70, 85, 0.5) 0px 0px 40px 0px, inset rgba(60, 70, 85, 0.5) 0px 0px 40px 0px, inset rgba(0, 0, 0, 1) 0px 0px 36px -24px",
+      },
     },
   },
   // eslint-disable-next-line no-undef
-  plugins: [require('tailwind-scrollbar-hide')],
+  plugins: [require("tailwind-scrollbar-hide")],
 };
