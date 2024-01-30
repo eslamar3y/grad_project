@@ -100,7 +100,7 @@ export default function Reset() {
             <div className="inline-flex items-start gap-[16px] relative mt-12 ">
               <input
                 type="text"
-                className="relative w-[77px] h-[77px] rounded-[15px] border text-center px-6 border-solid border-[#d8dadc] [font-family:'Inter-Medium',Helvetica] font-medium text-black text-[32px] tracking-[0] leading-[40px] whitespace-nowrap focus:border-[1px] focus:border-black"
+                className="relative  lg:w-[77px] lg:h-[77px] xs:w-[60px] xs:h-[60px] rounded-[15px] border text-center px-6 border-solid border-[#d8dadc] [font-family:'Inter-Medium',Helvetica] font-medium text-black text-[32px] tracking-[0] leading-[40px] whitespace-nowrap focus:border-[1px] focus:border-black"
                 ref={input1}
                 name="inp1"
                 maxLength={1}
@@ -108,7 +108,7 @@ export default function Reset() {
               />
               <input
                 type="text"
-                className="relative w-[77px] h-[77px] rounded-[15px] border text-center px-6 border-solid border-[#d8dadc] [font-family:'Inter-Medium',Helvetica] font-medium text-black text-[32px] tracking-[0] leading-[40px] whitespace-nowrap focus:border-[1px] focus:border-black"
+                className="relative lg:w-[77px] lg:h-[77px] w-[77px] h-[77px] xs:w-[60px] xs:h-[60px] rounded-[15px] border text-center px-6 border-solid border-[#d8dadc] [font-family:'Inter-Medium',Helvetica] font-medium text-black text-[32px] tracking-[0] leading-[40px] whitespace-nowrap focus:border-[1px] focus:border-black"
                 ref={input2}
                 name="inp2"
                 maxLength={1}
@@ -116,7 +116,7 @@ export default function Reset() {
               />
               <input
                 type="text"
-                className="relative w-[77px] h-[77px] rounded-[15px] border text-center px-6 border-solid border-[#d8dadc] [font-family:'Inter-Medium',Helvetica] font-medium text-black text-[32px] tracking-[0] leading-[40px] whitespace-nowrap focus:border-[1px] focus:border-black"
+                className="relative lg:w-[77px] lg:h-[77px] w-[77px] h-[77px] xs:w-[60px] xs:h-[60px] rounded-[15px] border text-center px-6 border-solid border-[#d8dadc] [font-family:'Inter-Medium',Helvetica] font-medium text-black text-[32px] tracking-[0] leading-[40px] whitespace-nowrap focus:border-[1px] focus:border-black"
                 ref={input3}
                 name="inp3"
                 maxLength={1}
@@ -124,7 +124,7 @@ export default function Reset() {
               />
               <input
                 type="text"
-                className="relative w-[77px] h-[77px] rounded-[15px] border text-center px-6 border-solid border-[#d8dadc] [font-family:'Inter-Medium',Helvetica] font-medium text-black text-[32px] tracking-[0] leading-[40px] whitespace-nowrap focus:border-[1px] focus:border-black"
+                className="relative lg:w-[77px] lg:h-[77px] w-[77px] h-[77px] xs:w-[60px] xs:h-[60px] rounded-[15px] border text-center px-6 border-solid border-[#d8dadc] [font-family:'Inter-Medium',Helvetica] font-medium text-black text-[32px] tracking-[0] leading-[40px] whitespace-nowrap focus:border-[1px] focus:border-black"
                 ref={input4}
                 name="inp4"
                 maxLength={1}
