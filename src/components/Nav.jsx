@@ -7,7 +7,7 @@ const NavLinks = () => {
     return (
         <>
             <NavLink to='/' className={({ isActive }) => (isActive ? ' font-bold text-lg' : '')}>Home</NavLink>
-            <NavLink to='/detection' className={({ isActive }) => (isActive ? ' font-bold text-xl' : '')}>Disease Detection</NavLink>
+            <NavLink to='detection' className={({ isActive }) => (isActive ? ' font-bold text-xl' : '')}>Disease Detection</NavLink>
             <NavLink to='equipments' className={({ isActive }) => (isActive ? ' font-bold text-xl' : '')}>Farm Equipments</NavLink>
             <NavLink to='fishInfo' className={({ isActive }) => (isActive ? ' font-bold text-xl' : '')}>Fish Information</NavLink>
             <NavLink to='doctors' className={({ isActive }) => (isActive ? ' font-bold text-xl' : '')}>Doctors</NavLink>
@@ -35,8 +35,12 @@ export default function Nav() {
             </nav>
             {showMenu &&
                 <menu className="flex flex-col w-full h-[610px] gap-5 mt-5 bg-white p-4 rounded-lg absolute top-5 right-0">
-                    <button className='mt-5 shadow-custom w-[158px] h-[48px] border-black bg-secondColor text-white rounded-2xl'>Signin</button>
                     <NavLinks />
+                    <NavLink to='login'>
+                        <button className='w-[90%] h-[48px] absolute left-[50%] translate-x-[-50%] bottom-6 mt-5 shadow-custom border-black bg-secondColor text-white rounded-2xl'>
+                            Signin
+                        </button>
+                    </NavLink>
                 </menu>
             }
         </>

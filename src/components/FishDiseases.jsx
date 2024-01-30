@@ -67,8 +67,8 @@ export default function FishDiseases() {
             </section>
             <section className='container mb-8 px-8 mx-auto text-center flex flex-col gap-10 xl:text-left xl:flex-row xl:justify-between xl:items-center'>
                 <div>
-                    <h2 className='text-[24] font-bold mb-2'>Bacterial Red disease (Aeromoniasis) :</h2>
-                    <p className='text-[18]'>
+                    <h2 className='text-[24] font-bold mb-2 capitalize'>Bacterial Red disease (Aeromoniasis) :</h2>
+                    <p className='text-[18] text-left'>
                         The genus Aeromonas comprises some of the most important fish bacterial pathogens that affect
                         aquaculture worldwide. Several species other than A. salmonicida, the causative agent of
                         furunculosis in salmonids have been responsible for severe losses both in freshwater and marine aquaculture.
@@ -91,7 +91,7 @@ export default function FishDiseases() {
                     <img className='w-[135px] mx-auto xl:mx-0' src={chartImg} alt="chart" />
                 </div>
             </section>
-            <button className="block mx-auto rounded-[24px] bg-secondColor text-white px-10 py-4 text-[20px] font-bold mt-10 shadow-custom">Detailed information</button>
+            <button className="block mx-auto rounded-[24px] bg-secondColor text-white px-10 py-4 text-[20px] font-bold mt-10 shadow-custom capitalize">Detailed information</button>
         </main>
     )
 }

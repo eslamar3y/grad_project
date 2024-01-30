@@ -12,8 +12,8 @@ export default function Landing() {
                 <Head />
                 <main className="xl:flex xl:justify-evenly xl:items-center mt-28">
                     <section className="w-full text-center xl:w-[600px] xl:text-left">
-                        <h1 className="text-[30px] xl:text-[50px] font-bold">Early detection, lifelong wellness.</h1>
-                        <p className="text-[20px] xl:text-[24px] mb-[39px] mt-[8px]">Dive into our Fish Disease WebSite.</p>
+                        <h1 className="text-[30px] xl:text-[50px] font-bold capitalize">Early detection, lifelong wellness.</h1>
+                        <p className="text-[20px] xl:text-[24px] mb-[39px] mt-[8px] capitalize">Dive into our Fish Disease WebSite.</p>
                         <button className="shadow-custom text-[24px] w-[289px] py-[10px] px-[16px] rounded-[24px] bg-[#585EC7] text-white">Detect</button>
                     </section>
                     <section>

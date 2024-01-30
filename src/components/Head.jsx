@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import Logo from '../assets/siteLogo.png';
 import './Head.css'
 import Nav from './Nav';
@@ -9,7 +10,9 @@ export default function Head() {
                 <img className='2xl:me-24' src={Logo} alt="logo" />
                 <Nav />
             </div>
-            <button className='hidden mt-5 shadow-custom w-[158px] h-[48px] border-black bg-mainColor rounded-2xl 2xl:block 2xl:mt-0'>Signin</button>
+            <NavLink to='login'>
+                <button className='hidden mt-5 shadow-custom w-[158px] h-[48px] border-black bg-mainColor rounded-2xl 2xl:block 2xl:mt-0'>Signin</button>
+            </NavLink>
         </header>
     )
 }

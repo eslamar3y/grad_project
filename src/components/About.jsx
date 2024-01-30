@@ -7,8 +7,8 @@ export default function About() {
             <div className='flex gap-8 flex-col xl:flex-row mt-20'>
                 <img className='w-full' src={about} alt="about image" />
                 <div className='bg-[#585EC7A8] text-center p-10 rounded-3xl'>
-                    <h2 className='font-bold text-[36px] mb-8'>ABOUT Us</h2>
-                    <p className='text-white text-[24px]'>
+                    <h2 className='font-bold text-[36px] mb-8 capitalize'>about us</h2>
+                    <p className='text-white text-[24px] text-left'>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Quisque quis hendrerit urna.
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
