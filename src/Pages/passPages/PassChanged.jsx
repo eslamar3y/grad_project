@@ -1,26 +1,10 @@
 import rectangleImage from "../../assets/Rectangle.png";
 import rectangleImage5 from "../../assets/Rectangle_6.png";
-import forgotandrew from "../../assets/undraw_forgot_password.png";
+import forgotandrew from "../../assets/undraw_completing.png";
 import stars from "../../assets/Stars.png";
-import { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
 export default function Forgot() {
-  useEffect(() => {
-    checkEmail();
-  }, []);
-
-  function checkEmail() {
-    const email = localStorage.getItem("emailForForgot");
-    if (!email) {
-      window.location.href = "/forgot";
-    }
-  }
-
-  function backToLogin() {
-    localStorage.removeItem("emailForForgot");
-    window.location.href = "/login";
-  }
-
   return (
     <div className="flex">
       <div
@@ -33,7 +17,7 @@ export default function Forgot() {
         >
           <img
             src={forgotandrew}
-            className="m-auto md:pt-28 md:h-[281px] lg:pt-36 lg:h-[375px]"
+            className="m-auto  md:h-[281px] pt-9 lg:h-[376px]"
             alt=""
           />
         </div>
@@ -49,12 +33,11 @@ export default function Forgot() {
           </h2>
           <div className="flex flex-col">
             <div className="error hidden text-red-500 -mb-6" id="error"></div>
-            <button
-              onClick={backToLogin}
-              className="SignInButon  font-popins mx-auto w-[218px] h-[52px] text-white rounded-2xl p-2 mt-8"
-            >
-              Back to login
-            </button>
+            <NavLink to="/login">
+              <button className="SignInButon  font-popins mx-auto w-[218px] h-[52px] text-white rounded-2xl p-2 mt-8">
+                Back to login
+              </button>
+            </NavLink>
           </div>
         </div>
       </div>

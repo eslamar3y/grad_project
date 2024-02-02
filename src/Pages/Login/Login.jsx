@@ -3,6 +3,7 @@ import rectangleImage5 from "../../assets/Rectangle_5.png";
 import loginandrew from "../../assets/undraw_login_re_4vu21.png";
 import google from "../../assets/google.png";
 import facebook from "../../assets/facebook.png";
+import { NavLink } from "react-router-dom";
 const svgContentUsername = `
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
     <path d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" fill="#1C1C1C"/>
@@ -57,12 +58,12 @@ export default function Login() {
               />
             </div>
             <div className="flex flex-col mt-4">
-              <a
-                href="/forgot"
+              <NavLink
+                to="/forgot"
                 className="text-[#585EC7] text-sm font-popins font-semibold tracking-[0.84px] m-auto -mt-1 mb-8 xs:w-[260px] md:w-[364px] text-end "
               >
-                Forgot Password ?
-              </a>
+                <span>Forgot Password ?</span>
+              </NavLink>
             </div>
             <div className="flex flex-col">
               <button className="SignInButon text-xs font-semibold font-popins mx-auto w-[124px] h-[52px] text-white rounded-2xl p-2">
@@ -73,9 +74,9 @@ export default function Login() {
               {/* dont have an account? sign up */}
               <div className="w-fit h-fit font-normal text-sm font-popins  tracking-[0.84px] mx-auto mt-8 text-end ">
                 Don{"'"}t have an account?{" "}
-                <a href="/register" className="text-[#585EC7] font-semibold">
-                  Sign Up
-                </a>
+                <NavLink to="/register">
+                  <span className="text-[#585EC7] font-semibold">Sign Up</span>
+                </NavLink>
               </div>
             </div>
             <div className="flex flex-col">

@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import rectangleImage from "../../assets/Rectangle.png";
 import rectangleImage5 from "../../assets/Rectangle_6.png";
 import forgotandrew from "../../assets/undraw_forgot_password.png";
@@ -88,9 +89,9 @@ export default function Forgot() {
             <div className="flex flex-col">
               <div className="w-fit h-fit font-normal text-sm font-popins  tracking-[0.84px] mx-auto mt-8 text-end ">
                 Remember Password?{" "}
-                <a href="/login" className="text-[#585EC7] font-semibold">
-                  Login
-                </a>
+                <NavLink to="/login">
+                  <span className="text-[#585EC7] font-semibold">Login</span>
+                </NavLink>
               </div>
             </div>
           </form>
