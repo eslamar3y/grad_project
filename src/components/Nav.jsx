@@ -68,7 +68,7 @@ export default function Nav() {
         </button>
       </nav>
       {showMenu && (
-        <menu className="flex flex-col w-full h-[610px] gap-5 mt-5 bg-white p-4 rounded-lg absolute top-5 right-0 z-[9] ">
+        <menu className="flex flex-col w-full h-[610px] gap-5 mt-10 bg-white p-4 rounded-lg absolute top-5 right-0 z-[9] ">
           <NavLinks />
           <NavLink to="login">
             <button className="w-[90%] h-[48px] absolute left-[50%] translate-x-[-50%] bottom-6 mt-5 shadow-custom border-black bg-secondColor text-white rounded-2xl">

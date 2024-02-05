@@ -10,12 +10,12 @@ import CardSlider from "./CardSlider";
 
 
 export default function Experts() {
-    const diseaseData = [
-        { id: 1, image: doc1 },
-        { id: 2, image: doc2 },
-        { id: 3, image: doc3 },
-        { id: 4, image: doc4 },
-        { id: 5, image: doc5 },
+    const doctorsData = [
+        { id: 1, image: doc1, name: "doc-1" },
+        { id: 2, image: doc2, name: "doc-2" },
+        { id: 3, image: doc3, name: "doc-3" },
+        { id: 4, image: doc4, name: "doc-4" },
+        { id: 5, image: doc5, name: "doc-5" },
     ];
 
     // const scrollRef = useRef();
@@ -51,10 +51,11 @@ export default function Experts() {
                 </section> */}
                 <section className="relative bottom-32 mt-20 mb-20">
                     <CardSlider>
-                        {diseaseData.map((disease) => {
+                        {doctorsData.map((doctor) => {
                             return (
-                                <div className="p-4" key={disease.id}>
-                                    <img className="w-full object-contain h-60" src={disease.image} alt="disease-image" />
+                                <div className="p-4" key={doctor.id}>
+                                    <img className="bg-mainColor w-full object-contain h-60" src={doctor.image} alt="disease-image" />
+                                    <p className='bg-slate-100 w-full py-3 text-center mx-auto rounded-b-md font-semibold'>Dr.{doctor.name}</p>
                                 </div>
                             )
                         })}

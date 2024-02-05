@@ -5,7 +5,7 @@ import Nav from './Nav';
 
 export default function Head() {
     return (
-        <header className='2xl:flex 2xl:justify-between px-0 2xl:items-center 2xl:px-8'>
+        <header className="sticky top-5 z-20 px-5 py-4 2xl:flex 2xl:justify-between 2xl:items-center 2xl:px-8">
             <div className='flex justify-between items-center flex-wrap'>
                 <img className='2xl:me-24' src={Logo} alt="logo" />
                 <Nav />

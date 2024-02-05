@@ -59,13 +59,13 @@ export default function FishDiseases() {
                         return (
                             <div className="p-4" key={disease.id}>
                                 <img className="w-full h-60" src={disease.image} alt="disease-image" />
-                                <h2 className='text-center font-bold p-3'>{disease.name}</h2>
+                                <p className='font-semibold bg-slate-100 p-3 text-center rounded-b-md relative bottom-4'>{disease.name}</p>
                             </div>
                         )
                     })}
                 </CardSlider>
             </section>
-            <section className='container mb-8 px-8 mx-auto text-center flex flex-col gap-10 xl:text-left xl:flex-row xl:justify-between xl:items-center'>
+            {/* <section className='container mb-8 px-8 mx-auto text-center flex flex-col gap-10 xl:text-left xl:flex-row xl:justify-between xl:items-center'>
                 <div>
                     <h2 className='text-[24] font-bold mb-2 capitalize'>Bacterial Red disease (Aeromoniasis) :</h2>
                     <p className='text-[18] text-left'>
@@ -78,7 +78,7 @@ export default function FishDiseases() {
                     </p>
                 </div>
                 <img className='w-[220px] mt-3 mx-auto xl:mx-0 xl:mt-0' src={deseas1} alt="fish" />
-            </section>
+            </section> */}
             <section className='container mx-auto px-8'>
                 <h2 className=' text-[#94A3B8] font-bold'>Title</h2>
                 <span className='block w-[15%] h-[0.5px] bg-[#475569]'></span>

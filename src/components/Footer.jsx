@@ -9,7 +9,7 @@ import { FaApple } from "react-icons/fa";
 
 export default function Footer() {
     return (
-        <footer className="w-full overflow-x-hidden pt-96">
+        <footer className="w-full overflow-x-hidden pt-80">
             <div className="min-h-[600px] bg-secondColor rounded-t-[50%] me-[-350px] ms-[-350px] p-6">
                 <div className="container mx-auto px-2 lg:px-8 flex flex-col xl:flex-row xl:justify-between xl:items-center">
                     <section className='bg-[#F0EDED] p-7 rounded-lg relative bottom-20 w-[350px] mx-auto xl:mx-0'>
