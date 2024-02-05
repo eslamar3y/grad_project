@@ -15,11 +15,25 @@ const DiseaseDetection = () => {
     document.querySelector(".imgName").innerText = e.target.files[0].name;
   };
 
+  // handle form submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // get the name of the uploaded image
+    const imgName = document.querySelector(".imgName").innerText;
+    // if no image is uploaded dont proceed
+    if (imgName === "") {
+      alert("Please upload an image");
+      return;
+    }
+    // if image is uploaded proceed to the next page
+    window.location.href = "/disease-detection-results";
+  };
+
   return (
     <div className="bg-[#D9D9D9] w-full h-lvh">
       <SimpleNav />
       <div className="detectBody ml-[10%] mt-[3%] rounded-xl border border-dotted border-black bg-white w-[80%] h-[60%] relative z-[0]">
-        <form action="#">
+        <form action="#" onSubmit={handleSubmit}>
           <img
             src={vector}
             alt=""
