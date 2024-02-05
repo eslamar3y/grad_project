@@ -31,7 +31,7 @@ const DiseaseDetectionResults = () => {
           </div>
         </div>
         <div className="upimg w-1/2 m-auto">
-          <img src={DetectedImg} alt="" className="w-[50%] m-auto" />
+          <img src={DetectedImg} alt="detect" className="w-[50%] m-auto" />
         </div>
       </div>
     </div>

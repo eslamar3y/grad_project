@@ -1,9 +1,8 @@
-import Head from "./SimpleNav";
-import Footer from "./Footer";
-import equip1 from "../assets/equip1.png";
-import equip2 from "../assets/equip2.png";
-import equip3 from "../assets/equip3.png";
-import equip4 from "../assets/equip4.png";
+import Head from "../../components/SimpleNav";
+import equip1 from "../../assets/equip1.png";
+import equip2 from "../../assets/equip2.png";
+import equip3 from "../../assets/equip3.png";
+import equip4 from "../../assets/equip4.png";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 
@@ -71,7 +70,7 @@ export default function Equipments() {
                     </section>
                 </article>
             </section>
-            <Footer />
+            {/* <Footer /> */}
         </main>
     )
 }

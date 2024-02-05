@@ -10,7 +10,8 @@ import ResetPass from "./Pages/passPages/ResetPass.jsx";
 import PassChanged from "./Pages/passPages/PassChanged.jsx";
 import Forgot from "./Pages/passPages/forgot.jsx";
 import DiseaseDetection from "./Pages/DiseaseDetection/DiseaseDetection.jsx";
-import Equipments from "./components/Equipments.jsx";
+import Equipments from "./Pages/Equipments/Equipments.jsx";
+import DiseaseDetectionResults from "./Pages/DiseaseDetection/DiseaseDetectionResults.jsx";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
   {
     path: "equipments",
     element: <Equipments />
+  },
+  {
+    path: "result",
+    element: <DiseaseDetectionResults />
   }
 ]);
 

@@ -1,5 +1,6 @@
 import SimpleNav from "../../components/SimpleNav";
 import vector from "../../assets/vector.png";
+import { Link } from "react-router-dom";
 
 const DiseaseDetection = () => {
   // detect if file uploaded
@@ -55,12 +56,14 @@ const DiseaseDetection = () => {
             </button>
           </p>
           <p className="text-center text-sm font-popins text-gray-500 mt-3 mb-5 imgName"></p>
-          <button
-            type="submit"
-            className="bg-[#585ec7] hover:bg-[#4d53c7]  font-popins mx-auto px-12 py-3 text-white rounded absolute -bottom-24 xs:left-[16%] md:left-[42%] "
-          >
-            Show results
-          </button>
+          <Link to="/result">
+            <button
+              // type="submit"
+              className="bg-[#585ec7] hover:bg-[#4d53c7]  font-popins mx-auto px-12 py-3 text-white rounded absolute -bottom-24 xs:left-[16%] md:left-[42%] "
+            >
+              Show results
+            </button>
+          </Link>
         </form>
       </div>
     </div>
