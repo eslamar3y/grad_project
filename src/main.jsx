@@ -12,6 +12,8 @@ import Forgot from "./Pages/passPages/forgot.jsx";
 import DiseaseDetection from "./Pages/DiseaseDetection/DiseaseDetection.jsx";
 import Equipments from "./Pages/Equipments/Equipments.jsx";
 import DiseaseDetectionResults from "./Pages/DiseaseDetection/DiseaseDetectionResults.jsx";
+import ExpertInfo from "./Pages/Expert/ExpertInfo.jsx";
+import DiseaseInfo from "./Pages/Disease/DiseaseInfo.jsx";
 
 const router = createBrowserRouter([
   {
@@ -48,12 +50,20 @@ const router = createBrowserRouter([
   },
   {
     path: "equipments",
-    element: <Equipments />
+    element: <Equipments />,
   },
   {
     path: "result",
-    element: <DiseaseDetectionResults />
-  }
+    element: <DiseaseDetectionResults />,
+  },
+  {
+    path: "expert",
+    element: <ExpertInfo />,
+  },
+  {
+    path: "disease",
+    element: <DiseaseInfo />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

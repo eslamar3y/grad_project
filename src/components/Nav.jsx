@@ -12,37 +12,37 @@ const NavLinks = () => {
         Home
       </NavLink>
       <NavLink
-        to="detection"
+        to="/detection"
         className={({ isActive }) => (isActive ? " font-bold text-xl" : "")}
       >
         Disease Detection
       </NavLink>
       <NavLink
-        to="equipments"
+        to="/equipments"
         className={({ isActive }) => (isActive ? " font-bold text-xl" : "")}
       >
         Farm Equipments
       </NavLink>
       <NavLink
-        to="fishInfo"
+        to="/fishInfo"
         className={({ isActive }) => (isActive ? " font-bold text-xl" : "")}
       >
         Fish Information
       </NavLink>
       <NavLink
-        to="doctors"
+        to="/doctors"
         className={({ isActive }) => (isActive ? " font-bold text-xl" : "")}
       >
         Doctors
       </NavLink>
       <NavLink
-        to="about"
+        to="/about"
         className={({ isActive }) => (isActive ? " font-bold text-xl" : "")}
       >
         About
       </NavLink>
       <NavLink
-        to="chat"
+        to="/chat"
         className={({ isActive }) => (isActive ? " font-bold text-xl" : "")}
       >
         Q&A, Chat
