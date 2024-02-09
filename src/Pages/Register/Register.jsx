@@ -78,19 +78,37 @@ export default function Register() {
   };
 
   return (
+    // commented
+    // <div
+    //     className="xxs:hidden xs:hidden sm:hidden  md:block md:w-1/2  bg-cover bg-center bg-fixed"
+    //     style={{ backgroundImage: `url(${rectangleImage})` }}
+    //   >
+    //     <div
+    //       className="text-center md:h-[393px] md:w-[309px] md:my-44 ml:h-[393px] ml:w-[309px] ml:my-44  lg:h-[524px] lg:w-[412px] m-auto lg:my-24 bg-cover bg-center "
+    //       style={{ backgroundImage: `url(${rectangleImage5})` }}
+    //     >
+    //       <img src={registerandrew} className="m-auto pt-32" alt="" />
+    //     </div>
+    //   </div>
+    //   <div className="xxs:w-full xs:w-full sm:w-full  md:w-1/2  ">
+    //     <div className="my-[6vh] mx-[auto] w-[80%] text-center h-[80vh]">
+    //       <h1 className="font-bold text-xl uppercase font-popins">Sign Up</h1>
+    //       <h2 className="text-[#525252] font-popins font-normal">
+    //         Welcome to FishShield
+    //       </h2>
     <div className="flex">
       <div
-        className="xxs:hidden xs:hidden sm:hidden  md:block md:w-1/2 h-screen bg-cover bg-center "
+        className="fixed left-0 top-0 w-1/2 h-screen bg-cover bg-center xxs:hidden xs:hidden sm:hidden md:block"
         style={{ backgroundImage: `url(${rectangleImage})` }}
       >
         <div
-          className="text-center md:h-[393px] md:w-[309px] md:my-44 ml:h-[393px] ml:w-[309px] ml:my-44  lg:h-[524px] lg:w-[412px] m-auto lg:my-24 bg-cover bg-center"
+          className="text-center md:h-[393px] md:w-[309px] md:my-44 ml:h-[393px] ml:w-[309px] ml:my-44  lg:h-[524px] lg:w-[412px] m-auto lg:my-24 bg-cover bg-center "
           style={{ backgroundImage: `url(${rectangleImage5})` }}
         >
           <img src={registerandrew} className="m-auto pt-32" alt="" />
         </div>
       </div>
-      <div className="xxs:w-full xs:w-full sm:w-full  md:w-1/2 h-screen ">
+      <div className="w-1/2 ml-auto xs:w-full sm:w-full  md:w-1/2">
         <div className="my-[6vh] mx-[auto] w-[80%] text-center h-[80vh]">
           <h1 className="font-bold text-xl uppercase font-popins">Sign Up</h1>
           <h2 className="text-[#525252] font-popins font-normal">
@@ -175,126 +193,126 @@ export default function Register() {
                 alt="Custom SVG Image"
               />
             </div>
-            <div className="flex justify-evenly flex-wrap">
-              {/* username */}
-              <div className="flex flex-col relative w-fit expert">
-                <input
-                  type="text"
-                  name="expertusername"
-                  id="expertusername"
-                  placeholder="Username"
-                  className="m-auto xs:w-[260px] md:w-[207px] h-[52px] text-sm border-none bg-[#f0edffcc]  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
-                />
-                <img
-                  className="w-6 absolute bottom-4 left-[4%]"
-                  src={`data:image/svg+xml,${encodeURIComponent(
-                    svgContentUsername
-                  )}`}
-                  alt="Custom SVG Image"
-                />
-              </div>
+            {/* <div className="flex justify-evenly flex-wrap"> */}
+            {/* username */}
+            <div className="flex flex-col relative w-fit m-auto expert">
+              <input
+                type="text"
+                name="expertusername"
+                id="expertusername"
+                placeholder="Username"
+                className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
+              />
+              <img
+                className="w-6 absolute bottom-4 left-[4%]"
+                src={`data:image/svg+xml,${encodeURIComponent(
+                  svgContentUsername
+                )}`}
+                alt="Custom SVG Image"
+              />
+            </div>
 
-              {/* email */}
-              <div className="flex flex-col relative w-fit expert">
-                <input
-                  type="text"
-                  name="expertemail"
-                  id="expertemail"
-                  placeholder="email"
-                  className="m-auto xs:w-[260px] md:w-[207px] h-[52px] text-sm border-none bg-[#f0edffcc]  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
-                />
-                <img
-                  className="w-6 absolute bottom-4 left-[4%]"
-                  src={`data:image/svg+xml,${encodeURIComponent(
-                    svgContentEmail
-                  )}`}
-                  alt="Custom SVG Image"
-                />
-              </div>
+            {/* email */}
+            <div className="flex flex-col relative w-fit m-auto expert">
+              <input
+                type="text"
+                name="expertemail"
+                id="expertemail"
+                placeholder="email"
+                className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
+              />
+              <img
+                className="w-6 absolute bottom-4 left-[4%]"
+                src={`data:image/svg+xml,${encodeURIComponent(
+                  svgContentEmail
+                )}`}
+                alt="Custom SVG Image"
+              />
+            </div>
 
-              {/* phone */}
-              <div className="flex flex-col relative w-fit expert">
-                <input
-                  type="text"
-                  name="expertphone"
-                  id="expertphone"
-                  placeholder="Phone Number"
-                  className="m-auto xs:w-[260px] md:w-[207px] h-[52px] text-sm border-none bg-[#f0edffcc]  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
-                />
-                <img
-                  className="w-6 absolute bottom-4 left-[4%]"
-                  src={phone}
-                  alt="Custom SVG Image"
-                />
-              </div>
-              {/* date */}
-              <div className="flex flex-col relative w-fit expert">
-                <input
-                  type="date"
-                  placeholder="Date of Birth"
-                  name="Dbirth"
-                  id="Dbirth"
-                  className="m-auto xs:w-[260px] md:w-[207px] h-[52px] text-sm border-none bg-[#f0edffcc]  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
-                />
+            {/* phone */}
+            <div className="flex flex-col relative w-fit m-auto expert">
+              <input
+                type="text"
+                name="expertphone"
+                id="expertphone"
+                placeholder="Phone Number"
+                className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
+              />
+              <img
+                className="w-6 absolute bottom-4 left-[4%]"
+                src={phone}
+                alt="Custom SVG Image"
+              />
+            </div>
+            {/* date */}
+            <div className="flex flex-col relative w-fit m-auto expert">
+              <input
+                type="date"
+                placeholder="Date of Birth"
+                name="Dbirth"
+                id="Dbirth"
+                className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
+              />
 
-                <img
-                  className="w-5 absolute bottom-4 left-[4%]"
-                  src={calendar}
-                  alt="Custom SVG Image"
-                />
-              </div>
-              {/* password */}
-              <div className="flex flex-col relative w-fit  expert">
-                <input
-                  type="password"
-                  name="expertpassword"
-                  id="expertpassword"
-                  placeholder="Password"
-                  className="m-auto xs:w-[260px] md:w-[207px] h-[52px] text-sm border-none bg-[#f0edffcc] pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginPass"
-                />
-                <img
-                  className="w-6 absolute bottom-4 left-[4%]"
-                  src={`data:image/svg+xml,${encodeURIComponent(
-                    svgContentPassword
-                  )}`}
-                  alt="Custom SVG Image"
-                />
-              </div>
-              {/* pass confirmation */}
-              <div className="flex flex-col relative w-fit  expert">
-                <input
-                  type="password"
-                  name="expertcpassword"
-                  id="expertcpassword"
-                  placeholder="Confirm Password"
-                  className="m-auto xs:w-[260px] md:w-[207px] h-[52px] text-sm border-none bg-[#f0edffcc] pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginPass"
-                />
-                <img
-                  className="w-6 absolute bottom-4 left-[4%]"
-                  src={`data:image/svg+xml,${encodeURIComponent(
-                    svgContentPassword
-                  )}`}
-                  alt="Custom SVG Image"
-                />
-              </div>
-              {/* professional info */}
-              <div className="flex flex-col relative w-fit expert">
-                <input
-                  type="text"
-                  name="profinfo"
-                  id="profinfo"
-                  placeholder="Professional info"
-                  className="m-auto xs:w-[260px] md:w-[207px] h-[52px] text-sm border-none bg-[#f0edffcc]  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
-                />
-                <img
-                  className="w-6 absolute bottom-4 left-[4%]"
-                  src={articleimg}
-                  alt="Custom SVG Image"
-                />
-              </div>
-              {/* pic */}
-              <div className="flex flex-col relative w-fit expert">
-                {/* <label
+              <img
+                className="w-5 absolute bottom-4 left-[4%]"
+                src={calendar}
+                alt="Custom SVG Image"
+              />
+            </div>
+            {/* password */}
+            <div className="flex flex-col relative w-fit m-auto  expert">
+              <input
+                type="password"
+                name="expertpassword"
+                id="expertpassword"
+                placeholder="Password"
+                className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc] pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginPass"
+              />
+              <img
+                className="w-6 absolute bottom-4 left-[4%]"
+                src={`data:image/svg+xml,${encodeURIComponent(
+                  svgContentPassword
+                )}`}
+                alt="Custom SVG Image"
+              />
+            </div>
+            {/* pass confirmation */}
+            <div className="flex flex-col relative w-fit m-auto  expert">
+              <input
+                type="password"
+                name="expertcpassword"
+                id="expertcpassword"
+                placeholder="Confirm Password"
+                className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc] pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginPass"
+              />
+              <img
+                className="w-6 absolute bottom-4 left-[4%]"
+                src={`data:image/svg+xml,${encodeURIComponent(
+                  svgContentPassword
+                )}`}
+                alt="Custom SVG Image"
+              />
+            </div>
+            {/* professional info */}
+            <div className="flex flex-col relative w-fit m-auto expert">
+              <input
+                type="text"
+                name="profinfo"
+                id="profinfo"
+                placeholder="Professional info"
+                className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
+              />
+              <img
+                className="w-6 absolute bottom-4 left-[4%]"
+                src={articleimg}
+                alt="Custom SVG Image"
+              />
+            </div>
+            {/* pic */}
+            <div className="flex flex-col relative w-fit m-auto expert">
+              {/* <label
                   htmlFor="formFileMultiple"
                   className="mb-2 inline-block text-neutral-700 "
                 >
@@ -306,29 +324,29 @@ export default function Register() {
                   id="formFileMultiple"
                   multiple
                 /> */}
-                <div
-                  name="profinfo"
-                  id="profinfo"
-                  placeholder="Professional info"
-                  className="m-auto xs:w-[260px] md:w-[207px] h-[52px] text-sm border-none bg-[#f0edffcc] relative  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
-                >
-                  <p className="absolute top-4 px-1 tracking-widest text-white rounded-xl z-0 bg-[#624cef]">
-                    <input
-                      className="absolute top-0 left-0 w-full h-full opacity-0 "
-                      type="file"
-                      id="formFileMultiple"
-                      // multiple
-                    />
-                    <span style={{ fontSize: "8px" }}>Upload Image</span>
-                  </p>
-                </div>
-                <img
-                  className="w-6 absolute bottom-4 left-[4%]"
-                  src={uploadImage}
-                  alt="Custom SVG Image"
-                />
+              <div
+                name="profinfo"
+                id="profinfo"
+                placeholder="Professional info"
+                className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc] relative  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
+              >
+                <p className="absolute top-4 px-1 tracking-widest text-white rounded-xl z-0 bg-[#624cef]">
+                  <input
+                    className="absolute top-0 left-0 w-full h-full opacity-0 "
+                    type="file"
+                    id="formFileMultiple"
+                    // multiple
+                  />
+                  <span style={{ fontSize: "8px" }}>Upload Image</span>
+                </p>
               </div>
+              <img
+                className="w-6 absolute bottom-4 left-[4%]"
+                src={uploadImage}
+                alt="Custom SVG Image"
+              />
             </div>
+            {/* </div> */}
 
             {/* make radio button to check if user is farm owner or expert */}
             <div className="flex  relative w-fit m-auto mt-6">
@@ -385,7 +403,7 @@ export default function Register() {
               <p className="text-sm  font-normal font-popins tracking-[0.84px] bg-white z-10 w-[30%] mx-auto mt-7 -mb-7 text-center ">
                 Or sign up with
               </p>
-              <div className="flex  border-t-2 border-gray-200 xs:w-[260px] md:w-[364px] mx-auto pt-10 justify-center mt-4">
+              <div className="flex  border-t-2 border-gray-200 xs:w-[260px] md:w-[364px] mx-auto pt-10 justify-center mt-4 mb-8">
                 <button className="flex justify-center items-center  rounded-2xl p-2">
                   <img src={google} className="mr-2" alt="" />
                 </button>
