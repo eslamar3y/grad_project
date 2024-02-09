@@ -1,6 +1,7 @@
 import SimpleNav from "../../components/SimpleNav";
 import vector from "../../assets/vector.png";
 import { Link } from "react-router-dom";
+import Checkmark from "../../assets/Checkmark.png";
 
 const DiseaseDetection = () => {
   // detect if file uploaded
@@ -14,6 +15,13 @@ const DiseaseDetection = () => {
 
     // show the name of the uploaded image
     document.querySelector(".imgName").innerText = e.target.files[0].name;
+
+    // add checkmark image beside the name of the uploaded image
+    const checkmark = document.createElement("img");
+    checkmark.src = Checkmark;
+    checkmark.alt = "checkmark";
+    checkmark.className = " h-5 inline";
+    document.querySelector(".imgName").appendChild(checkmark);
   };
 
   // handle form submit
