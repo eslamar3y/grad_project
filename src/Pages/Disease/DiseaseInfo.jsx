@@ -1,13 +1,31 @@
 import SimpleNav from "../../components/SimpleNav";
 import FImg from "../../assets/d1.png";
+import "./DiseaseInfo.css";
+import { useEffect } from "react";
 
 const DiseaseInfo = () => {
+  useEffect(() => {
+    const firstInfoElements = document.querySelectorAll(".firstinfo");
+    firstInfoElements.forEach((element, index) => {
+      element.dataset.index = index + 1;
+    });
+  }, []);
+
   return (
     <div className="bg-[#d9d9d9] w-full md:min-h-screen">
       <SimpleNav />
-      <div className="flex xs:flex-col-reverse sm:flex-col-reverse md:flex-row font-popins ">
-        <div className="pr-0 md:w-3/4 pt-12 md:pl-28 xs:pl-8 xs:pr-8 xs:pb-10 sm:pl-8 sm:pr-8 sm:pb-10">
-          <h1 className="text-xl font-bold text-center pl-32">Aeromoniasis</h1>
+      {/* <div className=" xs:flex-col-reverse sm:flex-col-reverse md:flex-row font-popins "> */}
+      <div className="  font-popins -mb-64">
+        <div className=" pt-8 ">
+          <img
+            src={FImg}
+            alt=""
+            className="m-auto w-[682px] h-[366px] md:w-[682px] md:h-[366px]  xs:w-[300px] xs:h-[200px] sm:w-[500px] sm:h-[300px] mb-4"
+          />
+        </div>
+        {/* <div className=" ml-32 mr-44 pr-0  pt-12 md:pl-28 xs:pl-8 xs:pr-8 xs:pb-10 sm:pl-8 sm:pr-8 sm:pb-10"> */}
+        <div className=" lg:mx-56 pb-10  md:mx-32 sm:mx-16 xs:mx-9">
+          <h1 className="text-2xl font-bold mb-3">Aeromoniasis</h1>
           <p className="">
             Fish Aeromoniasis, also known as Aeromonas infection, is a disease
             caused by bacteria belonging to the genus Aeromonas. Aeromonas are
@@ -16,7 +34,9 @@ const DiseaseInfo = () => {
             with Aeromonas hydrophila, Aeromonas salmonicida, and Aeromonas
             veronii being commonly associated with fish infections.
           </p>
-          <h2 className="font-medium text-lg mt-2 ">Causative Agents :</h2>
+          <h2 className="font-medium text-lg mt-2 firstinfo">
+            Causative Agents :
+          </h2>
           <ul className="list-disc ml-9 text-sm">
             <li>
               Aeromonas hydrophila: This species is one of the most common
@@ -28,7 +48,7 @@ const DiseaseInfo = () => {
               (such as salmon and trout) and is a major concern in aquaculture.
             </li>
           </ul>
-          <h2 className="font-medium text-lg mt-2 ">Transmission :</h2>
+          <h2 className="font-medium text-lg mt-2 firstinfo">Transmission :</h2>
           <ul className="list-disc ml-9 text-sm">
             <li>
               Aeromoniasis is highly contagious among fish and can be
@@ -40,7 +60,9 @@ const DiseaseInfo = () => {
               contribute to the spread of the disease.
             </li>
           </ul>
-          <h2 className="font-medium text-lg mt-2 ">Clinical Signs :</h2>
+          <h2 className="font-medium text-lg mt-2 firstinfo">
+            Clinical Signs :
+          </h2>
           <ul className="list-disc ml-9 text-sm">
             <li>
               Clinical signs of Aeromoniasis vary depending on the species of
@@ -54,7 +76,7 @@ const DiseaseInfo = () => {
               Fish may exhibit abnormal swimming behavior and loss of appetite.
             </li>
           </ul>
-          <h2 className="font-medium text-lg mt-2 ">Diagnosis :</h2>
+          <h2 className="font-medium text-lg mt-2 firstinfo">Diagnosis :</h2>
           <ul className="list-disc ml-9 text-sm">
             <li>
               Diagnosis is often based on clinical signs, post-mortem
@@ -65,7 +87,7 @@ const DiseaseInfo = () => {
               liver, can confirm the presence of Aeromonas species.
             </li>
           </ul>
-          <h2 className="font-medium text-lg mt-2 ">Treatment :</h2>
+          <h2 className="font-medium text-lg mt-2 firstinfo">Treatment :</h2>
           <ul className="list-disc ml-9 text-sm">
             <li>
               Antibiotics are commonly used to treat Aeromoniasis. Common
@@ -77,7 +99,7 @@ const DiseaseInfo = () => {
               infection.
             </li>
           </ul>
-          <h2 className="font-medium text-lg mt-2 ">
+          <h2 className="font-medium text-lg mt-2 firstinfo">
             Prevention and Control :
           </h2>
           <ul className="list-disc ml-9 text-sm">
@@ -94,7 +116,9 @@ const DiseaseInfo = () => {
               reduce the risk of Aeromonas infections.
             </li>
           </ul>
-          <h2 className="font-medium text-lg mt-2 ">Impact on Aquaculture :</h2>
+          <h2 className="font-medium text-lg mt-2 firstinfo">
+            Impact on Aquaculture :
+          </h2>
           <ul className="list-disc ml-9 text-sm">
             <li>
               Aeromoniasis can have significant economic impacts on aquaculture
@@ -106,9 +130,6 @@ const DiseaseInfo = () => {
               to substantial losses if not properly managed.
             </li>
           </ul>
-        </div>
-        <div className="md:w-1/4 pt-28 ">
-          <img src={FImg} alt="" className="m-auto" />
         </div>
       </div>
     </div>
