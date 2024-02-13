@@ -15,6 +15,7 @@ import DiseaseDetectionResults from "./Pages/DiseaseDetection/DiseaseDetectionRe
 import ExpertInfo from "./Pages/Expert/ExpertInfo.jsx";
 import DiseaseInfo from "./Pages/Disease/DiseaseInfo.jsx";
 import ChatBot from "./Pages/ChatBot/ChatBot.jsx";
+import About from "./Pages/About/About.jsx";
 
 const router = createBrowserRouter([
   {
@@ -68,7 +69,20 @@ const router = createBrowserRouter([
   {
     path: "chat",
     element: <ChatBot />,
-  }
+  },
+  {
+    path: "about",
+    element: <About />,
+  },
+  // make 404 page
+  {
+    path: "*",
+    element: (
+      <h1 className="text-center mt-80 font-bold font-popins">
+        404 - Not Found
+      </h1>
+    ),
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
