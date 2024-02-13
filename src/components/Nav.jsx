@@ -2,48 +2,49 @@ import { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
+
 const NavLinks = () => {
   return (
     <>
       <NavLink
         to="/"
-        className={({ isActive }) => (isActive ? " font-bold text-lg" : "")}
+        className={({ isActive }) => (isActive ? " font-bold" : "")}
       >
         Home
       </NavLink>
       <NavLink
         to="/detection"
-        className={({ isActive }) => (isActive ? " font-bold text-xl" : "")}
+        className={({ isActive }) => (isActive ? " font-bold" : "")}
       >
         Disease Detection
       </NavLink>
       <NavLink
         to="/equipments"
-        className={({ isActive }) => (isActive ? " font-bold text-xl" : "")}
+        className={({ isActive }) => (isActive ? " font-bold" : "")}
       >
         Farm Equipments
       </NavLink>
       <NavLink
         to="/fishInfo"
-        className={({ isActive }) => (isActive ? " font-bold text-xl" : "")}
+        className={({ isActive }) => (isActive ? " font-bold" : "")}
       >
         Fish Information
       </NavLink>
       <NavLink
         to="/doctors"
-        className={({ isActive }) => (isActive ? " font-bold text-xl" : "")}
+        className={({ isActive }) => (isActive ? " font-bold" : "")}
       >
         Doctors
       </NavLink>
       <NavLink
         to="/about"
-        className={({ isActive }) => (isActive ? " font-bold text-xl" : "")}
+        className={({ isActive }) => (isActive ? " font-bold" : "")}
       >
         About
       </NavLink>
       <NavLink
         to="/chat"
-        className={({ isActive }) => (isActive ? " font-bold text-xl" : "")}
+        className={({ isActive }) => (isActive ? " font-bold" : "")}
       >
         Q&A, Chat
       </NavLink>

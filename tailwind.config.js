@@ -19,6 +19,9 @@ export default {
         custom: "0px 4px 4px 0px #00000040",
         blur: "inset rgba(60, 70, 85, 0.5) 0px 0px 40px 0px, inset rgba(60, 70, 85, 0.5) 0px 0px 40px 0px, inset rgba(0, 0, 0, 1) 0px 0px 36px -24px",
       },
+      backgroundImage: {
+        'chatBot': 'url(./src/assets/chatBg.png)'
+      }
     },
   },
   // eslint-disable-next-line no-undef

@@ -14,6 +14,7 @@ import Equipments from "./Pages/Equipments/Equipments.jsx";
 import DiseaseDetectionResults from "./Pages/DiseaseDetection/DiseaseDetectionResults.jsx";
 import ExpertInfo from "./Pages/Expert/ExpertInfo.jsx";
 import DiseaseInfo from "./Pages/Disease/DiseaseInfo.jsx";
+import ChatBot from "./Pages/ChatBot/ChatBot.jsx";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
     path: "disease",
     element: <DiseaseInfo />,
   },
+  {
+    path: "chat",
+    element: <ChatBot />,
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

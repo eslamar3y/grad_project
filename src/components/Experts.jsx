@@ -33,7 +33,7 @@ export default function Experts() {
 
   return (
     <section className="pb-8 pt-8">
-      <h1 className="text-center font-bold text-[42px]">Experts</h1>
+      <h1 className="text-center font-bold text-[42px] pb-20">Experts</h1>
       <div className=" bg-[#8488CD] mt-40">
         {/* <section className='flex mt-20 mb-20 relative rounded-xl bottom-32'>
                     <button onClick={() => handelScroll(-AmountOfPosition)} className='bg-tranparent px-2 xl:px-3 text-white text-2xl relative left-0'><FaArrowLeft /></button>

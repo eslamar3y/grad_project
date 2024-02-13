@@ -8,7 +8,7 @@ import deseas7 from "../assets/d0.png";
 // import { FaArrowLeft } from "react-icons/fa";
 // import { FaArrowRight } from "react-icons/fa";
 // import { useRef, useState } from 'react';
-import chartImg from "../assets/Chart-container.png";
+// import chartImg from "../assets/Chart-container.png";
 import CardSlider from "./CardSlider";
 import { NavLink } from "react-router-dom";
 
@@ -38,7 +38,7 @@ export default function FishDiseases() {
   // border-y-8 border-y-secondColor
   return (
     <main className=" bg-mainColor pt-16 pb-16">
-      <h1 className="font-bold text-[42px] text-center">Fish Diseases</h1>
+      <h1 className="font-bold text-[42px] text-center pb-20">Fish Diseases</h1>
       {/* <section className='flex mt-20 mb-20 relative rounded-xl'>
                 <button onClick={() => handelScroll(-AmountOfPosition)} className='bg-tranparent px-2 xl:px-3 text-white text-2xl relative left-0'><FaArrowLeft /></button>
                 <div className="flex py-4 mx-auto overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide" ref={scrollRef}>
@@ -87,7 +87,7 @@ export default function FishDiseases() {
                 </div>
                 <img className='w-[220px] mt-3 mx-auto xl:mx-0 xl:mt-0' src={deseas1} alt="fish" />
             </section> */}
-      <section className="container mx-auto px-8">
+      {/* <section className="container mx-auto px-8">
         <h2 className=" text-[#94A3B8] font-bold">Title</h2>
         <span className="block w-[15%] h-[0.5px] bg-[#475569]"></span>
         <div className="chart flex flex-col p-5 xl:flex-row xl:gap-52 xl:items-center">
@@ -105,7 +105,7 @@ export default function FishDiseases() {
       </section>
       <button className="block mx-auto rounded-[24px] bg-secondColor text-white px-10 py-4 text-[20px] font-bold mt-10 shadow-custom capitalize">
         Detailed information
-      </button>
+      </button> */}
     </main>
   );
 }
