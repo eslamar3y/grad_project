@@ -30,7 +30,7 @@ export default function EditEquipments({ onClose, showEditModal, onEdit, existEq
                     <input type="number" placeholder="Count" value={Equipment.count} className="p-2 rounded" onChange={(e) => handleChange("count", e.target.value)} />
                     <ImageUpload value={Equipment.image} onChangeEdit={handleChange} />
                 </div>
-                <button type="button" className="rounded-lg mt-8 px-5 py-2 bg-secondColor text-white font-semibold" onClick={editEquipment}>Edit Equipment</button>
+                <button type="button" className="rounded-lg block mx-auto mt-8 px-5 py-2 bg-secondColor text-white font-semibold" onClick={editEquipment}>Edit Equipment</button>
                 <MdOutlineClose className=" absolute top-4 right-4 font-bold text-2xl cursor-pointer" onClick={onClose} />
             </form>
         </Modal>

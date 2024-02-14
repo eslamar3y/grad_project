@@ -25,18 +25,6 @@ const NavLinks = () => {
         Farm Equipments
       </NavLink>
       <NavLink
-        to="/fishInfo"
-        className={({ isActive }) => (isActive ? " font-bold" : "")}
-      >
-        Fish Information
-      </NavLink>
-      <NavLink
-        to="/doctors"
-        className={({ isActive }) => (isActive ? " font-bold" : "")}
-      >
-        Doctors
-      </NavLink>
-      <NavLink
         to="/about"
         className={({ isActive }) => (isActive ? " font-bold" : "")}
       >

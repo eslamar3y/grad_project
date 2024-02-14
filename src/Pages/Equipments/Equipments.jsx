@@ -9,6 +9,7 @@ import Footer from "../../components/Footer";
 import { useState } from "react";
 import AddEquipment from "../../components/AddEquipment";
 import EditEquipments from "../../components/EditEquipments";
+import RemoveEquipment from "../../components/RemoveEquipment";
 
 
 const equipments = [
@@ -45,31 +46,43 @@ const equipments = [
 export default function Equipments() {
     const [Equipments, setEquipments] = useState(equipments);
     const [selectedEquipment, setSelectedEquipment] = useState({});
-    const [showAddModal, setShowAddModal] = useState(false);
-    const [showEditModal, setShowEditModal] = useState(false);
+    const [modalState, setModalState] = useState({
+        showAdd: false,
+        showEdit: false,
+        showRemove: false,
+    });
 
     function handleShowModal() {
-        setShowAddModal(() => true);
+        setModalState((prevState) => ({ ...prevState, showAdd: true }));
     }
     function handleCloseAddModal() {
-        setShowAddModal(() => false);
+        setModalState((prevState) => ({ ...prevState, showAdd: false }));
     }
 
     function handleShowEditModal(existEquipment) {
-        setShowEditModal(() => true);
+        setModalState((prevState) => ({ ...prevState, showEdit: true }));
         setSelectedEquipment(() => existEquipment);
     }
     function handleCloseEditModal() {
-        setShowEditModal(() => false);
+        setModalState((prevState) => ({ ...prevState, showEdit: false }));
     }
 
-    function handleDelete(equipmentId) {
-        const newEquipments = Equipments.filter(eq => eq.id !== equipmentId)
-        setEquipments(() => newEquipments);
+    function handleShowRemoveModal(existEquipment) {
+        setModalState((prevState) => ({ ...prevState, showRemove: true }));
+        setSelectedEquipment(() => existEquipment);
     }
+    function handleCloseRemoveModal() {
+        setModalState((prevState) => ({ ...prevState, showRemove: false }));
+    }
+
+
     function handleAdd(theNewEquipment) {
         const newEquipment = theNewEquipment;
         setEquipments((prevEquipments) => [...prevEquipments, newEquipment]);
+    }
+    function handleDelete(equipmentId) {
+        const newEquipments = Equipments.filter(eq => eq.id !== equipmentId)
+        setEquipments(() => newEquipments);
     }
     function handleEdit(equipmentId, newValues) {
         const updatedProducts = Equipments.map((equipment) => {
@@ -81,7 +94,7 @@ export default function Equipments() {
 
     return (
         <>
-            <AddEquipment onAdd={handleAdd} onClose={handleCloseAddModal} showAddModal={showAddModal} />
+            <AddEquipment onAdd={handleAdd} onClose={handleCloseAddModal} showAddModal={modalState.showAdd} />
 
             <main className="bg-mainColor">
                 <Head />
@@ -105,11 +118,12 @@ export default function Equipments() {
                                         </div>
                                         <ul className="flex justify-center gap-5 mt-4">
                                             <li className="rounded-full p-2 cursor-pointer" onClick={() => handleShowEditModal(equip)}><MdEdit className=" text-3xl text-white" /></li>
-                                            <li className="rounded-full p-2 cursor-pointer" onClick={() => handleDelete(equip.id)}><MdDelete className=" text-3xl text-white" /></li>
+                                            <li className="rounded-full p-2 cursor-pointer" onClick={() => handleShowRemoveModal(equip)}><MdDelete className=" text-3xl text-white" /></li>
                                         </ul>
                                     </div>)
                             })}
-                            {showEditModal && <EditEquipments existEquipment={selectedEquipment} onEdit={handleEdit} onClose={handleCloseEditModal} showEditModal={showEditModal} />}
+                            {modalState.showEdit && <EditEquipments existEquipment={selectedEquipment} onEdit={handleEdit} onClose={handleCloseEditModal} showEditModal={modalState.showEdit} />}
+                            {modalState.showRemove && <RemoveEquipment selectedEquipment={selectedEquipment} onRemove={handleDelete} onClose={handleCloseRemoveModal} showRemoveModal={modalState.showRemove} />}
                         </section>
                     </article>
                 </section>

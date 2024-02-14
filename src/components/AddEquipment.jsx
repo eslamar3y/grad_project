@@ -38,7 +38,7 @@ export default function AddEquipment({ onAdd, onClose, showAddModal }) {
                     <input type="number" placeholder="Count" className="p-2 rounded" onChange={(e) => handleChange("count", e.target.value)} value={newEquipment.count} />
                     <ImageUpload onChange={handleChange} />
                 </div>
-                <button type="button" className="rounded-lg mt-8 px-5 py-2 bg-secondColor text-white font-semibold" onClick={AddEquipment}>Add Equipment</button>
+                <button type="button" className="rounded-lg block mx-auto mt-8 px-5 py-2 bg-secondColor text-white font-semibold" onClick={AddEquipment}>Add Equipment</button>
                 <MdOutlineClose className=" absolute top-4 right-4 font-bold text-2xl cursor-pointer" onClick={onClose} />
             </form>
         </Modal>
