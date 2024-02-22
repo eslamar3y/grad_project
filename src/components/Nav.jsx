@@ -2,7 +2,6 @@ import { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
-
 const NavLinks = () => {
   return (
     <>
