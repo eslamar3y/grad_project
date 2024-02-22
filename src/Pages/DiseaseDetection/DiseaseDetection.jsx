@@ -35,7 +35,19 @@ const DiseaseDetection = () => {
       return;
     }
     // if image is uploaded proceed to the next page
-    window.location.href = "/result";
+    // window.location.href = "/result";
+    // fetch the result of the image sent with post to https://detect-disease-api.onrender.com/detectApi and display the result
+    fetch("https://detect-disease-api.onrender.com/detectApi", {
+      method: "POST",
+      body: JSON.stringify({ imgName }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
   };
 
   return (
