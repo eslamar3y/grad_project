@@ -1,7 +1,23 @@
 import SimpleNav from "../../components/SimpleNav";
 import DetectedImg from "../../assets/d7.png";
+import { useEffect, useState } from "react";
 
 const DiseaseDetectionResults = () => {
+  // get the result and the image from local storage
+  // Get the result from local storage
+  const [result, setResult] = useState("");
+
+  useEffect(() => {
+    const resultFromStorage = localStorage.getItem("result");
+    if (!resultFromStorage) {
+      // If no result is found, navigate to the detection page
+      window.location.href = "/DiseaseDetection";
+    } else {
+      // Set the result state
+      setResult(resultFromStorage);
+    }
+  }, []); // Empty dependency array ensures this effect runs only once
+
   return (
     <div className="bg-[#D9D9D9] w-full min-h-lvh">
       <SimpleNav />
@@ -10,7 +26,11 @@ const DiseaseDetectionResults = () => {
           <div className="bg-[#585ec7] rounded-full h-[1000px] lg:-ml-96 lg:-mt-40 relative ">
             <div className="info absolute lg:top-[28%] lg:left-[43%] md:top-[20%] md:left-[13%] xs:top-[10%] xs:left-[13%] text-white font-popins tracking-wide">
               <h2 className="text-lg xs:w-11/12">
-                Disease Name: <span className="text-sm "> Aeromoniasis</span>
+                Disease Name:
+                <span className="text-sm " id="resultName">
+                  {" "}
+                  {result}
+                </span>
               </h2>
               <h2 className="text-lg xs:w-11/12">
                 Disease Type: <span className="text-sm">Lorem ipsum</span>{" "}
