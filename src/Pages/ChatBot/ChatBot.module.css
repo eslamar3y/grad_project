@@ -1,3 +1,6 @@
 .chat-section {
     height: calc(100svh - (64px + 72px));
+    overflow-y: scroll;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
 }
