@@ -1,6 +1,7 @@
 import Head from "./Head";
 import classes from './Landing.module.css';
 import landFish from "../assets/land_fish.png";
+import { Link } from "react-router-dom";
 
 export default function Landing() {
     return (
@@ -14,7 +15,7 @@ export default function Landing() {
                     <section className="w-full text-center xl:w-[600px] xl:text-left">
                         <h1 className="text-[30px] xl:text-[50px] font-bold capitalize">Early detection, lifelong wellness.</h1>
                         <p className="text-[20px] xl:text-[24px] mb-[39px] mt-[8px] capitalize">Dive into our Fish Disease WebSite.</p>
-                        <button className="shadow-custom text-[24px] w-[289px] py-[10px] px-[16px] rounded-[24px] bg-[#585EC7] text-white">Detect</button>
+                        <Link to='/detection' className=" block text-center shadow-custom text-[24px] w-[289px] py-[10px] px-[16px] rounded-[24px] bg-[#585EC7] text-white">Detect</Link>
                     </section>
                     <section>
                         <img className="hidden xl:block xl:w-[500px]" src={landFish} alt="fish-land-page" />

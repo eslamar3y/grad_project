@@ -2,6 +2,7 @@ import { useState } from "react";
 import SimpleNav from "../../components/SimpleNav";
 import vector from "../../assets/vector.png";
 import Checkmark from "../../assets/Checkmark.png";
+import { redirect } from "react-router-dom";
 
 const DiseaseDetection = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -55,6 +56,7 @@ const DiseaseDetection = () => {
 
         // navigate to the result page
         window.location.href = "/Result";
+        // redirect('/Result');
       })
       .catch((err) => {
         console.log(err);

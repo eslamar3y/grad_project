@@ -33,6 +33,7 @@ export default function ChatBot() {
     }
     const newMessages = [...messages, newMessage];
     setMessages(newMessages);
+    inputRef.current.value = '';
     setIsTyping(true);
     await processMessageToChatGPT(newMessages);
   }
