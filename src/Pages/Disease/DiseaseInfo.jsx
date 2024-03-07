@@ -1,9 +1,10 @@
 import SimpleNav from "../../components/SimpleNav";
-import FImg from "../../assets/d1.png";
 import "./DiseaseInfo.css";
 import { useEffect } from "react";
+import { json, useLoaderData } from "react-router-dom";
 
 const DiseaseInfo = () => {
+  const diseaseDetails = useLoaderData();
   useEffect(() => {
     const firstInfoElements = document.querySelectorAll(".firstinfo");
     firstInfoElements.forEach((element, index) => {
@@ -18,21 +19,16 @@ const DiseaseInfo = () => {
       <div className="  font-popins -mb-64">
         <div className=" pt-8 ">
           <img
-            src={FImg}
-            alt=""
-            className="m-auto w-[682px] h-[366px] md:w-[682px] md:h-[366px]  xs:w-[300px] xs:h-[200px] sm:w-[500px] sm:h-[300px] mb-4"
+            src={diseaseDetails.photoPath}
+            alt="disease image"
+            className="m-auto w-[682px] h-[366px] md:w-[682px] md:h-[366px] xs:w-[300px] xs:h-[200px] sm:w-[500px] sm:h-[300px] mb-4"
           />
         </div>
         {/* <div className=" ml-32 mr-44 pr-0  pt-12 md:pl-28 xs:pl-8 xs:pr-8 xs:pb-10 sm:pl-8 sm:pr-8 sm:pb-10"> */}
         <div className=" lg:mx-56 pb-10  md:mx-32 sm:mx-16 xs:mx-9">
-          <h1 className="text-2xl font-bold mb-3">Aeromoniasis</h1>
+          <h1 className="text-2xl font-bold mb-3">{diseaseDetails.name}</h1>
           <p className="">
-            Fish Aeromoniasis, also known as Aeromonas infection, is a disease
-            caused by bacteria belonging to the genus Aeromonas. Aeromonas are
-            Gram-negative, rod-shaped bacteria that are widely distributed in
-            aquatic environments. There are several species within the genus,
-            with Aeromonas hydrophila, Aeromonas salmonicida, and Aeromonas
-            veronii being commonly associated with fish infections.
+            {diseaseDetails.description}
           </p>
           <h2 className="font-medium text-lg mt-2 firstinfo">
             Causative Agents :
@@ -137,3 +133,17 @@ const DiseaseInfo = () => {
 };
 
 export default DiseaseInfo;
+
+
+export async function diseaseDetailsLoader({ params }) {
+  const diseaseId = params.diseaseId;
+  const response = await fetch(`https://localhost:7289/api/Disease/${diseaseId}`);
+
+  if (!response.ok) {
+    throw json({ message: "can't access expert details" }, { status: 500 });
+  }
+  else {
+    const data = response.json();
+    return data;
+  }
+}
