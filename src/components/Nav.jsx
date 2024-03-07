@@ -8,6 +8,7 @@ const NavLinks = () => {
       <NavLink
         to="/"
         className={({ isActive }) => (isActive ? " font-bold" : "")}
+        end
       >
         Home
       </NavLink>

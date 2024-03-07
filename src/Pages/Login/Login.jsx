@@ -3,7 +3,9 @@ import rectangleImage5 from "../../assets/Rectangle_5.png";
 import loginandrew from "../../assets/undraw_login_re_4vu21.png";
 import google from "../../assets/google.png";
 import facebook from "../../assets/facebook.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useContext, useRef } from "react";
+import { AuthContext } from "../../store/AuthContext";
 const svgContentUsername = `
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
     <path d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" fill="#1C1C1C"/>
@@ -16,6 +18,20 @@ const svgContentPassword = `
 `;
 
 export default function Login() {
+  const navigate = useNavigate();
+  const Name = useRef("");
+  const Pass = useRef("");
+  const { login } = useContext(AuthContext);
+
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const Username = Name.current.value;
+    const Password = Pass.current.value;
+    await login(Username, Password);
+    navigate("/");
+  }
+
   return (
     <div className="flex">
       <div className="xxs:w-full xs:w-full sm:w-full  md:w-1/2 h-screen ">
@@ -24,11 +40,12 @@ export default function Login() {
           <h2 className="text-[#525252] font-popins font-normal">
             Welcome back to FishShield
           </h2>
-          <form action="#">
+          <form method="POST" onSubmit={handleSubmit}>
             <div className="flex flex-col relative w-fit m-auto">
               <input
+                ref={Name}
                 type="text"
-                name="username"
+                name="Username"
                 id="username"
                 placeholder="Username"
                 className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  px-11 mt-4 rounded-xl font-popins font-normal loginUser "
@@ -43,8 +60,9 @@ export default function Login() {
             </div>
             <div className="flex flex-col relative w-fit m-auto">
               <input
+                ref={Pass}
                 type="password"
-                name="password"
+                name="Password"
                 id="password"
                 placeholder="Password"
                 className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc] px-11 mt-4 rounded-xl font-popins font-normal loginPass"
@@ -103,7 +121,6 @@ export default function Login() {
       >
         <div
           className="text-center md:h-[393px] md:w-[309px] md:my-44 ml:h-[393px] ml:w-[309px] ml:my-44  lg:h-[524px] lg:w-[412px] m-auto lg:my-24 bg-cover bg-center"
-          //   className="text-center h-[131px] w-[103px] m-auto my-24 bg-cover bg-center"
           style={{ backgroundImage: `url(${rectangleImage5})` }}
         >
           <img src={loginandrew} className="m-auto pt-32" alt="" />

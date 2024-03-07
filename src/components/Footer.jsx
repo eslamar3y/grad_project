@@ -5,6 +5,7 @@ import { FaFacebookF } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaApple } from "react-icons/fa";
+import { Form } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -12,7 +13,7 @@ export default function Footer() {
       <div className="min-h-[600px] bg-secondColor rounded-t-[50%] me-[-350px] ms-[-350px] p-6">
         <div className="container mx-auto px-2 lg:px-8 flex flex-col xl:flex-row xl:justify-between xl:items-center">
           <section className="bg-[#F0EDED] p-7 rounded-lg relative bottom-20 w-[350px] mx-auto xl:mx-0">
-            <form action="" className="flex flex-col gap-4">
+            <Form method="POST" action="/" className="flex flex-col gap-4">
               <input
                 type="text"
                 name="userName"
@@ -51,7 +52,7 @@ export default function Footer() {
               <button className=" bg-secondColor px-8 py-3 text-white rounded-md">
                 Send Message
               </button>
-            </form>
+            </Form>
           </section>
           <section className="flex flex-col items-center gap-10">
             <img className="w-[201px]" src={logo} alt="Logo" />

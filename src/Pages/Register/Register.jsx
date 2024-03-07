@@ -335,7 +335,7 @@ export default function Register() {
                     className="absolute top-0 left-0 w-full h-full opacity-0 "
                     type="file"
                     id="formFileMultiple"
-                    // multiple
+                  // multiple
                   />
                   <span style={{ fontSize: "8px" }}>Upload Image</span>
                 </p>
