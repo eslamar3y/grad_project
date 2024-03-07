@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SimpleNav from "../../components/SimpleNav";
 import vector from "../../assets/vector.png";
 import Checkmark from "../../assets/Checkmark.png";
-import { redirect } from "react-router-dom";
 
 const DiseaseDetection = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const fileUpload = (e) => {
-    const file = e.target.files[0];
+  useEffect(() => {
+    // Add event listener for paste events
+    document.addEventListener("paste", handlePaste);
+    return () => {
+      // Cleanup: remove event listener
+      document.removeEventListener("paste", handlePaste);
+    };
+  }, []);
+
+  const fileUpload = (file) => {
     // if uploaded file is not an image dont proceed and dont upload it
     if (!file || file.type.split("/")[0] !== "image") {
       alert("Please upload an image");
@@ -27,6 +34,24 @@ const DiseaseDetection = () => {
     checkmark.alt = "checkmark";
     checkmark.className = "h-5 inline";
     imgNameElement.appendChild(checkmark);
+  };
+
+  const handlePaste = (event) => {
+    // Get the clipboard data
+    const items = (event.clipboardData || event.originalEvent.clipboardData)
+      .items;
+
+    // Loop through clipboard items
+    for (let index in items) {
+      let item = items[index];
+
+      // Check if item type is an image
+      if (item.type.indexOf("image") !== -1) {
+        let blob = item.getAsFile();
+        fileUpload(blob);
+        break; // Stop processing after handling one image
+      }
+    }
   };
 
   const handleSubmit = (e) => {
@@ -83,7 +108,7 @@ const DiseaseDetection = () => {
               type="file"
               className="opacity-0 absolute top-0 left-0 w-[100%] h-[100%] cursor-pointer"
               name="image"
-              onChange={fileUpload}
+              onChange={(e) => fileUpload(e.target.files[0])}
             />
             <button className="SignInButon  font-popins mx-auto px-12 py-3 text-white rounded-2xl mt-4">
               Import Image
