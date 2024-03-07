@@ -1,21 +1,24 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import './App.css'
-import Home from './Pages/Home/Home'
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import "./App.css";
+import Home from "./Pages/Home/Home";
 import ResetPass from "./Pages/passPages/ResetPass.jsx";
 import PassChanged from "./Pages/passPages/PassChanged.jsx";
-import About from './components/About';
-import ChatBot from './Pages/ChatBot/ChatBot';
-import DiseaseInfo, { diseaseDetailsLoader } from './Pages/Disease/DiseaseInfo';
-import ExpertInfo, { expertDetailsLoader } from './Pages/Expert/ExpertInfo';
-import DiseaseDetectionResults from './Pages/DiseaseDetection/DiseaseDetectionResults';
-import Equipments from './Pages/Equipments/Equipments';
-import DiseaseDetection from './Pages/DiseaseDetection/DiseaseDetection';
-import Reset from './Pages/passPages/Reset';
-import Forgot from './Pages/passPages/ResetPass';
-import Register from './Pages/Register/Register';
-import Login from './Pages/Login/Login';
-import Root, { DiseaseAndExpertsLoader, feedBackAction } from './Pages/Root/Root.jsx';
-
+import About from "./Pages/About/About";
+import ChatBot from "./Pages/ChatBot/ChatBot";
+import DiseaseInfo, { diseaseDetailsLoader } from "./Pages/Disease/DiseaseInfo";
+import ExpertInfo, { expertDetailsLoader } from "./Pages/Expert/ExpertInfo";
+import DiseaseDetectionResults from "./Pages/DiseaseDetection/DiseaseDetectionResults";
+import Equipments from "./Pages/Equipments/Equipments";
+import DiseaseDetection from "./Pages/DiseaseDetection/DiseaseDetection";
+import Reset from "./Pages/passPages/Reset";
+import Forgot from "./Pages/passPages/ResetPass";
+import Register from "./Pages/Register/Register";
+import Login from "./Pages/Login/Login";
+import Root, {
+  DiseaseAndExpertsLoader,
+  feedBackAction,
+} from "./Pages/Root/Root.jsx";
+import Users from "./Pages/Admin/users.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,12 +34,12 @@ const router = createBrowserRouter([
       {
         path: "expert/:expertId",
         element: <ExpertInfo />,
-        loader: expertDetailsLoader
+        loader: expertDetailsLoader,
       },
       {
         path: "disease/:diseaseId",
         element: <DiseaseInfo />,
-        loader: diseaseDetailsLoader
+        loader: diseaseDetailsLoader,
       },
       {
         path: "login",
@@ -82,6 +85,11 @@ const router = createBrowserRouter([
         path: "about",
         element: <About />,
       },
+      {
+        path: "admin/dashboard",
+        element: <Users />,
+      },
+      // ,
       // {
       //   path: "*",
       //   element: (
@@ -90,17 +98,16 @@ const router = createBrowserRouter([
       //     </h1>
       //   ),
       // },
-    ]
+    ],
   },
 ]);
-
 
 function App() {
   return (
     <>
       <RouterProvider router={router} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
