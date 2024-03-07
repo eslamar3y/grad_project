@@ -16,6 +16,7 @@ import ExpertInfo from "./Pages/Expert/ExpertInfo.jsx";
 import DiseaseInfo from "./Pages/Disease/DiseaseInfo.jsx";
 import ChatBot from "./Pages/ChatBot/ChatBot.jsx";
 import About from "./Pages/About/About.jsx";
+import Users from "./Pages/Admin/users.jsx";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
   {
     path: "about",
     element: <About />,
+  },
+  {
+    path: "admin/dashboard",
+    element: <Users />,
   },
   // make 404 page
   {
