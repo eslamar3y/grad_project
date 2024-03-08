@@ -1,22 +1,26 @@
 /* eslint-disable react/prop-types */
 import Modal from "./Modal";
 
-export default function RemoveEquipment({
+export default function RemoveUser({
   onClose,
   showRemoveModal,
   onRemove,
-  selectedEquipment,
+  selectedUser,
 }) {
   function handleRemove() {
-    onRemove(selectedEquipment.id);
+    console.log(selectedUser);
+    selectedUser.forEach((user) => {
+      onRemove(user);
+    });
+
     onClose();
   }
 
   return (
-    <Modal open={showRemoveModal} onClose={onClose}>
+    <Modal open={showRemoveModal} onClose={onClose} backdropOpacity={10}>
       <div className="px-6 py-6 rounded-2xl bg-mainColor relative">
         <h2 className=" font-semibold text-xl mb-2">Delete Message</h2>
-        <p className="mb-6">Are you sure you want to remove this equipment</p>
+        <p className="mb-6">Are you sure you want to remove this User</p>
         <div className=" border-t-2 flex gap-4 justify-end pt-3">
           <button
             onClick={onClose}

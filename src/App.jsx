@@ -18,7 +18,7 @@ import Root, {
   DiseaseAndExpertsLoader,
   feedBackAction,
 } from "./Pages/Root/Root.jsx";
-import Users from "./Pages/Admin/users.jsx";
+import Users from "./Pages/Admin/UsersPage.jsx";
 
 const router = createBrowserRouter([
   {
