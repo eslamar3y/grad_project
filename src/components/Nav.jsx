@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../store/AuthContext";
 
 const NavLinks = () => {
   return (
@@ -45,6 +46,8 @@ export default function Nav() {
   const handleShowMenu = () => {
     setShowMenu((prev) => !prev);
   };
+  const { userLogin, logout } = useContext(AuthContext);
+
 
   return (
     <>
@@ -59,11 +62,18 @@ export default function Nav() {
       {showMenu && (
         <menu className="flex flex-col w-full h-[610px] gap-5 mt-10 bg-white p-4 rounded-lg absolute top-5 right-0 z-[9] ">
           <NavLinks />
-          <NavLink to="login">
-            <button className="w-[90%] h-[48px] absolute left-[50%] translate-x-[-50%] bottom-6 mt-5 shadow-custom border-black bg-secondColor text-white rounded-2xl">
-              Signin
-            </button>
-          </NavLink>
+          {
+            userLogin === false ?
+              <NavLink to="login">
+                <button className="w-[90%] h-[48px] absolute left-[50%] translate-x-[-50%] bottom-6 mt-5 shadow-custom border-black bg-secondColor text-white rounded-2xl">
+                  Signin
+                </button>
+              </NavLink>
+              :
+              <button onClick={logout} className="w-[90%] h-[48px] absolute left-[50%] translate-x-[-50%] bottom-6 mt-5 shadow-custom border-black bg-secondColor text-white rounded-2xl">
+                Logout
+              </button>
+          }
         </menu>
       )}
     </>
