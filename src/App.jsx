@@ -19,6 +19,8 @@ import Root, {
   feedBackAction,
 } from "./Pages/Root/Root.jsx";
 import Users from "./Pages/Admin/UsersPage.jsx";
+import Disease from "./Pages/Admin/DiseasesPage.jsx";
+import Feedback from "./Pages/Admin/Feedback.jsx";
 
 const router = createBrowserRouter([
   {
@@ -88,6 +90,14 @@ const router = createBrowserRouter([
       {
         path: "admin/dashboard",
         element: <Users />,
+      },
+      {
+        path: "admin/diseases",
+        element: <Disease />,
+      },
+      {
+        path: "admin/feedback",
+        element: <Feedback />,
       },
       // ,
       // {
