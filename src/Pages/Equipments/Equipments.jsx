@@ -6,50 +6,74 @@ import equip4 from "../../assets/equip4.png";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Footer from "../../components/Footer";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AddEquipment from "../../components/AddEquipment";
 import EditEquipments from "../../components/EditEquipments";
 import RemoveEquipment from "../../components/RemoveEquipment";
+import { AuthContext } from "../../store/AuthContext";
+import { json } from "react-router-dom";
 
-const equipments = [
-  {
-    id: Math.random() * 100,
-    title: "Optical Dissolved Oxygen Meter",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-    count: 4,
-    image: equip1,
-  },
-  {
-    id: Math.random() * 100,
-    title: "Dissolved Oxygen Meter",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-    count: 3,
-    image: equip2,
-  },
-  {
-    id: Math.random() * 100,
-    title: "Optical Dissolved Oxygen Meter",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-    count: 2,
-    image: equip3,
-  },
-  {
-    id: Math.random() * 100,
-    title: "Dissolved Oxygen Meter",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-    count: 1,
-    image: equip4,
-  },
-];
+// const equipments = [
+//   {
+//     id: Math.random() * 100,
+//     title: "Optical Dissolved Oxygen Meter",
+//     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+//     count: 4,
+//     image: equip1,
+//   },
+//   {
+//     id: Math.random() * 100,
+//     title: "Dissolved Oxygen Meter",
+//     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+//     count: 3,
+//     image: equip2,
+//   },
+//   {
+//     id: Math.random() * 100,
+//     title: "Optical Dissolved Oxygen Meter",
+//     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+//     count: 2,
+//     image: equip3,
+//   },
+//   {
+//     id: Math.random() * 100,
+//     title: "Dissolved Oxygen Meter",
+//     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+//     count: 1,
+//     image: equip4,
+//   },
+// ];
 
 export default function Equipments() {
-  const [Equipments, setEquipments] = useState(equipments);
+  const [Equipments, setEquipments] = useState([]);
   const [selectedEquipment, setSelectedEquipment] = useState({});
   const [modalState, setModalState] = useState({
     showAdd: false,
     showEdit: false,
     showRemove: false,
   });
+
+
+
+  useEffect(() => {
+    async function getEquipments() {
+      // 901cbc9f-d929-4121-bbd3-84916eac10f4  
+      const user = JSON.parse(localStorage.getItem("userData"));
+      console.log(user)
+      const response = await fetch(`https://localhost:7289/api/${user.id}/Equipment/Owner?id=${user.id}`);
+      console.log(`https://localhost:7289/api/${user.id}/Equipment/Owner?id=${user.id}`)
+      if (response.status == 201) {
+        throw json({ message: "Unauthorized" }, { status: 500 });
+      }
+      if (!response.ok) {
+        throw json({ message: "failed to get equipments" }, { status: 500 });
+      }
+      const data = await response.json();
+      console.log(data);
+      setEquipments(data);
+    }
+    getEquipments();
+  }, [])
 
   function handleShowModal() {
     setModalState((prevState) => ({ ...prevState, showAdd: true }));
@@ -113,7 +137,7 @@ export default function Equipments() {
               Add Equipment
             </button>
             <section className="flex flex-col gap-6 mt-10">
-              {Equipments.map((equip) => {
+              {Equipments && Equipments.map((equip) => {
                 return (
                   <div
                     key={equip.id}
