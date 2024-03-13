@@ -98,6 +98,8 @@ const UsersPage = () => {
     showEdit: false,
     showRemove: false,
   });
+  const [filter, setFilter] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   function handleShowModal() {
     setModalState((prevState) => ({ ...prevState, showAdd: true }));
@@ -179,6 +181,30 @@ const UsersPage = () => {
     setUsers(() => updatedUsers);
   }
 
+  // handle filter
+  function handleFilterChange(event) {
+    setFilter(event.target.value);
+  }
+
+  function searchUsers(query) {
+    setSearchQuery(query);
+  }
+
+  function filteredUsers() {
+    let filtered = Users;
+    if (filter) {
+      filtered = filtered.filter(
+        (user) => user.position.toLowerCase() === filter.toLowerCase()
+      );
+    }
+    if (searchQuery) {
+      filtered = filtered.filter((user) =>
+        user.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    return filtered;
+  }
+
   return (
     <>
       <AddUser
@@ -187,11 +213,14 @@ const UsersPage = () => {
         showAddModal={modalState.showAdd}
       />
 
-      <div className="min-h-screen bg-gray-100 flex ">
+      <div className="min-h-screen bg-gray-100 flex font-popins">
         <AdminSidebar />
         {/* Main content */}
         <main className="flex-1 p-4">
-          <AdminNav />
+          <AdminNav
+            searchQuery={searchQuery}
+            handleSearchChange={searchUsers}
+          />
           {/* Filter */}
           <div className="flex justify-between items-center p-4">
             <h2 className="text-lg font-medium text-gray-800">Filter By:</h2>
@@ -199,10 +228,12 @@ const UsersPage = () => {
               className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               name="filter"
               id="filter"
+              value={filter}
+              onChange={handleFilterChange}
             >
               <option value="">All</option>
               <option value="expert">Expert</option>
-              <option value="farm-owner">Farm Owner</option>
+              <option value="farm owner">Farm Owner</option>
             </select>
           </div>
           {/* Your main content here */}
@@ -262,75 +293,86 @@ const UsersPage = () => {
               </thead>
               {/* Table body */}
               <tbody>
-                {Users.map((user) => {
-                  return (
-                    <tr key={user.id} className="bg-white">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        <input
-                          type="checkbox"
-                          name="select"
-                          id={`${user.id}`}
-                          className="mr-4 selection"
-                        />
-                        {user.name}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {user.position}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {user.email}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {user.phonenumber}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {user.status === "Disabled" ||
-                        user.status === "disabled" ? (
-                          <button
-                            className=" bg-[#DF9C9C] hover:bg-[#e27373] text-white font-bold py-2 w-28 rounded opacity-75"
-                            onClick={() => handleDisabled(user)}
-                          >
-                            Disabled
-                          </button>
-                        ) : (
-                          <button
-                            className="bg-[#585EC7] hover:bg-indigo-700 text-white font-bold py-2 w-28 rounded"
-                            onClick={() => handleEnabled(user)}
-                          >
-                            Enabled
-                          </button>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
-                        <MdEdit
-                          onClick={() => handleShowEditModal(user)}
-                          className="inline mr-4 text-2xl text-black cursor-pointer ml-16"
-                        />
-                        <MdDelete
-                          onClick={() => handleShowRemoveModal(user)}
-                          className="inline mr-4 text-2xl text-black cursor-pointer"
-                        />
-                        {modalState.showEdit && (
-                          <EditUsers
-                            existUser={selectedUser}
-                            onEdit={handleEdit}
-                            onClose={handleCloseEditModal}
-                            showEditModal={modalState.showEdit}
+                {filteredUsers().length > 0 ? (
+                  filteredUsers().map((user) => {
+                    return (
+                      <tr key={user.id} className="bg-white">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          <input
+                            type="checkbox"
+                            name="select"
+                            id={`${user.id}`}
+                            className="mr-4 selection"
                           />
-                        )}
+                          {user.name}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {user.position}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {user.email}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {user.phonenumber}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {user.status === "Disabled" ||
+                          user.status === "disabled" ? (
+                            <button
+                              className=" bg-[#DF9C9C] hover:bg-[#e27373] text-white font-bold py-2 w-28 rounded opacity-75"
+                              onClick={() => handleDisabled(user)}
+                            >
+                              Disabled
+                            </button>
+                          ) : (
+                            <button
+                              className="bg-[#585EC7] hover:bg-indigo-700 text-white font-bold py-2 w-28 rounded"
+                              onClick={() => handleEnabled(user)}
+                            >
+                              Enabled
+                            </button>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
+                          <MdEdit
+                            onClick={() => handleShowEditModal(user)}
+                            className="inline mr-4 text-2xl text-black cursor-pointer ml-16"
+                          />
+                          <MdDelete
+                            onClick={() => handleShowRemoveModal(user)}
+                            className="inline mr-4 text-2xl text-black cursor-pointer"
+                          />
+                          {modalState.showEdit && (
+                            <EditUsers
+                              existUser={selectedUser}
+                              onEdit={handleEdit}
+                              onClose={handleCloseEditModal}
+                              showEditModal={modalState.showEdit}
+                            />
+                          )}
 
-                        {modalState.showRemove && (
-                          <RemoveUser
-                            selectedUser={selectedUser}
-                            onRemove={handleDelete}
-                            onClose={handleCloseRemoveModal}
-                            showRemoveModal={modalState.showRemove}
-                          />
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
+                          {modalState.showRemove && (
+                            <RemoveUser
+                              selectedUser={selectedUser}
+                              onRemove={handleDelete}
+                              onClose={handleCloseRemoveModal}
+                              showRemoveModal={modalState.showRemove}
+                            />
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td
+                      colSpan="6"
+                      className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-extrabold text-center"
+                    >
+                      No users found
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
