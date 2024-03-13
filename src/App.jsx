@@ -19,11 +19,13 @@ import Root, {
   feedBackAction,
 } from "./Pages/Root/Root.jsx";
 import Users from "./Pages/Admin/UsersPage.jsx";
+import Error from "./Pages/Error/Error.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <Error />,
     action: feedBackAction,
     children: [
       {

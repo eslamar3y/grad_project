@@ -63,7 +63,7 @@ export default function Equipments() {
       const response = await fetch(`https://localhost:7289/api/${user.id}/Equipment/Owner?id=${user.id}`);
       console.log(`https://localhost:7289/api/${user.id}/Equipment/Owner?id=${user.id}`)
       if (response.status == 201) {
-        throw json({ message: "Unauthorized" }, { status: 500 });
+        throw json({ message: "Unauthorized" }, { status: 201 });
       }
       if (!response.ok) {
         throw json({ message: "failed to get equipments" }, { status: 500 });

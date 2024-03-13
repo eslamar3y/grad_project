@@ -4,7 +4,7 @@ import loginandrew from "../../assets/undraw_login_re_4vu21.png";
 import google from "../../assets/google.png";
 import facebook from "../../assets/facebook.png";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useContext, useRef } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../store/AuthContext";
 const svgContentUsername = `
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -19,18 +19,76 @@ const svgContentPassword = `
 
 export default function Login() {
   const navigate = useNavigate();
-  const Name = useRef("");
-  const Pass = useRef("");
   const { login } = useContext(AuthContext);
+  const [loginError, setLoginError] = useState();
+  const [inputData, setInputData] = useState({
+    Username: '',
+    Password: '',
+  });
+  const [errors, setErrors] = useState({});
 
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const Username = Name.current.value;
-    const Password = Pass.current.value;
-    await login(Username, Password);
-    navigate("/");
+  function handleInputData(input, value) {
+    setInputData((prevData) => ({
+      ...prevData,
+      [input]: value
+    }))
   }
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    const Username = inputData.Username;
+    const Password = inputData.Password;
+    console.log(Username, Password);
+
+    const errors = {};
+    // username validation
+    if (!Username) {
+      errors.Username = "Username is required";
+    } else if (Username.length < 3) {
+      errors.Username = "The number of characters should be 3 at least.";
+    }
+
+    // password validation
+    if (!Password) {
+      errors.Password = "Password is required";
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{6,}$/.test(Password)) {
+      errors.Password = `Password must include at least
+        (6 chars, 1 upprecase char,
+        1 lowercase char, 1 number,
+        1 special char)`;
+    }
+
+    setErrors(errors);
+
+    // Submit the form if there are no errors
+    if (Object.keys(errors).length === 0) {
+      try {
+        await login(Username, Password);
+      } catch (err) {
+        console.log(err.response.status);
+        if (err.response.status == 401) {
+          setLoginError({
+            message: "Unautherized user",
+          })
+          throw new Error("Unautherized user");
+        }
+        if (err.response.status == 500) {
+          setLoginError({
+            message: "Server error, Failed to login please try again",
+          })
+          throw new Error("Server error, Failed to login please try again");
+        }
+        if (!err.response.ok) {
+          setLoginError({
+            message: "Somthing wrong happened please try again",
+          })
+          throw new Error("Somthing wrong happened please try again");
+        }
+      }
+      navigate("/");
+    }
+  }
+
 
   return (
     <div className="flex">
@@ -40,10 +98,16 @@ export default function Login() {
           <h2 className="text-[#525252] font-popins font-normal">
             Welcome back to FishShield
           </h2>
-          <form method="POST" onSubmit={handleSubmit}>
+          <form method="POST" onSubmit={onSubmit}>
             <div className="flex flex-col relative w-fit m-auto">
               <input
-                ref={Name}
+                onChange={(e) => handleInputData("Username", e.target.value)}
+                // {
+                // ...register("Username",
+                //   { required: true, minLength: 3 },
+                // )
+                // }
+                value={inputData.Username}
                 type="text"
                 name="Username"
                 id="username"
@@ -58,9 +122,19 @@ export default function Login() {
                 alt="Custom SVG Image"
               />
             </div>
+            {errors.Username && <p className="text-sm text-red-600">{errors.Username}</p>}
+            {/* {errors.Username?.type === "required" && <p className="text-sm text-red-600">Username is required.</p>} */}
+            {/* {errors.Username?.type === "minLength" && <p className="text-sm text-red-600">The number of characters should be 3 at least.</p>} */}
             <div className="flex flex-col relative w-fit m-auto">
               <input
-                ref={Pass}
+                onChange={(e) => handleInputData("Password", e.target.value)}
+                value={inputData.Password}
+                // {...register("Password",
+                //   {
+                //     required: true,
+                //     pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{6,}$/
+                //   },
+                // )}
                 type="password"
                 name="Password"
                 id="password"
@@ -75,6 +149,10 @@ export default function Login() {
                 alt="Custom SVG Image"
               />
             </div>
+            {errors.Password && <p className="text-sm text-red-600">{errors.Password}</p>}
+            {loginError && <p className="text-sm text-red-600">{loginError.message}</p>}
+            {/* {errors.Password?.type === "required" && <p className="text-sm text-red-600">Password is requird</p>} */}
+            {/* {errors.Password?.type === "pattern" && <p className="text-sm text-red-600">Password must contain at least one digit, one uppercase letter, and one non-alphanumeric character, and be at least 6 characters long.</p>} */}
             <div className="flex flex-col mt-4">
               <NavLink
                 to="/forgot"

@@ -5,10 +5,11 @@ import articleimg from "../../assets/articleimg.png";
 import uploadImage from "../../assets/uploadImage.png";
 import google from "../../assets/google.png";
 import facebook from "../../assets/facebook.png";
-import { NavLink, json, useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useRef, useState } from "react";
 import phone from "../../assets/Phone.png";
 import calendar from "../../assets/Calendar.png";
+import { AuthContext } from "../../store/AuthContext";
 
 const svgContentUsername = `
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -30,6 +31,9 @@ export default function Register() {
   const expertRef = useRef();
   const navigate = useNavigate();
   const [registerType, setRegisterType] = useState("owner");
+  const { register } = useContext(AuthContext);
+  const [errors, setErrors] = useState({});
+  const [loginError, setLoginError] = useState();
 
   useEffect(() => {
     ownerRef.current.checked = true;
@@ -38,46 +42,120 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const ownerData = Object.fromEntries(formData.entries());
+    const data = Object.fromEntries(formData.entries());
 
     const ownerObj = {
-      birthDate: ownerData.BirthDate,
-      email: ownerData.Email,
-      userName: ownerData.UserName,
-      password: ownerData.Password,
-      confirmPass: ownerData.ConfirmPass,
-      phoneNumber: ownerData.PhoneNumber,
-      farmAddress: ownerData.FarmAddress,
-      address: ownerData.Address
+      farmAddress: data.FarmAddress,
+      address: data.Address,
+      birthDate: data.BirthDate,
+      email: data.Email,
+      userName: data.UserName,
+      password: data.Password,
+      confirmPass: data.ConfirmPass,
+      phoneNumber: data.PhoneNumber,
     }
+    const ownerFormData = new FormData();
+    for (const key in ownerObj) {
+      ownerFormData.append(key, ownerObj[key]);
+    }
+
     const expertObj = {
-      birthDate: ownerData.BirthDate,
-      email: ownerData.Email,
-      userName: ownerData.UserName,
-      password: ownerData.Password,
-      confirmPass: ownerData.ConfirmPass,
-      phoneNumber: ownerData.PhoneNumber,
-      personalPhoto: ownerData.personalPhoto,
-      moreInfo: ownerData.moreInfo,
-      address: ownerData.Address
+      birthDate: data.BirthDate,
+      email: data.Email,
+      userName: data.UserName,
+      password: data.Password,
+      confirmPass: data.ConfirmPass,
+      phoneNumber: data.PhoneNumber,
+      personalPhoto: data.personalPhoto,
+      moreInfo: data.moreInfo,
+      address: data.Address
+    }
+    const expertFormData = new FormData();
+    for (const key in expertObj) {
+      expertFormData.append(key, expertObj[key]);
     }
 
-    const choosenObj = registerType === "owner" ? ownerObj : expertObj;
-    console.log(choosenObj);
+    const choosenData = registerType === "owner" ? ownerFormData : expertFormData;
+    console.log(choosenData);
 
-    const response = await fetch("https://localhost:7289/api/Accounts/farmOwner", {
-      method: "POST",
-      headers: {
-        'accept': '*/*', // This header is optional
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(choosenObj)
-    });
-    if (!response.ok) {
-      throw json({ message: "Couldn't register" }, { status: 500 })
+    const errors = {};
+    if (!data.BirthDate) {
+      errors.BirthDate = "Birth date is required.";
     }
-    console.log("ok")
-    navigate('/login');
+
+    if (!data.Email) {
+      errors.Email = "Email is required.";
+    }
+    else if (!data.Email.includes('@')) {
+      errors.Email = "@ is required.";
+    }
+
+    if (!data.UserName) {
+      errors.UserName = "UserName is required.";
+    } else if (data.UserName.length < 3) {
+      errors.UserName = "UserName must be at least 3 characters";
+    }
+
+    if (!data.Password) {
+      errors.Password = "Password is required.";
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{6,}$/.test(data.Password)) {
+      errors.Password = `Password must include at least
+        (6 chars, 1 upprecase char,
+        1 lowercase char, 1 number,
+        1 special char)`;
+    }
+
+    if (!data.ConfirmPass) {
+      errors.ConfirmPass = "Confirm Pass is required.";
+    } else if (data.ConfirmPass !== data.Password) {
+      errors.ConfirmPass = "Confirm Password must be identical to password.";
+    }
+
+    if (!data.PhoneNumber) {
+      errors.PhoneNumber = "Phone number is required.";
+    } else if (data.PhoneNumber.length != 11) {
+      errors.PhoneNumber = "Phone number must be exactly 11 numbers.";
+    }
+
+    if (!data.Address) {
+      errors.Address = "Address is required.";
+    }
+
+    if (registerType === "owner" && !data.FarmAddress) {
+      errors.FarmAddress = "Farm address is required.";
+    }
+
+    if (registerType === "expert" && !data.personalPhoto.name) {
+      errors.personalPhoto = "Personal photo is required.";
+    }
+
+    setErrors(errors);
+    if (Object.keys(errors).length == 0) {
+      try {
+        await register(choosenData, registerType);
+      } catch (err) {
+        console.log(err.response.status);
+        if (err.response.status == 400) {
+          setLoginError({
+            message: "User already registered",
+          })
+          throw new Error("User already registered");
+        }
+        if (err.response.status == 500) {
+          setLoginError({
+            message: "Server error, Failed to login please try again",
+          })
+          throw new Error("Server error, Failed to login please try again");
+        }
+        if (!err.response.ok) {
+          setLoginError({
+            message: "Somthing wrong happened please try again",
+          })
+          throw new Error("Somthing wrong happened please try again");
+        }
+      }
+      navigate("/");
+    }
   };
 
   return (
@@ -100,13 +178,14 @@ export default function Register() {
             Welcome to FishShield
           </h2>
           <form onSubmit={handleSubmit}>
+            {loginError && <p className="text-sm text-red-600">{loginError.message}</p>}
             <div className="flex flex-col relative w-fit m-auto owner">
               <input
                 type="text"
                 name="UserName"
                 id="UserName"
                 placeholder="User name"
-                required
+                // required
                 className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  px-11 mt-4 rounded-xl font-popins font-normal loginUser "
               />
               <img
@@ -117,13 +196,14 @@ export default function Register() {
                 alt="Custom SVG Image"
               />
             </div>
+            {errors.UserName && <p className="text-sm text-red-600">{errors.UserName}</p>}
             <div className="flex flex-col relative w-fit m-auto owner">
               <input
                 type="email"
                 name="Email"
                 id="Email"
                 placeholder="Email"
-                required
+                // required
                 className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  px-11 mt-4 rounded-xl font-popins font-normal loginUser "
               />
               <img
@@ -134,22 +214,27 @@ export default function Register() {
                 alt="Custom SVG Image"
               />
             </div>
+            {errors.Email && <p className="text-sm text-red-600">{errors.Email}</p>}
             {
               registerType == "owner" ?
-                <div className="flex flex-col relative w-fit m-auto owner">
-                  <input
-                    type="text"
-                    name="FarmAddress"
-                    id="FarmAddress"
-                    placeholder="Farm Address"
-                    className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  px-11 mt-4 rounded-xl font-popins font-normal loginUser "
-                  />
-                  <img
-                    className="w-6 absolute bottom-4 left-[4%]"
-                    src={phone}
-                    alt="Custom SVG Image"
-                  />
-                </div> :
+                <>
+                  <div className="flex flex-col relative w-fit m-auto owner">
+                    <input
+                      type="text"
+                      name="FarmAddress"
+                      id="FarmAddress"
+                      placeholder="Farm Address"
+                      className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  px-11 mt-4 rounded-xl font-popins font-normal loginUser "
+                    />
+                    <img
+                      className="w-6 absolute bottom-4 left-[4%]"
+                      src={phone}
+                      alt="Custom SVG Image"
+                    />
+                  </div>
+                  {errors.FarmAddress && <p className="text-sm text-red-600">{errors.FarmAddress}</p>}
+                </>
+                :
                 <>
                   <div className="flex flex-col relative w-fit m-auto expert">
                     <input
@@ -186,6 +271,7 @@ export default function Register() {
                       alt="Custom SVG Image"
                     />
                   </div>
+                  {errors.personalPhoto && <p className="text-sm text-red-600">{errors.personalPhoto}</p>}
                 </>
             }
             <div className="flex flex-col relative w-fit m-auto owner">
@@ -202,6 +288,7 @@ export default function Register() {
                 alt="Custom SVG Image"
               />
             </div>
+            {errors.BirthDate && <p className="text-sm text-red-600">{errors.BirthDate}</p>}
             <div className="flex flex-col relative w-fit m-auto owner">
               <input
                 type="text"
@@ -216,6 +303,7 @@ export default function Register() {
                 alt="Custom SVG Image"
               />
             </div>
+            {errors.PhoneNumber && <p className="text-sm text-red-600">{errors.PhoneNumber}</p>}
             <div className="flex flex-col relative w-fit m-auto owner">
               <input
                 type="text"
@@ -230,6 +318,7 @@ export default function Register() {
                 alt="Custom SVG Image"
               />
             </div>
+            {errors.Address && <p className="text-sm text-red-600">{errors.Address}</p>}
             <div className="flex flex-col relative w-fit m-auto owner">
               <input
                 type="password"
@@ -246,6 +335,7 @@ export default function Register() {
                 alt="Custom SVG Image"
               />
             </div>
+            {errors.Password && <p className="text-sm text-red-600">{errors.Password}</p>}
             <div className="flex flex-col relative w-fit m-auto owner">
               <input
                 type="password"
@@ -262,6 +352,7 @@ export default function Register() {
                 alt="Custom SVG Image"
               />
             </div>
+            {errors.ConfirmPass && <p className="text-sm text-red-600">{errors.ConfirmPass}</p>}
 
             {/* make radio button to check if user is farm owner or expert */}
             <div className="flex  relative w-fit m-auto mt-6">
