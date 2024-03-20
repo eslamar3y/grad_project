@@ -1,0 +1,14 @@
+.chat-section {
+    height: calc(100svh - (64px + 72px));
+    /* min-height: 100vh; */
+    overflow-y: scroll;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+
+.aside-section {
+    min-height: 100vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}

@@ -70,6 +70,7 @@ export default function Register() {
       moreInfo: data.moreInfo,
       address: data.Address
     }
+    console.log(expertObj);
     const expertFormData = new FormData();
     for (const key in expertObj) {
       expertFormData.append(key, expertObj[key]);

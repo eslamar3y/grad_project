@@ -9,9 +9,8 @@ export default function Modal({
 }) {
   const dialog = useRef();
   useEffect(() => {
-    if (open) {
-      dialog.current.showModal();
-    } else {
+    dialog.current.showModal();
+    if (!open) {
       dialog.current.close();
     }
   }, [open]);

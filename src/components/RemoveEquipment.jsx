@@ -1,14 +1,19 @@
 /* eslint-disable react/prop-types */
 import Modal from "./Modal";
+import { useMutation } from "@tanstack/react-query";
+import { deleteEquipment, queryClient } from "../Http/equipmentsHttp";
 
-export default function RemoveEquipment({
-  onClose,
-  showRemoveModal,
-  onRemove,
-  selectedEquipment,
-}) {
+
+export default function RemoveEquipment({ onClose, showRemoveModal, selectedEquipment }) {
+  const { mutate } = useMutation({
+    mutationFn: deleteEquipment,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["equipments"]);
+    }
+  })
+
   function handleRemove() {
-    onRemove(selectedEquipment.id);
+    mutate(selectedEquipment.id)
     onClose();
   }
 

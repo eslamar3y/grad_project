@@ -3,7 +3,9 @@ import { FaBars } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../store/AuthContext";
 
+
 const NavLinks = () => {
+  const { userLogin } = useContext(AuthContext);
   return (
     <>
       <NavLink
@@ -13,18 +15,18 @@ const NavLinks = () => {
       >
         Home
       </NavLink>
-      <NavLink
+      {userLogin && <NavLink
         to="/detection"
         className={({ isActive }) => (isActive ? " font-bold" : "")}
       >
         Disease Detection
-      </NavLink>
-      <NavLink
+      </NavLink>}
+      {userLogin && <NavLink
         to="/equipments"
         className={({ isActive }) => (isActive ? " font-bold" : "")}
       >
         Farm Equipments
-      </NavLink>
+      </NavLink>}
       <NavLink
         to="/about"
         className={({ isActive }) => (isActive ? " font-bold" : "")}
@@ -37,6 +39,12 @@ const NavLinks = () => {
       >
         Q&A, Chat
       </NavLink>
+      {userLogin && <NavLink
+        to="/realChat"
+        className={({ isActive }) => (isActive ? " font-bold" : "")}
+      >
+        Chat
+      </NavLink>}
     </>
   );
 };
@@ -51,7 +59,7 @@ export default function Nav() {
 
   return (
     <>
-      <nav>
+      <nav className="2xl:mx-auto">
         <div className="hidden 2xl:flex 2xl:gap-6 2xl:items-center">
           <NavLinks />
         </div>
