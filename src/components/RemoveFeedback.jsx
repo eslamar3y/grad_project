@@ -9,15 +9,25 @@ export default function RemoveFeedback({
 }) {
   function handleRemove() {
     console.log(selectedFeedback);
-    selectedFeedback.forEach((feedback) => {
-      onRemove(feedback);
+    // selectedFeedback.forEach((feedback) => {
+    //   onRemove(feedback);
+    // });
+    fetch(`https://localhost:7289/api/Feedbacks`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(selectedFeedback),
+    }).then((response) => {
+      onRemove(true);
+      return response.json();
     });
 
     onClose();
   }
 
   return (
-    <Modal open={showRemoveModal} onClose={onClose} backdropOpacity={10}>
+    <Modal open={showRemoveModal} onClose={onClose} backdropOpacity={5}>
       <div className="px-6 py-6 rounded-2xl bg-mainColor relative">
         <h2 className=" font-semibold text-xl mb-2">Delete Message</h2>
         <p className="mb-6">Are you sure you want to remove this Feedback</p>

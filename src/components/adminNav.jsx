@@ -1,6 +1,6 @@
 // AdminNav.jsx
 import user from "../assets/UserAdmin.png";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 
 export default function AdminNav({
@@ -9,6 +9,21 @@ export default function AdminNav({
   forsearch = false,
 }) {
   const [query, setQuery] = useState("");
+  const [showLogout, setShowLogout] = useState(false);
+  const logoutRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (logoutRef.current && !logoutRef.current.contains(event.target)) {
+        setShowLogout(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [logoutRef]);
 
   function handleChange(e) {
     setQuery(e.target.value);
@@ -69,13 +84,21 @@ export default function AdminNav({
                 </div>
               </div>
             </div>
-            {/* Logo */}
-            <div className=" flex-shrink-0 flex items-center">
+            {/* User image and logout link */}
+            <div className="flex-shrink-0 flex items-center relative">
               <img
-                className="hidden lg:block h-8 w-auto"
+                className="hidden lg:block h-8 w-auto cursor-pointer"
                 src={user}
                 alt="Logo"
+                onClick={() => setShowLogout(!showLogout)} // Toggle logout link visibility on image click
               />
+              {showLogout && (
+                <div className="absolute right-0 top-6 mt-2 py-1 w-40 bg-white border border-gray-200 rounded shadow-md z-10">
+                  <button className="block w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-100">
+                    Logout
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
