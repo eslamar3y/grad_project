@@ -6,6 +6,7 @@ export default function Modal({
   onClose,
   children,
   backdropOpacity = 50,
+  width = "w-96", // Default width class
 }) {
   const dialog = useRef();
   useEffect(() => {
@@ -18,7 +19,9 @@ export default function Modal({
   return createPortal(
     <dialog
       // className=" backdrop:bg-black/50 bg-transparent w-96"
-      className={`backdrop:bg-black/${backdropOpacity} bg-transparent w-96`}
+      className={`backdrop:bg-black/${backdropOpacity} bg-transparent ${
+        width === "w-96" ? "w-96" : width
+      } `}
       ref={dialog}
       onClose={onClose}
     >

@@ -3,11 +3,42 @@ import user from "../assets/UserAdmin.png";
 import { useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 
-export default function AdminNav({ searchQuery, handleSearchChange }) {
+export default function AdminNav({
+  searchQuery,
+  handleSearchChange,
+  forsearch = false,
+}) {
   const [query, setQuery] = useState("");
 
   function handleChange(e) {
     setQuery(e.target.value);
+    if (e.target.value !== "") {
+      if (forsearch === true) {
+        console.log("Searching for diseases");
+        fetch(
+          `https://localhost:7289/api/Disease?diseaseNameSearchTerm=${e.target.value}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            handleSearchChange(data); // Update diseases state with fetched data
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+      } else {
+        console.log("Searching for users");
+        fetch(
+          `https://localhost:7289/api/Accounts?UsernameSearchTerm=${e.target.value}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            handleSearchChange(data); // Update users state with fetched data
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+      }
+    }
     handleSearchChange(e.target.value);
   }
 
@@ -24,19 +55,6 @@ export default function AdminNav({ searchQuery, handleSearchChange }) {
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    {/* <svg
-                      className="h-5 w-5 text-gray-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M4 8a6 6 0 1112 0 6 6 0 01-12 0zM2 8a8 8 0 1116 0 8 8 0 01-16 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg> */}
                     <IoMdSearch className="h-5 w-5 text-gray-400" />
                   </div>
                   <input
