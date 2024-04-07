@@ -13,7 +13,7 @@ export default function RemoveEquipment({ onClose, showRemoveModal, selectedEqui
   })
 
   function handleRemove() {
-    mutate(selectedEquipment.id)
+    mutate(selectedEquipment.id);
     onClose();
   }
 

@@ -1,31 +1,25 @@
 /* eslint-disable react/prop-types */
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import uploadImage from '../assets/upload.png';
 
 
 function ImageUpload({ defaultImage, getImageFile }) {
     const fileInputRef = useRef();
-    const [previewImage, setPreviewImage] = useState(null);
-    const [existImg, setExistImg] = useState(defaultImage);
+    const [image, setImage] = useState(null);
+    const [preview, setPreview] = useState(defaultImage);
 
-    const handleImageChange = (event) => {
-        const selectedFile = event.target.files[0];
-        if (selectedFile) {
-            const reader = new FileReader();
-            reader.readAsDataURL(selectedFile);
-            reader.onload = () => {
-                !existImg && setPreviewImage(() => reader.result); // Set preview image URL
-                existImg && setExistImg(() => reader.result);
-            };
-            getImageFile(selectedFile)
-            // setImageFile(selectedFile); // Set image file for further processing
+    // Handles image files selected by the user
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImage(() => file);
+            setPreview(URL.createObjectURL(file));
         }
     };
 
-    // useEffect(() => {
-    //     previewImage && onChange("image", previewImage);
-    //     existImg && onChangeEdit("image", existImg);
-    // }, [previewImage, existImg, onChange, onChangeEdit])
+    useEffect(() => {
+        getImageFile(image)
+    }, [getImageFile, image])
 
     const handleClickUpload = () => {
         fileInputRef.current.click();
@@ -34,14 +28,15 @@ function ImageUpload({ defaultImage, getImageFile }) {
     return (
         <div onClick={handleClickUpload} className='mx-auto'>
             {
-                previewImage ?? existImg ?
-                    <img className='w-40 h-40' src={previewImage ?? existImg} alt="Preview" /> :
+                preview ?
+                    <img className='w-40 h-40' src={preview} alt="Preview" /> :
                     <img className='w-40 h-40' src={uploadImage} alt="upload" />
             }
             <input
                 name="PhotoPath"
                 type="file"
                 accept="image/*"
+                // defaultValue={defaultImage}
                 onChange={handleImageChange}
                 ref={fileInputRef}
                 className=' hidden'

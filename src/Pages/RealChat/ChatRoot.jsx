@@ -16,7 +16,7 @@ export default function ChatRoot() {
 
 
     return (
-        <main className="min-h-svh bg-[#585dc7da] bg-chatBot flex">
+        <main className="min-h-svh bg-chatBot bg-[#585dc7da] flex">
             <aside className={`transition-all duration-700 ${expanded ? "translate-x-0" : "translate-x-[-300px]"} ${styles['aside-section']} w-fit lg:w-[300px] chat-section bg-mainColor absolute border-r-2 px-5 py-4`}>
                 <div className="flex flex-col gap-4 lg:items-center lg:flex-row lg:gap-5">
                     <div className="relative">
