@@ -22,7 +22,7 @@ export default function Equipments() {
   });
   const { data: Equipments, isPending, isError, error } = useQuery({
     queryKey: ["equipments"],
-    queryFn: getEquipments
+    queryFn: ({ signal }) => getEquipments({ signal })
   })
 
 

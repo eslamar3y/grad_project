@@ -7,11 +7,14 @@ export const AuthContext = createContext({
     login: () => { },
     register: () => { },
     logout: () => { },
-    userLogin: false,
+    userLogin: null,
+    accessToken: null,
 });
 
 export default function AuthContextProvider({ children }) {
-    const [userLogin, setUserLogin] = useState(JSON.parse(localStorage.getItem("tokens")) ? true : false);
+    const [userLogin, setUserLogin] = useState(JSON.parse(localStorage.getItem("userData")) || null);
+    // const [userLogin, setUserLogin] = useState(null);
+    const [accessToken, setAccessToken] = useState(null);
 
     const login = async (Username, Password) => {
         // try {
@@ -40,9 +43,11 @@ export default function AuthContextProvider({ children }) {
         const data = await response.data;
         console.log(data)
 
-        localStorage.setItem('tokens', JSON.stringify(data));
+        // localStorage.setItem('tokens', JSON.stringify(data));
         const accessToken = data.accessToken;
         // const refreshToken = data.refreshToken;
+        setAccessToken(accessToken);
+        console.log(accessToken)
 
         const parts = accessToken.split('.');
         const payload = JSON.parse(atob(parts[1]));
@@ -51,7 +56,7 @@ export default function AuthContextProvider({ children }) {
         const name = payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
         const id = payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
         localStorage.setItem('userData', JSON.stringify({ name: name, id: id }));
-        setUserLogin(true);
+        setUserLogin(JSON.parse(localStorage.getItem("userData")));
         // } catch (err) {
         //     if (err.response.status == 401) {
         //         throw new Error("Unautherized user");
@@ -90,14 +95,13 @@ export default function AuthContextProvider({ children }) {
     }
 
     const logout = () => {
-        localStorage.removeItem("tokens");
         localStorage.removeItem("userData");
-        setUserLogin(false);
+        setUserLogin(null);
     }
 
 
     return (
-        <AuthContext.Provider value={{ login, register, logout, userLogin }}>
+        <AuthContext.Provider value={{ login, register, logout, userLogin, accessToken }}>
             {children}
         </AuthContext.Provider>
     );

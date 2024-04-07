@@ -35,7 +35,7 @@ export const deleteEquipment = async (equipId) => {
     let url = `https://localhost:7289/api/${user.id}/Equipment/${equipId}`;
     const response = await fetch(url, {
         method: 'DELETE',
-    })
+    });
     if (!response.ok) {
         const error = new Error('An error occurred while fetching the equipments');
         error.code = response.status;

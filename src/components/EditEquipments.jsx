@@ -15,7 +15,7 @@ export default function EditEquipments({ onClose, showEditModal }) {
     const { mutate, isPending: isEditPending, isError: isEditError, error: editError } = useMutation({
         mutationFn: editEquipment,
         onSuccess: () => {
-            queryClient.invalidateQueries(["equipments"]);
+            queryClient.invalidateQueries({ queryKey: ["equipments"] });
             onClose();
         }
     });
@@ -24,16 +24,23 @@ export default function EditEquipments({ onClose, showEditModal }) {
         queryFn: ({ signal }) => getEquipmentDetails({ id: params.id, signal })
     })
 
-    function getImageFile(imgFile) {
-        setImageFile(imgFile);
+
+    const getImageFile = (imgFile) => {
+        setImageFile(() => imgFile);
     }
+
+    if (Equipment) {
+        console.log(Equipment);
+    }
+
 
     function handleSubmit(e) {
         e.preventDefault();
         const user = JSON.parse(localStorage.getItem("userData"));
         const formData = new FormData(e.target);
         formData.append("OwnerId", user.id);
-        formData.append("PhotoPath", imageFile);
+        console.log("img file ::::", imageFile)
+        formData.append("photoPath", imageFile);
         formData.append("ID", params.id);
         mutate(formData);
     }
@@ -41,7 +48,7 @@ export default function EditEquipments({ onClose, showEditModal }) {
 
     return (
         <Modal open={showEditModal} onClose={onClose}>
-            {isPending ?
+            {isPending &&
                 <div className="flex justify-center items-center">
                     <Hourglass
                         visible={true}
@@ -51,7 +58,9 @@ export default function EditEquipments({ onClose, showEditModal }) {
                         wrapperStyle={{}}
                         wrapperClass=""
                         colors={['#306cce', '#72a1ed']}
-                    /></div> :
+                    /></div>
+            }
+            {Equipment &&
                 <form onSubmit={handleSubmit} className="px-6 py-6 rounded-2xl bg-mainColor relative">
                     <h2 className="font-bold text-2xl mb-8 text-center">Edit Equipment</h2>
                     <div className="flex flex-col gap-5">

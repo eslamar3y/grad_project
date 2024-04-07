@@ -16,7 +16,7 @@ export default function Head() {
         </NavLink>
         <Nav />
       </div>
-      {userLogin === false ?
+      {!userLogin ?
         <NavLink to="login">
           <button className="hidden mt-5 shadow-custom w-[158px] h-[48px] border-black bg-mainColor rounded-2xl 2xl:block 2xl:mt-0">
             Signin
