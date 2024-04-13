@@ -27,7 +27,7 @@ export default function RemoveFeedback({
   }
 
   return (
-    <Modal open={showRemoveModal} onClose={onClose} backdropOpacity={5}>
+    <Modal open={showRemoveModal} onClose={onClose} backdropOpacity={50}>
       <div className="px-6 py-6 rounded-2xl bg-mainColor relative">
         <h2 className=" font-semibold text-xl mb-2">Delete Message</h2>
         <p className="mb-6">Are you sure you want to remove this Feedback</p>

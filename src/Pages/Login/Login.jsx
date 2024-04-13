@@ -22,16 +22,16 @@ export default function Login() {
   const { login } = useContext(AuthContext);
   const [loginError, setLoginError] = useState();
   const [inputData, setInputData] = useState({
-    Username: '',
-    Password: '',
+    Username: "",
+    Password: "",
   });
   const [errors, setErrors] = useState({});
 
   function handleInputData(input, value) {
     setInputData((prevData) => ({
       ...prevData,
-      [input]: value
-    }))
+      [input]: value,
+    }));
   }
 
   async function onSubmit(e) {
@@ -51,7 +51,9 @@ export default function Login() {
     // password validation
     if (!Password) {
       errors.Password = "Password is required";
-    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{6,}$/.test(Password)) {
+    } else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{6,}$/.test(Password)
+    ) {
       errors.Password = `Password must include at least
         (6 chars, 1 upprecase char,
         1 lowercase char, 1 number,
@@ -69,26 +71,33 @@ export default function Login() {
         if (err.response.status == 401) {
           setLoginError({
             message: "Unautherized user",
-          })
+          });
           throw new Error("Unautherized user");
         }
         if (err.response.status == 500) {
           setLoginError({
             message: "Server error, Failed to login please try again",
-          })
+          });
           throw new Error("Server error, Failed to login please try again");
         }
         if (!err.response.ok) {
           setLoginError({
             message: "Somthing wrong happened please try again",
-          })
+          });
           throw new Error("Somthing wrong happened please try again");
         }
       }
-      navigate("/");
+      const userData = localStorage.getItem("userData");
+      const parsedUserData = JSON.parse(userData);
+      const role = parsedUserData?.role;
+      console.log(role);
+      if (role === "Admin") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/");
+      }
     }
   }
-
 
   return (
     <div className="flex">
@@ -122,7 +131,9 @@ export default function Login() {
                 alt="Custom SVG Image"
               />
             </div>
-            {errors.Username && <p className="text-sm text-red-600">{errors.Username}</p>}
+            {errors.Username && (
+              <p className="text-sm text-red-600">{errors.Username}</p>
+            )}
             {/* {errors.Username?.type === "required" && <p className="text-sm text-red-600">Username is required.</p>} */}
             {/* {errors.Username?.type === "minLength" && <p className="text-sm text-red-600">The number of characters should be 3 at least.</p>} */}
             <div className="flex flex-col relative w-fit m-auto">
@@ -149,8 +160,12 @@ export default function Login() {
                 alt="Custom SVG Image"
               />
             </div>
-            {errors.Password && <p className="text-sm text-red-600">{errors.Password}</p>}
-            {loginError && <p className="text-sm text-red-600">{loginError.message}</p>}
+            {errors.Password && (
+              <p className="text-sm text-red-600">{errors.Password}</p>
+            )}
+            {loginError && (
+              <p className="text-sm text-red-600">{loginError.message}</p>
+            )}
             {/* {errors.Password?.type === "required" && <p className="text-sm text-red-600">Password is requird</p>} */}
             {/* {errors.Password?.type === "pattern" && <p className="text-sm text-red-600">Password must contain at least one digit, one uppercase letter, and one non-alphanumeric character, and be at least 6 characters long.</p>} */}
             <div className="flex flex-col mt-4">

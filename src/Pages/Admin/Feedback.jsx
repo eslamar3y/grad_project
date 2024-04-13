@@ -49,7 +49,6 @@ const FeedbacksPage = () => {
   }
 
   function getCheckedFeedbackIds() {
-    setModalState((prevState) => ({ ...prevState, showRemove: true }));
     const selectedCheckboxes = document.querySelectorAll(".selection");
     const selectedFeedbackIds = [];
     selectedCheckboxes.forEach((checkbox) => {
@@ -57,7 +56,10 @@ const FeedbacksPage = () => {
         selectedFeedbackIds.push(checkbox.id);
       }
     });
-    setSelectedFeedback(selectedFeedbackIds);
+    if (selectedFeedbackIds.length > 0) {
+      setModalState((prevState) => ({ ...prevState, showRemove: true }));
+      setSelectedFeedback(selectedFeedbackIds);
+    }
     console.log(selectedFeedback);
     // handleShowRemoveModal();
   }

@@ -30,6 +30,8 @@ const UsersPage = () => {
   const [enabledisableAccount, setEnabledisableAccount] = useState(false);
   const [handleDeleteToggle, setHandleDeleteToggle] = useState(false);
   const [handleAd, setHandleAd] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedUserData, setSelectedUserData] = useState(null);
 
   useEffect(() => {
     fetch("https://localhost:7289/api/Accounts?PageSize=50")
@@ -42,8 +44,6 @@ const UsersPage = () => {
         setUsers(data);
       });
   }, [enabledisableAccount, handleDeleteToggle, ResearchQuery, handleAd]);
-
-  const [selectedUserId, setSelectedUserId] = useState(null);
 
   function handleShowModal() {
     setModalState((prevState) => ({ ...prevState, showAdd: true }));
@@ -58,8 +58,6 @@ const UsersPage = () => {
   }
 
   function getCheckedUserIds() {
-    setModalState((prevState) => ({ ...prevState, showRemove: true }));
-
     const checkboxes = document.querySelectorAll('tr input[type="checkbox"]');
     const selectedIds = [];
     checkboxes.forEach((checkbox) => {
@@ -67,7 +65,11 @@ const UsersPage = () => {
         selectedIds.push(checkbox.id);
       }
     });
-    setSelectedUser(selectedIds);
+    if (selectedIds.length > 0) {
+      setModalState((prevState) => ({ ...prevState, showRemove: true }));
+      setSelectedUser(selectedIds);
+    }
+    // console.log(selectedIds.length);
   }
 
   useEffect(() => {
@@ -120,7 +122,7 @@ const UsersPage = () => {
           console.error("Error fetching data:", error);
         });
     } else {
-      fetch(`https://localhost:7289/api/Accounts`)
+      fetch(`https://localhost:7289/api/Accounts?PageSize=50`)
         .then((response) => response.json())
         .then((data) => {
           setUsers(data); // Update users state with fetched data
@@ -145,6 +147,22 @@ const UsersPage = () => {
       setSelectedUserId(null); // Close details if already open
     } else {
       setSelectedUserId(userId); // Open details for clicked user
+
+      // Fetch data for the selected user
+      fetch(`https://localhost:7289/api/${userId}/Detects/generateReportData`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((userData) => {
+          // Update state with fetched user data
+          setSelectedUserData(userData);
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
     }
   };
 
@@ -342,58 +360,55 @@ const UsersPage = () => {
                             )}
                           </td>
                         </tr>
-                        {selectedUserId === user.id && (
+                        {selectedUserId === user.id && selectedUserData && (
                           <tr>
                             <td
                               colSpan="7"
-                              // className="text-center details-cell"
                               className={`text-center details-cell ${
                                 selectedUserId === user.id ? "open" : ""
                               }`}
                               style={{ transition: "all 2s ease" }}
                             >
                               <div className="flex px-3 mx-3 shadow-xl rounded-lg mb-10">
-                                <div className="w-1/2 text-left leading-10 ">
+                                <div className="w-full text-left leading-10 flex flex-row">
                                   {/* User details component for {user.name} */}
-                                  <div className="">
-                                    Number of Detections: 4
-                                  </div>
-                                  <div>Last Detection: 19 Feb 2024</div>
-                                  <div>Most Common Disease: EUS</div>
                                   <div>
-                                    Other Diseases Appeared: Parasitic diseases
+                                    <div className="DetectionNumber">
+                                      Number of Detections:{" "}
+                                      {selectedUserData.numberOfDetections}
+                                    </div>
+                                    <div>
+                                      Last Detection:{" "}
+                                      {selectedUserData.lastDetection}
+                                    </div>
+                                    <div>
+                                      Most Common Disease:{" "}
+                                      {selectedUserData.mostCommonDisease
+                                        ? selectedUserData.mostCommonDisease
+                                        : "No disease detected"}
+                                    </div>
+                                    <div>
+                                      Other Diseases Appeared:{" "}
+                                      {selectedUserData.otherDiseasesAppeared
+                                        ? selectedUserData.otherDiseasesAppeared
+                                        : "No disease detected"}
+                                    </div>
                                   </div>
-                                  <br />
-                                  <div>Detection History:</div>
-                                  <div>
-                                    <span className="text-gray-300">
-                                      28 Jul 2024
-                                    </span>{" "}
-                                    - EUS
-                                  </div>
-                                  <div>
-                                    <span className="text-gray-300">
-                                      07 Jan 2024
-                                    </span>{" "}
-                                    - EUS
-                                  </div>
-                                  <div>
-                                    <span className="text-gray-300">
-                                      18 May 2024
-                                    </span>{" "}
-                                    - Parasitic diseases
-                                  </div>
-                                  <div>
-                                    <span className="text-gray-300">
-                                      23 May 2024
-                                    </span>{" "}
-                                    - EUS
-                                  </div>
-                                  <div>
-                                    <span className="text-gray-300">
-                                      19 Feb 2024
-                                    </span>{" "}
-                                    - Parasitic diseases
+                                  <div className="ml-96">
+                                    <h2>Detection History:</h2>
+
+                                    {selectedUserData.length > 0
+                                      ? selectedUserData.detectionHistory.map(
+                                          (historyItem) => (
+                                            <div key={historyItem.date}>
+                                              <span className="text-gray-300">
+                                                {historyItem.date}
+                                              </span>{" "}
+                                              - {historyItem.disease}
+                                            </div>
+                                          )
+                                        )
+                                      : "No data found"}
                                   </div>
                                 </div>
                               </div>

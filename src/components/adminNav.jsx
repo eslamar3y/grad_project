@@ -1,7 +1,8 @@
 // AdminNav.jsx
 import user from "../assets/UserAdmin.png";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { IoMdSearch } from "react-icons/io";
+import { AuthContext } from "../store/AuthContext";
 
 export default function AdminNav({
   searchQuery,
@@ -11,8 +12,17 @@ export default function AdminNav({
   const [query, setQuery] = useState("");
   const [showLogout, setShowLogout] = useState(false);
   const logoutRef = useRef(null);
+  const { userLogin, logout } = useContext(AuthContext);
 
   useEffect(() => {
+    const userData = localStorage.getItem("userData");
+    const isAdmin = userData && JSON.parse(userData).role === "Admin";
+    if (!userData) {
+      window.location.href = "/login"; // Redirect to login if no userData
+    } else if (!isAdmin) {
+      window.location.href = "/"; // Redirect to home if not admin
+    }
+
     function handleClickOutside(event) {
       if (logoutRef.current && !logoutRef.current.contains(event.target)) {
         setShowLogout(false);
@@ -23,7 +33,7 @@ export default function AdminNav({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [logoutRef]);
+  }, [logoutRef, userLogin]);
 
   function handleChange(e) {
     setQuery(e.target.value);
@@ -92,13 +102,19 @@ export default function AdminNav({
                 alt="Logo"
                 onClick={() => setShowLogout(!showLogout)} // Toggle logout link visibility on image click
               />
-              {showLogout && (
-                <div className="absolute right-0 top-6 mt-2 py-1 w-40 bg-white border border-gray-200 rounded shadow-md z-10">
-                  <button className="block w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-100">
-                    Logout
-                  </button>
-                </div>
-              )}
+
+              {!userLogin
+                ? ""
+                : showLogout && (
+                    <div className="absolute right-0 top-6 mt-2 py-1 w-40 bg-white border border-gray-200 rounded shadow-md z-10">
+                      <button
+                        onClick={logout}
+                        className="block w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
             </div>
           </div>
         </div>
