@@ -14,7 +14,10 @@ import Reset from "./Pages/passPages/Reset";
 import Forgot from "./Pages/passPages/ResetPass";
 import Register from "./Pages/Register/Register";
 import Login from "./Pages/Login/Login";
-import Root, { DiseaseAndExpertsLoader, feedBackAction } from "./Pages/Root/Root.jsx";
+import Root, {
+  DiseaseAndExpertsLoader,
+  feedBackAction,
+} from "./Pages/Root/Root.jsx";
 import Users from "./Pages/Admin/UsersPage.jsx";
 import Error from "./Pages/Error/Error.jsx";
 import Disease from "./Pages/Admin/DiseasesPage.jsx";
@@ -27,8 +30,7 @@ import ChatRoot from "./Pages/RealChat/ChatRoot.jsx";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./Http/equipmentsHttp.js";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
-
-
+import ProtectedRouteAdmin from "./components/ProtectedRouteAdmin.jsx";
 
 const router = createBrowserRouter([
   {
@@ -78,11 +80,21 @@ const router = createBrowserRouter([
       },
       {
         path: "detection",
-        element: <ProtectedRoute> <DiseaseDetection /> </ProtectedRoute>,
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <DiseaseDetection />{" "}
+          </ProtectedRoute>
+        ),
       },
       {
         path: "equipments",
-        element: <ProtectedRoute> <Equipments /> </ProtectedRoute>,
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <Equipments />{" "}
+          </ProtectedRoute>
+        ),
         children: [
           {
             path: "add",
@@ -91,8 +103,8 @@ const router = createBrowserRouter([
           {
             path: "edit/:id",
             element: <EditEquipments />,
-          }
-        ]
+          },
+        ],
       },
       {
         path: "result",
@@ -104,7 +116,12 @@ const router = createBrowserRouter([
       },
       {
         path: "realChat",
-        element: <ProtectedRoute> <ChatRoot /> </ProtectedRoute>,
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <ChatRoot />{" "}
+          </ProtectedRoute>
+        ),
         id: "experts",
         loader: DiseaseAndExpertsLoader,
         children: [
@@ -115,8 +132,8 @@ const router = createBrowserRouter([
           {
             path: ":id",
             element: <ExpertChat />,
-          }
-        ]
+          },
+        ],
       },
       {
         path: "about",
@@ -124,7 +141,11 @@ const router = createBrowserRouter([
       },
       {
         path: "admin/dashboard",
-        element: <Users />,
+        element: (
+          <ProtectedRouteAdmin>
+            <Users />
+          </ProtectedRouteAdmin>
+        ),
       },
       {
         path: "admin/diseases",

@@ -1,104 +1,24 @@
 import {
-  MdEdit,
+  // MdEdit,
   MdDelete,
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
 } from "react-icons/md";
 import AdminSidebar from "../../components/adminSidebar";
 import AdminNav from "../../components/adminNav";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddUser from "../../components/AddUser";
 import RemoveUser from "../../components/RemoveUser";
-import EditUsers from "../../components/EditUsers";
+// import EditUsers from "../../components/EditUsers";
 import React from "react";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const UsersPage = () => {
-  const users = [
-    {
-      id: Math.random() * 100,
-      name: "john doe",
-      position: "Expert",
-      email: "john@gmail.com",
-      phonenumber: "015545123545",
-      status: "enabled",
-    },
-    {
-      id: Math.random() * 100,
-      name: "liam miller",
-      position: "Farm Owner",
-      email: "liam@gmail.com",
-      phonenumber: "015545123551",
-      status: "enabled",
-    },
-    {
-      id: Math.random() * 100,
-      name: "jane smith",
-      position: "Expert",
-      email: "jane@gmail.com",
-      phonenumber: "015545123546",
-      status: "disabled",
-    },
-    {
-      id: Math.random() * 100,
-      name: "ava anderson",
-      position: "Farm Owner",
-      email: "ava@gmail.com",
-      phonenumber: "015545123554",
-      status: "enabled",
-    },
-    {
-      id: Math.random() * 100,
-      name: "alexander brown",
-      position: "Expert",
-      email: "alexander@gmail.com",
-      phonenumber: "015545123547",
-      status: "enabled",
-    },
-    {
-      id: Math.random() * 100,
-      name: "emma wilson",
-      position: "Expert",
-      email: "emma@gmail.com",
-      phonenumber: "015545123548",
-      status: "disabled",
-    },
-    {
-      id: Math.random() * 100,
-      name: "william johnson",
-      position: "Expert",
-      email: "william@gmail.com",
-      phonenumber: "015545123549",
-      status: "enabled",
-    },
-    {
-      id: Math.random() * 100,
-      name: "olivia davis",
-      position: "Farm Owner",
-      email: "olivia@gmail.com",
-      phonenumber: "015545123550",
-      status: "disabled",
-    },
-
-    {
-      id: Math.random() * 100,
-      name: "sophia wilson",
-      position: "Farm Owner",
-      email: "sophia@gmail.com",
-      phonenumber: "015545123552",
-      status: "enabled",
-    },
-    {
-      id: Math.random() * 100,
-      name: "noah thompson",
-      position: "Farm Owner",
-      email: "noah@gmail.com",
-      phonenumber: "015545123553",
-      status: "enabled",
-    },
-  ];
-
-  const [Users, setUsers] = useState(users);
+  const [Users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(true); // New state for loading indicator
+
   const [modalState, setModalState] = useState({
     showAdd: false,
     showEdit: false,
@@ -106,9 +26,24 @@ const UsersPage = () => {
   });
   const [filter, setFilter] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-
-  // const [showDetails, setShowDetails] = useState(false);
+  const [ResearchQuery, setReSearchQuery] = useState(false);
+  const [enabledisableAccount, setEnabledisableAccount] = useState(false);
+  const [handleDeleteToggle, setHandleDeleteToggle] = useState(false);
+  const [handleAd, setHandleAd] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedUserData, setSelectedUserData] = useState(null);
+
+  useEffect(() => {
+    fetch("https://localhost:7289/api/Accounts?PageSize=50")
+      .then((response) => {
+        // console.log(response.headers);
+        return response.json();
+      })
+      .then((data) => {
+        setIsLoading(false); // Data fetched, set isLoading to false
+        setUsers(data);
+      });
+  }, [enabledisableAccount, handleDeleteToggle, ResearchQuery, handleAd]);
 
   function handleShowModal() {
     setModalState((prevState) => ({ ...prevState, showAdd: true }));
@@ -117,101 +52,94 @@ const UsersPage = () => {
     setModalState((prevState) => ({ ...prevState, showAdd: false }));
   }
 
-  function handleShowEditModal(existUser) {
-    setModalState((prevState) => ({ ...prevState, showEdit: true }));
-    setSelectedUser(() => existUser.id);
-  }
-  function handleCloseEditModal() {
-    setModalState((prevState) => ({ ...prevState, showEdit: false }));
+  function handleShowRemoveModal(id) {
+    setModalState((prevState) => ({ ...prevState, showRemove: true }));
+    setSelectedUser([id]);
   }
 
-  function handleShowRemoveModal(existUser) {
-    setModalState((prevState) => ({ ...prevState, showRemove: true }));
-    // setSelectedUser(() => existUser.id);
-    setSelectedUser([]);
-    // make it append to the list
-    setSelectedUser((prevSelectedUser) => [...prevSelectedUser, existUser.id]);
+  function getCheckedUserIds() {
+    const checkboxes = document.querySelectorAll('tr input[type="checkbox"]');
+    const selectedIds = [];
+    checkboxes.forEach((checkbox) => {
+      if (checkbox.checked) {
+        selectedIds.push(checkbox.id);
+      }
+    });
+    if (selectedIds.length > 0) {
+      setModalState((prevState) => ({ ...prevState, showRemove: true }));
+      setSelectedUser(selectedIds);
+    }
+    // console.log(selectedIds.length);
   }
+
+  useEffect(() => {
+    console.log(selectedUser);
+  }, [selectedUser]);
 
   function handleCloseRemoveModal() {
     setModalState((prevState) => ({ ...prevState, showRemove: false }));
   }
 
-  function handleAdd(theNewUser) {
-    const newUser = theNewUser;
-    setUsers((prevUsers) => [...prevUsers, newUser]);
+  function handleAdd() {
+    setHandleAd(true);
   }
 
-  function handleDelete(userId) {
-    const newUsers = Users.filter((eq) => eq.id !== userId);
-    setUsers(() => newUsers);
-  }
-
-  function getCheckedUserIds() {
-    setModalState((prevState) => ({ ...prevState, showRemove: true }));
-
-    const checkboxes = document.querySelectorAll('tr input[type="checkbox"]');
-    setSelectedUser([]);
-    checkboxes.forEach((checkbox) => {
-      if (checkbox.checked) {
-        // checkedUserIds.push(checkbox.id);
-        setSelectedUser((prevSelectedUser) => [
-          ...prevSelectedUser,
-          parseFloat(checkbox.id),
-        ]);
-      }
-    });
-
-    // return checkedUserIds;
-
-    // console.log(selectedUser);
-  }
-
-  function handleEdit(userId, newValues) {
-    const updatedUsers = Users.map((user) => {
-      return user.id === userId ? { ...user, ...newValues } : user;
-    });
-    setUsers(() => updatedUsers);
-  }
-
-  // make handleDisabled
-  function handleDisabled(user) {
-    const updatedUsers = Users.map((u) => {
-      return u.id === user.id ? { ...u, status: "Enabled" } : u;
-    });
-    setUsers(() => updatedUsers);
+  function handleDelete() {
+    setHandleDeleteToggle(!handleDeleteToggle);
   }
 
   // make handleEnabled
-  function handleEnabled(user) {
-    const updatedUsers = Users.map((u) => {
-      return u.id === user.id ? { ...u, status: "Disabled" } : u;
+  function EnableAndDisableAccount(id) {
+    fetch(`https://localhost:7289/api/Accounts/EnableAndDisableAccount`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify([id]),
+    }).then((response) => {
+      // console.log(JSON.stringify([id])
+      // console.log(response);
+      setEnabledisableAccount(!enabledisableAccount);
+      return response.json();
     });
-    setUsers(() => updatedUsers);
   }
 
   // handle filter
   function handleFilterChange(event) {
-    setFilter(event.target.value);
+    const newFilter = event.target.value;
+    setFilter(newFilter); // Update filter state first
+
+    // Fetch data based on the updated filter state
+    if (newFilter !== "all") {
+      fetch(
+        `https://localhost:7289/api/Accounts?Discriminator=${newFilter}&PageSize=50`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setUsers(data); // Update users state with fetched data
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    } else {
+      fetch(`https://localhost:7289/api/Accounts?PageSize=50`)
+        .then((response) => response.json())
+        .then((data) => {
+          setUsers(data); // Update users state with fetched data
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
   }
 
   function searchUsers(query) {
-    setSearchQuery(query);
-  }
-
-  function filteredUsers() {
-    let filtered = Users;
-    if (filter) {
-      filtered = filtered.filter(
-        (user) => user.position.toLowerCase() === filter.toLowerCase()
-      );
+    if (typeof query !== "string") {
+      setUsers(query);
     }
-    if (searchQuery) {
-      filtered = filtered.filter((user) =>
-        user.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+    if (query === "") {
+      setReSearchQuery(!ResearchQuery);
     }
-    return filtered;
   }
 
   const handleRowClick = (userId) => {
@@ -219,6 +147,22 @@ const UsersPage = () => {
       setSelectedUserId(null); // Close details if already open
     } else {
       setSelectedUserId(userId); // Open details for clicked user
+
+      // Fetch data for the selected user
+      fetch(`https://localhost:7289/api/${userId}/Detects/generateReportData`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((userData) => {
+          // Update state with fetched user data
+          setSelectedUserData(userData);
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
     }
   };
 
@@ -248,9 +192,10 @@ const UsersPage = () => {
               value={filter}
               onChange={handleFilterChange}
             >
-              <option value="">All</option>
-              <option value="expert">Expert</option>
-              <option value="farm owner">Farm Owner</option>
+              <option value="all">All</option>
+              <option value="admin">Admin</option>
+              <option value="Doctor">Specialist</option>
+              <option value="farmOwner">Farm Owner</option>
             </select>
           </div>
           {/* Your main content here */}
@@ -311,13 +256,27 @@ const UsersPage = () => {
                       // onClick={getCheckedUserIds}
                       onClick={() => getCheckedUserIds()}
                     />
+                    {modalState.showRemove && (
+                      <RemoveUser
+                        selectedUser={selectedUser}
+                        onRemove={handleDelete}
+                        onClose={handleCloseRemoveModal}
+                        showRemoveModal={modalState.showRemove}
+                      />
+                    )}
                   </th>
                 </tr>
               </thead>
               {/* Table body */}
               <tbody>
-                {filteredUsers().length > 0 ? (
-                  filteredUsers().map((user) => {
+                {isLoading ? ( // Check if data is loading
+                  <tr>
+                    <td colSpan="7">
+                      <LoadingSpinner />
+                    </td>
+                  </tr>
+                ) : Users.length > 0 ? (
+                  Users.map((user) => {
                     return (
                       <React.Fragment key={user.id}>
                         <tr className="bg-white">
@@ -328,38 +287,37 @@ const UsersPage = () => {
                               id={`${user.id}`}
                               className="mr-4 selection"
                             />
-                            {user.name}
+                            {user.userName}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                            {user.position}
+                            {user.discriminator}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                            {user.email}
+                            {user.email ? user.email : "Null"}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                            {user.phonenumber}
+                            {user.phoneNumber ? user.phoneNumber : "Null"}
                           </td>
 
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                            {user.status === "Disabled" ||
-                            user.status === "disabled" ? (
+                            {user.disabled === true ? (
                               <button
                                 className=" bg-[#DF9C9C] hover:bg-[#e27373] text-white font-bold py-2 w-28 rounded opacity-75"
-                                onClick={() => handleDisabled(user)}
+                                onClick={() => EnableAndDisableAccount(user.id)}
                               >
                                 Disabled
                               </button>
                             ) : (
                               <button
                                 className="bg-[#585EC7] hover:bg-indigo-700 text-white font-bold py-2 w-28 rounded"
-                                onClick={() => handleEnabled(user)}
+                                onClick={() => EnableAndDisableAccount(user.id)}
                               >
                                 Enabled
                               </button>
                             )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                            {user.position === "Farm Owner" ? (
+                            {user.discriminator === "FarmOwner" ? (
                               <button
                                 onClick={() => handleRowClick(user.id)}
                                 className="focus:outline-none"
@@ -375,22 +333,22 @@ const UsersPage = () => {
                             )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                            <MdEdit
+                            {/* <MdEdit
                               onClick={() => handleShowEditModal(user)}
                               className="inline mr-4 text-2xl text-black cursor-pointer ml-16"
-                            />
+                            /> */}
                             <MdDelete
-                              onClick={() => handleShowRemoveModal(user)}
+                              onClick={() => handleShowRemoveModal(user.id)}
                               className="inline mr-4 text-2xl text-black cursor-pointer"
                             />
-                            {modalState.showEdit && (
+                            {/* {modalState.showEdit && (
                               <EditUsers
                                 existUser={selectedUser}
                                 onEdit={handleEdit}
                                 onClose={handleCloseEditModal}
                                 showEditModal={modalState.showEdit}
                               />
-                            )}
+                            )} */}
 
                             {modalState.showRemove && (
                               <RemoveUser
@@ -402,58 +360,55 @@ const UsersPage = () => {
                             )}
                           </td>
                         </tr>
-                        {selectedUserId === user.id && (
+                        {selectedUserId === user.id && selectedUserData && (
                           <tr>
                             <td
                               colSpan="7"
-                              // className="text-center details-cell"
                               className={`text-center details-cell ${
                                 selectedUserId === user.id ? "open" : ""
                               }`}
                               style={{ transition: "all 2s ease" }}
                             >
                               <div className="flex px-3 mx-3 shadow-xl rounded-lg mb-10">
-                                <div className="w-1/2 text-left leading-10 ">
+                                <div className="w-full text-left leading-10 flex flex-row">
                                   {/* User details component for {user.name} */}
-                                  <div className="">
-                                    Number of Detections: 4
-                                  </div>
-                                  <div>Last Detection: 19 Feb 2024</div>
-                                  <div>Most Common Disease: EUS</div>
                                   <div>
-                                    Other Diseases Appeared: Parasitic diseases
+                                    <div className="DetectionNumber">
+                                      Number of Detections:{" "}
+                                      {selectedUserData.numberOfDetections}
+                                    </div>
+                                    <div>
+                                      Last Detection:{" "}
+                                      {selectedUserData.lastDetection}
+                                    </div>
+                                    <div>
+                                      Most Common Disease:{" "}
+                                      {selectedUserData.mostCommonDisease
+                                        ? selectedUserData.mostCommonDisease
+                                        : "No disease detected"}
+                                    </div>
+                                    <div>
+                                      Other Diseases Appeared:{" "}
+                                      {selectedUserData.otherDiseasesAppeared
+                                        ? selectedUserData.otherDiseasesAppeared
+                                        : "No disease detected"}
+                                    </div>
                                   </div>
-                                  <br />
-                                  <div>Detection History:</div>
-                                  <div>
-                                    <span className="text-gray-300">
-                                      28 Jul 2024
-                                    </span>{" "}
-                                    - EUS
-                                  </div>
-                                  <div>
-                                    <span className="text-gray-300">
-                                      07 Jan 2024
-                                    </span>{" "}
-                                    - EUS
-                                  </div>
-                                  <div>
-                                    <span className="text-gray-300">
-                                      18 May 2024
-                                    </span>{" "}
-                                    - Parasitic diseases
-                                  </div>
-                                  <div>
-                                    <span className="text-gray-300">
-                                      23 May 2024
-                                    </span>{" "}
-                                    - EUS
-                                  </div>
-                                  <div>
-                                    <span className="text-gray-300">
-                                      19 Feb 2024
-                                    </span>{" "}
-                                    - Parasitic diseases
+                                  <div className="ml-96">
+                                    <h2>Detection History:</h2>
+
+                                    {selectedUserData.length > 0
+                                      ? selectedUserData.detectionHistory.map(
+                                          (historyItem) => (
+                                            <div key={historyItem.date}>
+                                              <span className="text-gray-300">
+                                                {historyItem.date}
+                                              </span>{" "}
+                                              - {historyItem.disease}
+                                            </div>
+                                          )
+                                        )
+                                      : "No data found"}
                                   </div>
                                 </div>
                               </div>
