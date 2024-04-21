@@ -13,7 +13,6 @@ export const AuthContext = createContext({
 
 export default function AuthContextProvider({ children }) {
     const [userLogin, setUserLogin] = useState(JSON.parse(localStorage.getItem("userData")) || null);
-    // const [userLogin, setUserLogin] = useState(null);
     const [accessToken, setAccessToken] = useState(null);
 
     const login = async (Username, Password) => {
@@ -53,9 +52,10 @@ export default function AuthContextProvider({ children }) {
         const payload = JSON.parse(atob(parts[1]));
         console.log(payload);
 
-        const name = payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
         const id = payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
-        localStorage.setItem('userData', JSON.stringify({ name: name, id: id }));
+        const name = payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+        const role = payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+        localStorage.setItem('userData', JSON.stringify({ name: name, id: id, role: role }));
         setUserLogin(JSON.parse(localStorage.getItem("userData")));
         // } catch (err) {
         //     if (err.response.status == 401) {
@@ -83,14 +83,6 @@ export default function AuthContextProvider({ children }) {
             }
         });
         console.log(response);
-        // const response = await fetch(url, {
-        //     method: "POST",
-        //     headers: {
-        //         'accept': '*/*', // This header is optional
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(choosenData)
-        // });
         console.log("ok")
     }
 

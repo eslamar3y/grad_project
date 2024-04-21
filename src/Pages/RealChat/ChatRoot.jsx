@@ -1,53 +1,72 @@
-import { BsSearch } from "react-icons/bs";
-import { IoClose } from "react-icons/io5";
 import { FaBars } from "react-icons/fa";
 import { MdHome } from "react-icons/md";
-import { Await, Link, Outlet, useLoaderData, useParams } from "react-router-dom";
-import { Suspense, useState } from "react";
+import { Link, Outlet, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import styles from "./RealChat.module.css";
 import ChatList from "../../components/ChatList";
-import ExpertChatLogo from "../../components/ExpertChatLogo";
+import Search from "../../components/Search";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../lib/firebase";
 
 
 export default function ChatRoot() {
-    const { expertsData } = useLoaderData();
     const [expanded, setExpanded] = useState(false);
+    const [chats, setChats] = useState([]);
+    const user = JSON.parse(localStorage.getItem("userData"));
     const { id } = useParams();
+    console.log(user);
 
+    function handleExpand() {
+        setExpanded((open) => !open);
+    }
 
+    useEffect(() => {
+        function getChats() {
+            const unsub = onSnapshot(doc(db, "userChats", user.id), (doc) => {
+                setChats(doc.data());
+            });
+
+            return () => {
+                unsub();
+            }
+        }
+        user.id && getChats();
+    }, [user.id]);
+    console.log(chats);
+
+    function getSelectedUser() {
+        if (chats.length !== 0) {
+            let userChatsArr = Object.entries(chats);
+            for (let i = 0; i < userChatsArr.length; i++) {
+                if ((userChatsArr[i][1]).userInfo.uid === id) {
+                    return userChatsArr[i][1].userInfo;
+                }
+            }
+        }
+    }
+    let selectedUser = getSelectedUser();
+    console.log(selectedUser);
+
+    // bg-chatBot
     return (
-        <main className="min-h-svh bg-chatBot bg-[#585dc7da] flex">
-            <aside className={`transition-all duration-700 ${expanded ? "translate-x-0" : "translate-x-[-300px]"} ${styles['aside-section']} w-fit lg:w-[300px] chat-section bg-mainColor absolute border-r-2 px-5 py-4`}>
-                <div className="flex flex-col gap-4 lg:items-center lg:flex-row lg:gap-5">
-                    <div className="relative">
-                        <input type="text" className="rounded-3xl w-full h-full p-2 ps-9" placeholder="Search" />
-                        <BsSearch className="text-sm absolute bottom-3 left-3 text-[#747881]" />
-                    </div>
-                    <IoClose className="text-2xl cursor-pointer" onClick={() => setExpanded((open) => !open)} />
-                </div>
-                <div>
-                    <Suspense fallback={<p className="text-center">Loading...</p>}>
-                        <Await resolve={expertsData}>
-                            {
-                                (loadedData) => <ChatList doctors={loadedData} />
-                            }
-                        </Await>
-                    </Suspense>
-                </div>
+        <main className="min-h-svh chat-background bg-secondColor flex">
+            <aside className={`transition-all duration-700 ${expanded ? "translate-x-0" : "translate-x-[-310px]"} ${styles['aside-section']} w-fit lg:w-[300px] chat-section bg-mainColor absolute border-r-2 px-5 py-4`}>
+                <Search handleExpand={handleExpand} />
+                <ChatList />
             </aside>
             <section className="w-full">
                 <header className="flex justify-between bg-mainColor h-16 px-6 py-2">
                     <div className="flex gap-4 items-center">
-                        <FaBars className="text-2xl cursor-pointer" onClick={() => setExpanded((open) => !open)} />
-                        {id && <div className="flex gap-2 items-center">
-                            <Suspense fallback={<p className="text-center">Loading...</p>}>
-                                <Await resolve={expertsData}>
-                                    {
-                                        (loadedData) => <ExpertChatLogo experts={loadedData} />
-                                    }
-                                </Await>
-                            </Suspense>
-                        </div>}
+                        <FaBars className="text-2xl cursor-pointer" onClick={handleExpand} />
+                        {
+                            selectedUser &&
+                            <div className="flex gap-2 items-center">
+                                <img src={selectedUser.photoURL} alt="ChatBot" className=" w-12 p-2 rounded-full" />
+                                <div>
+                                    <h1 className="font-semibold">{selectedUser.displayName}</h1>
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div className="flex gap-6 items-center">
                         <Link to="/">
