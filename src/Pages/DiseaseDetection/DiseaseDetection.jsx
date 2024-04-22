@@ -114,12 +114,12 @@ const DiseaseDetection = () => {
               name="image"
               onChange={(e) => fileUpload(e.target.files[0])}
             />
-            <button className="SignInButon  font-popins mx-auto px-12 py-3 text-white rounded-2xl mt-4">
+            <button className="SignInButon font-popins mx-auto px-12 py-3 text-white rounded-2xl mt-4">
               Import Image
             </button>
           </p>
           <p className="text-center text-sm font-popins text-gray-500 mt-3 mb-5 imgName"></p>
-          <button className="bg-[#585ec7] hover:bg-[#4d53c7]  font-popins mx-auto px-12 py-3 text-white rounded absolute -bottom-24 xs:left-[16%] md:left-[42%] ">
+          <button className="bg-secondColor hover:bg-secondColor/80  font-popins mx-auto px-12 py-3 text-white rounded absolute -bottom-24 xs:left-[16%] md:left-[42%] ">
             Show results
           </button>
         </form>

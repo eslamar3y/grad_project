@@ -3,6 +3,7 @@ import { json, useLoaderData } from "react-router-dom";
 
 const ExpertInfo = () => {
   const expertDetails = useLoaderData();
+  console.log(expertDetails);
 
   return (
     <div className="bg-[#d9d9d9] w-full md:h-lvh">

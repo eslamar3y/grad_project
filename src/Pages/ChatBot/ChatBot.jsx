@@ -1,8 +1,3 @@
-// import { BsSearch } from "react-icons/bs";
-// import { FaPhoneAlt } from "react-icons/fa";
-// import { BsThreeDotsVertical } from "react-icons/bs";
-// import { IoMdAddCircleOutline } from "react-icons/io";
-// import { FaBars } from "react-icons/fa";
 import { MdHome } from "react-icons/md";
 import { IoSend } from "react-icons/io5";
 import { FaUserCircle } from "react-icons/fa";
@@ -29,7 +24,6 @@ export default function ChatBot() {
     const newMessage = {
       message: inputRef.current.value,
       sender: 'user',
-      // direction: 'outgoing',
     }
     const newMessages = [...messages, newMessage];
     setMessages(newMessages);
@@ -71,7 +65,6 @@ export default function ChatBot() {
       body: JSON.stringify(apiRequestBody)
     });
     const data = await res.json();
-    // console.log(data.choices[0].message.content);
     setMessages(
       [
         ...chatMessages,
@@ -85,10 +78,7 @@ export default function ChatBot() {
   }
 
   return (
-    <main className="min-h-svh bg-[#585dc7da] bg-chatBot flex">
-      {/* <aside className="w-20 lg:w-[300px] min-h-svh bg-mainColor relative border-r-2 px-5 py-4">
-                <FaBars className="text-2xl cursor-pointer" />
-            </aside> */}
+    <main className="min-h-svh bg-secondColor bg-chatBot flex">
       <section className="w-full">
         <header className="flex justify-between bg-mainColor px-6 py-2">
           <div className="flex gap-3 items-center">
@@ -99,7 +89,6 @@ export default function ChatBot() {
                 &&
                 <p>
                   <Comment
-                    // visible={true}
                     height="30"
                     width="30"
                     ariaLabel="comment-loading"
@@ -117,9 +106,6 @@ export default function ChatBot() {
             <Link to="/">
               <MdHome className="text-gray-600 text-2xl cursor-pointer" />
             </Link>
-            {/* <BsSearch className="text-gray-600" />
-                        <FaPhoneAlt className="text-gray-600" />
-                        <BsThreeDotsVertical className="text-gray-800" /> */}
           </div>
         </header>
         <article className={`${styles['chat-section']} p-4`}>
@@ -138,7 +124,6 @@ export default function ChatBot() {
           })}
         </article>
         <section className="bg-mainColor px-4 py-3 flex items-center gap-4">
-          {/* <IoMdAddCircleOutline className="text-gray-400 text-4xl" /> */}
           <input
             type="text"
             name="chat-text"

@@ -11,6 +11,7 @@ import phone from "../../assets/Phone.png";
 import calendar from "../../assets/Calendar.png";
 import { AuthContext } from "../../store/AuthContext";
 
+
 const svgContentUsername = `
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
     <path d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" fill="#1C1C1C"/>
@@ -135,7 +136,6 @@ export default function Register() {
       try {
         await register(choosenData, registerType);
       } catch (err) {
-        console.log(err.response.status);
         if (err.response.status == 400) {
           setLoginError({
             message: "User already registered",
@@ -144,9 +144,9 @@ export default function Register() {
         }
         if (err.response.status == 500) {
           setLoginError({
-            message: "Server error, Failed to login please try again",
+            message: "Server error, Failed to register please try again",
           })
-          throw new Error("Server error, Failed to login please try again");
+          throw new Error("Server error, Failed to register please try again");
         }
         if (!err.response.ok) {
           setLoginError({
@@ -155,7 +155,7 @@ export default function Register() {
           throw new Error("Somthing wrong happened please try again");
         }
       }
-      navigate("/");
+      navigate("/login");
     }
   };
 
@@ -204,7 +204,7 @@ export default function Register() {
                 name="Email"
                 id="Email"
                 placeholder="Email"
-                // required
+                required
                 className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  px-11 mt-4 rounded-xl font-popins font-normal loginUser "
               />
               <img
@@ -366,7 +366,7 @@ export default function Register() {
                   value="owner"
                   name="default-radio"
                   onClick={() => setRegisterType("owner")}
-                  className="w-4 h-4 text-grey-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
+                  className="w-4 h-4 text-secondColor bg-gray-100 border-gray-300 focus:ring-secondColor/90 "
                 />
                 <label
                   htmlFor="radio1"
@@ -383,7 +383,7 @@ export default function Register() {
                   value="expert"
                   name="default-radio"
                   onClick={() => setRegisterType("expert")}
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
+                  className="w-4 h-4 text-secondColor bg-gray-100 border-gray-300 focus:ring-secondColor/90 "
                 />
                 <label
                   htmlFor="radio2"
@@ -403,7 +403,7 @@ export default function Register() {
               <div className="w-fit h-fit font-normal text-sm font-popins  tracking-[0.84px] mx-auto mt-7 text-end ">
                 Already have an account?{" "}
                 <NavLink to="/login">
-                  <span className="text-[#585EC7] font-semibold">Sign In</span>
+                  <span className="text-secondColor font-semibold">Sign In</span>
                 </NavLink>
               </div>
             </div>

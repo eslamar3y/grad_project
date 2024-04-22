@@ -91,7 +91,7 @@ export default function Equipments() {
                   return (
                     <div
                       key={equip.id}
-                      className="bg-[#585ec7a8] rounded-md p-4 text-center xl:text-left xl:flex xl:justify-between xl:items-start"
+                      className="bg-secondColor rounded-md p-4 text-center xl:text-left xl:flex xl:justify-between xl:items-start"
                     >
                       <div className="xl:flex xl:items-center">
                         <div className="relative">

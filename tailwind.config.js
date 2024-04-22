@@ -5,7 +5,8 @@ export default {
     extend: {
       colors: {
         mainColor: "#D9D9D9",
-        secondColor: "#585EC7",
+        secondColor: "#018391",
+        // secondColor: "#585EC7",
       },
       fontFamily: {
         popins: ["Poppins", "sans-serif"],

@@ -1,51 +1,132 @@
-import { FaUserCircle } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
-import { useRef, useState } from "react";
-import chat from "../../assets/chat-bot.png";
+import { useEffect, useRef, useState } from "react";
 import styles from "./RealChat.module.css";
+import userImg from "../../assets/user.png";
+import expertImg from "../../assets/expert.png";
+import uploadImg from "../../assets/uploadImg.png";
+import { useParams } from "react-router";
+import { db } from "../../lib/firebase";
+import { Timestamp, arrayUnion, doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { v4 as uuid } from "uuid";
+import { upload } from "../../lib/upload";
 
 
 export default function ExpertChat() {
-    const inputRef = useRef();
-    const [messages, setMessages] = useState([]);
+    const params = useParams();
+    const messageRef = useRef();
+    const user = JSON.parse(localStorage.getItem("userData"));
+    const [img, setImg] = useState({ file: null, url: "" });
+    const [message, setMessage] = useState("");
+    const [messages, setMessages] = useState();
 
-    async function handleSend() {
-        const newMessage = {
-            message: inputRef.current.value,
-            sender: 'user',
+    const handleUploadImg = (e) => {
+        if (e.target.files[0]) {
+            setImg({
+                file: e.target.files[0],
+                url: URL.createObjectURL(e.target.files[0])
+            })
         }
-        const newMessages = [...messages, newMessage];
-        setMessages(newMessages);
-        inputRef.current.value = '';
+    }
+
+    const compinedId = user.id > params.id ? user.id + params.id : params.id + user.id;
+    async function handleSend() {
+        if (message.trim() !== "") {
+            let imgUrl = null;
+            if (img.file) {
+                imgUrl = await upload(img.file);
+            }
+
+            await updateDoc(doc(db, "chats", compinedId), {
+                messages: arrayUnion({
+                    id: uuid(),
+                    senderName: user.name,
+                    userRole: user.role,
+                    message,
+                    senderId: user.id,
+                    date: Timestamp.now(),
+                    ...(imgUrl && { img: imgUrl })
+                }),
+            });
+        }
+        messageRef.current?.scrollIntoView({ behavior: "smooth" });
+        setMessage("");
+        setImg({ file: null, url: "" });
+    }
+
+    useEffect(() => {
+        function getChats() {
+            const unsub = onSnapshot(doc(db, "chats", compinedId), (doc) => {
+                setMessages(doc.data().messages);
+            });
+
+            return () => {
+                unsub();
+            }
+        }
+        user.id && getChats();
+    }, [compinedId, user.id]);
+    console.log(messages);
+
+    function handleKeyDown(event) {
+        if (event.key === 'Enter') {
+            handleSend();
+        }
     }
 
 
     return (
         <>
-            <article className={`${styles['chat-section']} p-4`}>
-                {messages.map((message, i) => {
-                    let isBot = message.sender === "ChatGPT";
+            <article className={`${styles['chat-section']} p-4 flex flex-col`}>
+                {messages?.map((m) => {
+                    let userPhoto;
+                    let userName;
+                    let sender;
+                    if (user.id !== m.senderId) {
+                        userPhoto = (m.userRole == "FarmOwner" ? userImg : expertImg);
+                        userName = m.senderName;
+                        sender = true;
+                    }
+                    else {
+                        userPhoto = (user.role == "FarmOwner" ? userImg : expertImg);
+                        userName = user.name;
+                        sender = false;
+                    }
                     return (
-                        <div key={i} className="p-4 m-2 rounded bg-mainColor/60 my-3 flex items-start">
+                        <div key={m.id} ref={messageRef} className={`shadow-lg w-fit p-4 m-2 rounded-xl bg-mainColor/60 my-3 ${sender ? " self-end rounded-tr-none" : "self-start rounded-tl-none bg-mainColor/80"}`}>
                             {
-                                isBot ?
-                                    <img src={chat} alt="ChatBot" className=" w-10 p-2 rounded-full" /> :
-                                    <FaUserCircle className=" text-2xl text-secondColor/90 block m-2" />
+                                <div className="w-100 flex gap-4">
+                                    <img src={userPhoto} alt="person-img" className=" w-14 p-2 rounded-full object-cover" />
+                                    <div className="flex flex-col">
+                                        <h2 className="font-semibold">{userName}</h2>
+                                        <p className=" text-wrap mt-3">{m.message}</p>
+                                    </div>
+                                </div>
                             }
-                            <p className="mt-3">{message.message}</p>
+                            {m.img &&
+                                <div className="shadow-lg w-fit p-4 m-2 rounded-xl bg-mainColor/60 my-3">
+                                    <img src={m.img} alt="person-img" className=" w-56 object-contain" />
+                                </div>
+                            }
                         </div>
                     )
                 })}
             </article>
+
             <section className="bg-mainColor px-4 py-3 flex items-center gap-4">
                 <input
                     type="text"
                     name="chat-text"
                     id="chat-text"
-                    ref={inputRef}
+                    onChange={(e) => setMessage(e.target.value)}
+                    value={message}
                     className="w-full p-3 rounded-xl shadow-inner"
                     placeholder="Type Your Message"
+                    onKeyDown={handleKeyDown}
                 />
+                <label htmlFor="imgUpload" className=" cursor-pointer">
+                    <img src={uploadImg} alt="img-uploader" className="w-10" />
+                </label>
+                <input type="file" id="imgUpload" className=" hidden" onChange={handleUploadImg} />
                 <button onClick={handleSend}>
                     <IoSend className=" text-4xl text-white p-2 bg-gray-400 rounded-full" />
                 </button>
