@@ -66,8 +66,11 @@ const DiseaseDetection = () => {
     const formData = new FormData();
     formData.append("image", selectedImage);
 
+    // store the image in local storage
+    localStorage.setItem("uploadedImage", selectedImage);
+
     // fetch the result of the image sent with post to https://detect-disease-api.onrender.com/detectApi and display the result key "image"
-    fetch("https://detect-disease-api.onrender.com/detectApi", {
+    fetch("https://fish-detection-api.onrender.com/detectApi", {
       method: "POST",
       body: formData,
     })
@@ -77,7 +80,8 @@ const DiseaseDetection = () => {
         // display the result of the image
         // alert(data.Detection);
         // store the result and the image in local storage
-        localStorage.setItem("result", data.Detection);
+        localStorage.setItem("resultT", data.Detection);
+        localStorage.setItem("resultimage", data.image);
 
         // navigate to the result page
         window.location.href = "/Result";
