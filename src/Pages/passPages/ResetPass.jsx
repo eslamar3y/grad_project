@@ -53,9 +53,57 @@ export default function Forgot() {
   function resetPassword(e) {
     if (valid) {
       e.preventDefault();
-      console.log("done");
-      localStorage.removeItem("emailForForgot");
-      window.location.href = "/passChanged";
+      // console.log("done");
+      // localStorage.removeItem("emailForForgot");
+      fetch("https://localhost:7289/api/Accounts/reset-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: localStorage.getItem("emailForForgot"),
+          code: localStorage.getItem("codeForReset"),
+          pass: document.getElementById("password").value,
+          confirmPass: document.getElementById("cpassword").value,
+        }),
+      })
+        .then(async (response) => {
+          if (!response.ok) {
+            // Handle non-successful responses
+            if (response.status === 400) {
+              // For 400 Bad Request errors, parse and display the response body
+              const errorMessage = await response.text();
+              throw new Error(` ${errorMessage}`);
+            } else {
+              // For other errors, throw a general error message
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+          }
+          // If response is successful, parse JSON or text response
+          const contentType = response.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            return response.json(); // Parse JSON response
+          } else {
+            return response.text(); // Parse text/plain response
+          }
+        })
+        .then((data) => {
+          // Handle the response data
+          console.log(data); // Output the response data to the console
+          if (data === "Password reset successful.") {
+            localStorage.removeItem("emailForForgot");
+            localStorage.removeItem("codeForReset");
+            window.location.href = "/passChanged";
+          }
+        })
+        .catch((error) => {
+          console.log("Fetch error:", error.message); // Output the error message to the console
+          document.getElementById("error").innerHTML = error.message;
+          document.getElementById("error").style.display = "block"; // Show the error message element
+          document.getElementById("error").style.color = "red"; // Show the error message element
+        });
+
+      // window.location.href = "/passChanged";
     } else {
       e.preventDefault();
       console.log("error");

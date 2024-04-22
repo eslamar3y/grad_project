@@ -3,7 +3,6 @@ import { FaBars } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../store/AuthContext";
 
-
 const NavLinks = () => {
   const { userLogin } = useContext(AuthContext);
   return (
@@ -15,18 +14,22 @@ const NavLinks = () => {
       >
         Home
       </NavLink>
-      {userLogin && <NavLink
-        to="/detection"
-        className={({ isActive }) => (isActive ? " font-bold" : "")}
-      >
-        Disease Detection
-      </NavLink>}
-      {userLogin && <NavLink
-        to="/equipments"
-        className={({ isActive }) => (isActive ? " font-bold" : "")}
-      >
-        Farm Equipments
-      </NavLink>}
+      {userLogin && (
+        <NavLink
+          to="/detection"
+          className={({ isActive }) => (isActive ? " font-bold" : "")}
+        >
+          Disease Detection
+        </NavLink>
+      )}
+      {userLogin && (
+        <NavLink
+          to="/equipments"
+          className={({ isActive }) => (isActive ? " font-bold" : "")}
+        >
+          Farm Equipments
+        </NavLink>
+      )}
       <NavLink
         to="/about"
         className={({ isActive }) => (isActive ? " font-bold" : "")}
@@ -39,12 +42,14 @@ const NavLinks = () => {
       >
         Q&A, Chat
       </NavLink>
-      {userLogin && <NavLink
-        to="/realChat"
-        className={({ isActive }) => (isActive ? " font-bold" : "")}
-      >
-        Chat
-      </NavLink>}
+      {userLogin && (
+        <NavLink
+          to="/realChat"
+          className={({ isActive }) => (isActive ? " font-bold" : "")}
+        >
+          Chat
+        </NavLink>
+      )}
     </>
   );
 };
@@ -55,7 +60,6 @@ export default function Nav() {
     setShowMenu((prev) => !prev);
   };
   const { userLogin, logout } = useContext(AuthContext);
-
 
   return (
     <>
@@ -70,18 +74,20 @@ export default function Nav() {
       {showMenu && (
         <menu className="flex flex-col w-full h-[610px] gap-5 mt-10 bg-white p-4 rounded-lg absolute top-5 right-0 z-[9] ">
           <NavLinks />
-          {
-            !userLogin ?
-              <NavLink to="login">
-                <button className="w-[90%] h-[48px] absolute left-[50%] translate-x-[-50%] bottom-6 mt-5 shadow-custom border-black bg-secondColor text-white rounded-2xl">
-                  Signin
-                </button>
-              </NavLink>
-              :
-              <button onClick={logout} className="w-[90%] h-[48px] absolute left-[50%] translate-x-[-50%] bottom-6 mt-5 shadow-custom border-black bg-secondColor text-white rounded-2xl">
-                Logout
+          {!userLogin ? (
+            <NavLink to="login">
+              <button className="w-[90%] h-[48px] absolute left-[50%] translate-x-[-50%] bottom-6 mt-5 shadow-custom border-black bg-secondColor text-white rounded-2xl">
+                Signin
               </button>
-          }
+            </NavLink>
+          ) : (
+            <button
+              onClick={logout}
+              className="w-[90%] h-[48px] absolute left-[50%] translate-x-[-50%] bottom-6 mt-5 shadow-custom border-black bg-secondColor text-white rounded-2xl"
+            >
+              Logout
+            </button>
+          )}
         </menu>
       )}
     </>

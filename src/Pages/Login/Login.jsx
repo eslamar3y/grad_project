@@ -113,7 +113,7 @@ export default function Login() {
   return (
     <div className="flex">
       <div className="xxs:w-full xs:w-full sm:w-full  md:w-1/2 h-screen ">
-        <div className="my-[10vh] mx-[auto] w-[80%] text-center h-[80vh]">
+        <div className="my-[20vh] mx-[auto] w-[80%] text-center h-[80vh]">
           <h1 className="font-bold text-xl uppercase font-popins">Sign in</h1>
           <h2 className="text-[#525252] font-popins font-normal">
             Welcome back to FishShield
@@ -137,7 +137,9 @@ export default function Login() {
                 alt="Custom SVG Image"
               />
             </div>
-            {errors.Username && <p className="text-sm text-red-600">{errors.Username}</p>}
+            {errors.Username && (
+              <p className="text-sm text-red-600">{errors.Username}</p>
+            )}
             <div className="flex flex-col relative w-fit m-auto">
               <input
                 onChange={(e) => handleInputData("Password", e.target.value)}
@@ -156,12 +158,16 @@ export default function Login() {
                 alt="Custom SVG Image"
               />
             </div>
-            {errors.Password && <p className="text-sm text-red-600">{errors.Password}</p>}
-            {loginError && <p className="text-sm text-red-600">{loginError.message}</p>}
+            {errors.Password && (
+              <p className="text-sm text-red-600">{errors.Password}</p>
+            )}
+            {loginError && (
+              <p className="text-sm text-red-600">{loginError.message}</p>
+            )}
             <div className="flex flex-col mt-4">
               <NavLink
                 to="/forgot"
-                className="text-[#585EC7] text-sm font-popins font-semibold tracking-[0.84px] m-auto -mt-1 mb-8 xs:w-[260px] md:w-[364px] text-end "
+                className="text-secondColor text-sm font-popins font-semibold tracking-[0.84px] m-auto -mt-1 mb-8 xs:w-[260px] md:w-[364px] text-end "
               >
                 <span>Forgot Password ?</span>
               </NavLink>
@@ -176,23 +182,10 @@ export default function Login() {
               <div className="w-fit h-fit font-normal text-sm font-popins  tracking-[0.84px] mx-auto mt-8 text-end ">
                 Don{"'"}t have an account?{" "}
                 <NavLink to="/register">
-                  <span className="text-[#585EC7] font-semibold">Sign Up</span>
+                  <span className="text-secondColor font-semibold">
+                    Sign Up
+                  </span>
                 </NavLink>
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <p className="text-sm  font-normal font-popins tracking-[0.84px] bg-white z-10 w-[30%] mx-auto mt-8 -mb-7 text-center ">
-                Or sign in with
-              </p>
-              <div className="flex flex-col border-t-2 border-gray-200 xs:w-[260px] md:w-[364px] mx-auto pt-10 justify-center mt-4">
-                <button className="flex justify-center items-center xs:w-[260px] md:w-[364px] h-[52px] border-2 border-gray-200  rounded-2xl p-2">
-                  <img src={google} className="mr-2" alt="" />
-                  Signin with &nbsp;<span className="font-bold">Google</span>
-                </button>
-                <button className="flex justify-center items-center xs:w-[260px] md:w-[364px] h-[52px] border-2 border-gray-200 mt-4 rounded-2xl p-2">
-                  <img src={facebook} className="mr-2" alt="" />
-                  Signin with &nbsp;<span className="font-bold">Facebook</span>
-                </button>
               </div>
             </div>
           </form>

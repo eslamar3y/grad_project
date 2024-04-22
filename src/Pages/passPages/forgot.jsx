@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import rectangleImage from "../../assets/Rectangle.png";
 import rectangleImage5 from "../../assets/Rectangle_6.png";
@@ -7,32 +8,79 @@ const svgContentEmail = `
 
 // make when click on send code button go to reset password page
 
-function sendCode(e) {
-  e.preventDefault();
-  const email = document.getElementById("email").value;
-  const error = document.getElementById("error");
-  const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-  if (email == "") {
-    error.innerHTML = "Email cannot be empty";
-    error.style.display = "block";
-    error.style.color = "#ff0000";
-  } else {
-    if (email.match(pattern)) {
-      // error.innerHTML = "Email is valid";
-      // error.style.display = "block";
-      // error.style.color = "#02b402";
-      // store email in local storage
-      localStorage.setItem("emailForForgot", email);
-      window.location.href = "/reset";
-    } else {
-      error.innerHTML = "Please enter valid email";
+export default function Forgot() {
+  const [isLoading, setIsLoading] = useState(false); // Define isLoading state
+
+  function sendCode(e) {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const error = document.getElementById("error");
+    const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    if (email == "") {
+      error.innerHTML = "Email cannot be empty";
       error.style.display = "block";
       error.style.color = "#ff0000";
+    } else {
+      if (email.match(pattern)) {
+        setIsLoading(true); // Set loading state to true when fetch starts
+
+        fetch("https://localhost:7289/api/Accounts/forgot", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+          }),
+        })
+          .then((response) => {
+            setIsLoading(false); // Set loading state to false when fetch completes
+            if (!response.ok) {
+              // Handle non-successful responses
+              if (response.status === 400) {
+                // For 400 Bad Request errors, parse and display the response body
+                return response.text().then((errorMessage) => {
+                  throw new Error(` ${errorMessage}`);
+                });
+              } else {
+                // For other errors, throw a general error message
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+            }
+            // If response is successful, parse JSON or text response
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+              return response.json(); // Parse JSON response
+            } else {
+              return response.text(); // Parse text/plain response
+            }
+          })
+          .then((data) => {
+            // Handle the response data
+            console.log(data); // Output the response data to the console
+            if (data === "Password reset email sent successfully.") {
+              localStorage.setItem("emailForForgot", email);
+              window.location.href = "/reset";
+            }
+          })
+          .catch((error) => {
+            setIsLoading(false); // Set loading state to false in case of error
+            // Handle fetch errors
+            console.error("Fetch error:", error.message); // Output the error message to the console
+            document.getElementById("error").innerHTML = error.message;
+            document.getElementById("error").style.display = "block"; // Show the error message element
+          });
+
+        // window.location.href = "/reset";
+      } else {
+        error.innerHTML = "Please enter valid email";
+        error.style.display = "block";
+        error.style.color = "#ff0000";
+      }
     }
   }
-}
 
-export default function Forgot() {
   return (
     <div className="flex">
       <div
@@ -79,18 +127,22 @@ export default function Forgot() {
             </div>
             <div className="flex flex-col">
               <div className="error hidden text-red-500 -mb-6" id="error"></div>
-              <button
-                onClick={sendCode}
-                className="SignInButon text-xs font-semibold font-popins mx-auto w-[124px] h-[52px] text-white rounded-2xl p-2 mt-8"
-              >
-                Send code
-              </button>
+              {isLoading ? ( // Conditional rendering for loading state
+                <p className="pt-10">Loading...</p>
+              ) : (
+                <button
+                  onClick={sendCode}
+                  className="SignInButon text-xs font-semibold font-popins mx-auto w-[124px] h-[52px] text-white rounded-2xl p-2 mt-8"
+                >
+                  Send code
+                </button>
+              )}
             </div>
             <div className="flex flex-col">
               <div className="w-fit h-fit font-normal text-sm font-popins  tracking-[0.84px] mx-auto mt-8 text-end ">
                 Remember Password?{" "}
                 <NavLink to="/login">
-                  <span className="text-[#585EC7] font-semibold">Login</span>
+                  <span className="text-secondColor font-semibold">Login</span>
                 </NavLink>
               </div>
             </div>

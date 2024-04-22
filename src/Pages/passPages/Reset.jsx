@@ -52,6 +52,56 @@ export default function Reset() {
     timeleft -= 1;
   }, 1000);
 
+  function sendAgain() {
+    fetch("https://localhost:7289/api/Accounts/forgot", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: localStorage.getItem("emailForForgot"),
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          // Handle non-successful responses
+          if (response.status === 400) {
+            // For 400 Bad Request errors, parse and display the response body
+            return response.text().then((errorMessage) => {
+              throw new Error(` ${errorMessage}`);
+            });
+          } else {
+            // For other errors, throw a general error message
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+        }
+        // If response is successful, parse JSON or text response
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          return response.json(); // Parse JSON response
+        } else {
+          return response.text(); // Parse text/plain response
+        }
+      })
+      .then((data) => {
+        // Handle the response data
+        console.log(data); // Output the response data to the console
+        if (data === "Password reset email sent successfully.") {
+          localStorage.setItem(
+            "emailForForgot",
+            localStorage.getItem("emailForForgot")
+          );
+          window.location.href = "/reset";
+        }
+      })
+      .catch((error) => {
+        // Handle fetch errors
+        console.error("Fetch error:", error.message); // Output the error message to the console
+        document.getElementById("error").innerHTML = error.message;
+        document.getElementById("error").style.display = "block"; // Show the error message element
+      });
+  }
+
   // make function verify when click to check if the fields are filled
   function verify(e) {
     e.preventDefault();
@@ -66,7 +116,67 @@ export default function Reset() {
       error.style.display = "block";
       error.style.color = "#ff0000";
     } else {
-      window.location.href = "/resetPass";
+      fetch("https://localhost:7289/api/Accounts/IsCodeEnterTrue", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: localStorage.getItem("emailForForgot"),
+          code:
+            input1.current.value +
+            input2.current.value +
+            input3.current.value +
+            input4.current.value,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            // Handle non-successful responses
+            if (response.status === 400) {
+              // For 400 Bad Request errors, parse and display the response body
+              return response.text().then((errorMessage) => {
+                throw new Error(` ${errorMessage}`);
+              });
+            } else {
+              // For other errors, throw a general error message
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+          }
+          // If response is successful, parse JSON or text response
+          const contentType = response.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            return response.json(); // Parse JSON response
+          } else {
+            return response.text(); // Parse text/plain response
+          }
+        })
+        .then((data) => {
+          // Handle the response data
+          console.log(data); // Output the response data to the console
+          if (data === true) {
+            console.log("true---");
+            localStorage.setItem(
+              "codeForReset",
+              input1.current.value +
+                input2.current.value +
+                input3.current.value +
+                input4.current.value
+            );
+
+            window.location.href = "/resetPass";
+          } else {
+            error.innerHTML = "Code is incorrect";
+            error.style.display = "block";
+            error.style.color = "#ff0000";
+          }
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error.message); // Output the error message to the console
+          document.getElementById("error").innerHTML = error.message;
+          document.getElementById("error").style.display = "block"; // Show the error message element
+        });
+      // window.location.href = "/resetPass";
     }
   }
 
@@ -141,8 +251,11 @@ export default function Reset() {
               </button>
               <div className="h-[20px] top-0 left-[137px] mt-4 [font-family:'Inter-Regular',Helvetica] font-normal text-[#000000b2] text-[16px] tracking-[0] leading-[20px] whitespace-nowrap">
                 <NavLink
-                  to="/ff"
-                  className="font-semibold text-normal disabled-link"
+                  // to="/ff"
+                  className="font-semibold text-normal disabled-link sendAgain"
+                  onClick={() => {
+                    sendAgain();
+                  }}
                   id="sendCodeAgain"
                 >
                   Send code again

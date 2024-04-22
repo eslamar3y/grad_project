@@ -3,14 +3,13 @@ import rectangleImage5 from "../../assets/Rectangle_5.png";
 import registerandrew from "../../assets/undraw_mobile_payments.png";
 import articleimg from "../../assets/articleimg.png";
 import uploadImage from "../../assets/uploadImage.png";
-import google from "../../assets/google.png";
-import facebook from "../../assets/facebook.png";
+// import google from "../../assets/google.png";
+// import facebook from "../../assets/facebook.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import phone from "../../assets/Phone.png";
 import calendar from "../../assets/Calendar.png";
 import { AuthContext } from "../../store/AuthContext";
-
 
 const svgContentUsername = `
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -24,7 +23,7 @@ const svgContentPassword = `
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
     <path d="M6 8V7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7V8H20C20.5523 8 21 8.44772 21 9V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V9C3 8.44772 3.44772 8 4 8H6ZM19 10H5V20H19V10ZM11 15.7324C10.4022 15.3866 10 14.7403 10 14C10 12.8954 10.8954 12 12 12C13.1046 12 14 12.8954 14 14C14 14.7403 13.5978 15.3866 13 15.7324V18H11V15.7324ZM8 8H16V7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7V8Z" fill="#1C1C1C"/>
     </svg>`;
-
+const svgContentLocation = `<svg viewBox="0 0 1024 1024" fill="#000000" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="47.104"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M512 1012.8c-253.6 0-511.2-54.4-511.2-158.4 0-92.8 198.4-131.2 283.2-143.2h3.2c12 0 22.4 8.8 24 20.8 0.8 6.4-0.8 12.8-4.8 17.6-4 4.8-9.6 8.8-16 9.6-176.8 25.6-242.4 72-242.4 96 0 44.8 180.8 110.4 463.2 110.4s463.2-65.6 463.2-110.4c0-24-66.4-70.4-244.8-96-6.4-0.8-12-4-16-9.6-4-4.8-5.6-11.2-4.8-17.6 1.6-12 12-20.8 24-20.8h3.2c85.6 12 285.6 50.4 285.6 143.2 0.8 103.2-256 158.4-509.6 158.4z m-16.8-169.6c-12-11.2-288.8-272.8-288.8-529.6 0-168 136.8-304.8 304.8-304.8S816 145.6 816 313.6c0 249.6-276.8 517.6-288.8 528.8l-16 16-16-15.2zM512 56.8c-141.6 0-256.8 115.2-256.8 256.8 0 200.8 196 416 256.8 477.6 61.6-63.2 257.6-282.4 257.6-477.6C768.8 172.8 653.6 56.8 512 56.8z m0 392.8c-80 0-144.8-64.8-144.8-144.8S432 160 512 160c80 0 144.8 64.8 144.8 144.8 0 80-64.8 144.8-144.8 144.8zM512 208c-53.6 0-96.8 43.2-96.8 96.8S458.4 401.6 512 401.6c53.6 0 96.8-43.2 96.8-96.8S564.8 208 512 208z" fill=""></path></g></svg>`;
 
 export default function Register() {
   // check if radio button is of owner or expert, if owner then show owner input fields else show expert input fields
@@ -54,7 +53,7 @@ export default function Register() {
       password: data.Password,
       confirmPass: data.ConfirmPass,
       phoneNumber: data.PhoneNumber,
-    }
+    };
     const ownerFormData = new FormData();
     for (const key in ownerObj) {
       ownerFormData.append(key, ownerObj[key]);
@@ -69,15 +68,16 @@ export default function Register() {
       phoneNumber: data.PhoneNumber,
       personalPhoto: data.personalPhoto,
       moreInfo: data.moreInfo,
-      address: data.Address
-    }
+      address: data.Address,
+    };
     console.log(expertObj);
     const expertFormData = new FormData();
     for (const key in expertObj) {
       expertFormData.append(key, expertObj[key]);
     }
 
-    const choosenData = registerType === "owner" ? ownerFormData : expertFormData;
+    const choosenData =
+      registerType === "owner" ? ownerFormData : expertFormData;
     console.log(choosenData);
 
     const errors = {};
@@ -87,8 +87,7 @@ export default function Register() {
 
     if (!data.Email) {
       errors.Email = "Email is required.";
-    }
-    else if (!data.Email.includes('@')) {
+    } else if (!data.Email.includes("@")) {
       errors.Email = "@ is required.";
     }
 
@@ -100,7 +99,11 @@ export default function Register() {
 
     if (!data.Password) {
       errors.Password = "Password is required.";
-    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{6,}$/.test(data.Password)) {
+    } else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{6,}$/.test(
+        data.Password
+      )
+    ) {
       errors.Password = `Password must include at least
         (6 chars, 1 upprecase char,
         1 lowercase char, 1 number,
@@ -139,19 +142,19 @@ export default function Register() {
         if (err.response.status == 400) {
           setLoginError({
             message: "User already registered",
-          })
+          });
           throw new Error("User already registered");
         }
         if (err.response.status == 500) {
           setLoginError({
             message: "Server error, Failed to register please try again",
-          })
+          });
           throw new Error("Server error, Failed to register please try again");
         }
         if (!err.response.ok) {
           setLoginError({
             message: "Somthing wrong happened please try again",
-          })
+          });
           throw new Error("Somthing wrong happened please try again");
         }
       }
@@ -179,7 +182,9 @@ export default function Register() {
             Welcome to FishShield
           </h2>
           <form onSubmit={handleSubmit}>
-            {loginError && <p className="text-sm text-red-600">{loginError.message}</p>}
+            {loginError && (
+              <p className="text-sm text-red-600">{loginError.message}</p>
+            )}
             <div className="flex flex-col relative w-fit m-auto owner">
               <input
                 type="text"
@@ -197,7 +202,9 @@ export default function Register() {
                 alt="Custom SVG Image"
               />
             </div>
-            {errors.UserName && <p className="text-sm text-red-600">{errors.UserName}</p>}
+            {errors.UserName && (
+              <p className="text-sm text-red-600">{errors.UserName}</p>
+            )}
             <div className="flex flex-col relative w-fit m-auto owner">
               <input
                 type="email"
@@ -215,66 +222,73 @@ export default function Register() {
                 alt="Custom SVG Image"
               />
             </div>
-            {errors.Email && <p className="text-sm text-red-600">{errors.Email}</p>}
-            {
-              registerType == "owner" ?
-                <>
-                  <div className="flex flex-col relative w-fit m-auto owner">
-                    <input
-                      type="text"
-                      name="FarmAddress"
-                      id="FarmAddress"
-                      placeholder="Farm Address"
-                      className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  px-11 mt-4 rounded-xl font-popins font-normal loginUser "
-                    />
-                    <img
-                      className="w-6 absolute bottom-4 left-[4%]"
-                      src={phone}
-                      alt="Custom SVG Image"
-                    />
+            {errors.Email && (
+              <p className="text-sm text-red-600">{errors.Email}</p>
+            )}
+            {registerType == "owner" ? (
+              <>
+                <div className="flex flex-col relative w-fit m-auto owner">
+                  <input
+                    type="text"
+                    name="FarmAddress"
+                    id="FarmAddress"
+                    placeholder="Farm Address"
+                    className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  px-11 mt-4 rounded-xl font-popins font-normal loginUser "
+                  />
+                  <img
+                    className="w-6 absolute bottom-4 left-[4%]"
+                    src={`data:image/svg+xml,${encodeURIComponent(
+                      svgContentLocation
+                    )}`}
+                    alt="Custom SVG Image"
+                  />
+                </div>
+                {errors.FarmAddress && (
+                  <p className="text-sm text-red-600">{errors.FarmAddress}</p>
+                )}
+              </>
+            ) : (
+              <>
+                <div className="flex flex-col relative w-fit m-auto expert">
+                  <input
+                    type="text"
+                    name="moreInfo"
+                    id="moreInfo"
+                    placeholder="Professional info"
+                    className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
+                  />
+                  <img
+                    className="w-6 absolute bottom-4 left-[4%]"
+                    src={articleimg}
+                    alt="Custom SVG Image"
+                  />
+                </div>
+                <div className="flex flex-col relative w-fit m-auto expert">
+                  <div
+                    placeholder="Personal Photo"
+                    className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc] relative  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
+                  >
+                    <p className="absolute top-4 px-1 tracking-widest text-white rounded-xl z-0 bg-[#624cef]">
+                      <input
+                        className="absolute top-0 left-0 w-full h-full opacity-0 "
+                        type="file"
+                        name="personalPhoto"
+                        id="personalPhoto"
+                      />
+                      <span style={{ fontSize: "8px" }}>Upload Image</span>
+                    </p>
                   </div>
-                  {errors.FarmAddress && <p className="text-sm text-red-600">{errors.FarmAddress}</p>}
-                </>
-                :
-                <>
-                  <div className="flex flex-col relative w-fit m-auto expert">
-                    <input
-                      type="text"
-                      name="moreInfo"
-                      id="moreInfo"
-                      placeholder="Professional info"
-                      className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
-                    />
-                    <img
-                      className="w-6 absolute bottom-4 left-[4%]"
-                      src={articleimg}
-                      alt="Custom SVG Image"
-                    />
-                  </div>
-                  <div className="flex flex-col relative w-fit m-auto expert">
-                    <div
-                      placeholder="Personal Photo"
-                      className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc] relative  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
-                    >
-                      <p className="absolute top-4 px-1 tracking-widest text-white rounded-xl z-0 bg-[#624cef]">
-                        <input
-                          className="absolute top-0 left-0 w-full h-full opacity-0 "
-                          type="file"
-                          name="personalPhoto"
-                          id="personalPhoto"
-                        />
-                        <span style={{ fontSize: "8px" }}>Upload Image</span>
-                      </p>
-                    </div>
-                    <img
-                      className="w-6 absolute bottom-4 left-[4%]"
-                      src={uploadImage}
-                      alt="Custom SVG Image"
-                    />
-                  </div>
-                  {errors.personalPhoto && <p className="text-sm text-red-600">{errors.personalPhoto}</p>}
-                </>
-            }
+                  <img
+                    className="w-6 absolute bottom-4 left-[4%]"
+                    src={uploadImage}
+                    alt="Custom SVG Image"
+                  />
+                </div>
+                {errors.personalPhoto && (
+                  <p className="text-sm text-red-600">{errors.personalPhoto}</p>
+                )}
+              </>
+            )}
             <div className="flex flex-col relative w-fit m-auto owner">
               <input
                 type="datetime-local"
@@ -289,7 +303,9 @@ export default function Register() {
                 alt="Custom SVG Image"
               />
             </div>
-            {errors.BirthDate && <p className="text-sm text-red-600">{errors.BirthDate}</p>}
+            {errors.BirthDate && (
+              <p className="text-sm text-red-600">{errors.BirthDate}</p>
+            )}
             <div className="flex flex-col relative w-fit m-auto owner">
               <input
                 type="text"
@@ -304,7 +320,9 @@ export default function Register() {
                 alt="Custom SVG Image"
               />
             </div>
-            {errors.PhoneNumber && <p className="text-sm text-red-600">{errors.PhoneNumber}</p>}
+            {errors.PhoneNumber && (
+              <p className="text-sm text-red-600">{errors.PhoneNumber}</p>
+            )}
             <div className="flex flex-col relative w-fit m-auto owner">
               <input
                 type="text"
@@ -315,11 +333,15 @@ export default function Register() {
               />
               <img
                 className="w-6 absolute bottom-4 left-[4%]"
-                src={phone}
+                src={`data:image/svg+xml,${encodeURIComponent(
+                  svgContentLocation
+                )}`}
                 alt="Custom SVG Image"
               />
             </div>
-            {errors.Address && <p className="text-sm text-red-600">{errors.Address}</p>}
+            {errors.Address && (
+              <p className="text-sm text-red-600">{errors.Address}</p>
+            )}
             <div className="flex flex-col relative w-fit m-auto owner">
               <input
                 type="password"
@@ -336,7 +358,9 @@ export default function Register() {
                 alt="Custom SVG Image"
               />
             </div>
-            {errors.Password && <p className="text-sm text-red-600">{errors.Password}</p>}
+            {errors.Password && (
+              <p className="text-sm text-red-600">{errors.Password}</p>
+            )}
             <div className="flex flex-col relative w-fit m-auto owner">
               <input
                 type="password"
@@ -353,7 +377,9 @@ export default function Register() {
                 alt="Custom SVG Image"
               />
             </div>
-            {errors.ConfirmPass && <p className="text-sm text-red-600">{errors.ConfirmPass}</p>}
+            {errors.ConfirmPass && (
+              <p className="text-sm text-red-600">{errors.ConfirmPass}</p>
+            )}
 
             {/* make radio button to check if user is farm owner or expert */}
             <div className="flex  relative w-fit m-auto mt-6">
@@ -399,16 +425,17 @@ export default function Register() {
                 Sign Up
               </button>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col pb-10">
               <div className="w-fit h-fit font-normal text-sm font-popins  tracking-[0.84px] mx-auto mt-7 text-end ">
                 Already have an account?{" "}
                 <NavLink to="/login">
-                  <span className="text-secondColor font-semibold">Sign In</span>
+                  <span className="text-secondColor font-semibold">
+                    Sign In
+                  </span>
                 </NavLink>
               </div>
             </div>
-            <div className="flex flex-col">
-              {/* or sign in with (google, facebook) */}
+            {/* <div className="flex flex-col">
               <p className="text-sm  font-normal font-popins tracking-[0.84px] bg-white z-10 w-[30%] mx-auto mt-7 -mb-7 text-center ">
                 Or sign up with
               </p>
@@ -420,7 +447,7 @@ export default function Register() {
                   <img src={facebook} className="mr-2" alt="" />
                 </button>
               </div>
-            </div>
+            </div> */}
           </form>
         </div>
       </div>

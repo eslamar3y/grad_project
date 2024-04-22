@@ -11,7 +11,7 @@ import DiseaseDetectionResults from "./Pages/DiseaseDetection/DiseaseDetectionRe
 import Equipments from "./Pages/Equipments/Equipments";
 import DiseaseDetection from "./Pages/DiseaseDetection/DiseaseDetection";
 import Reset from "./Pages/passPages/Reset";
-import Forgot from "./Pages/passPages/ResetPass";
+import Forgot from "./Pages/passPages/forgot";
 import Register from "./Pages/Register/Register";
 import Login from "./Pages/Login/Login";
 import Root, {
@@ -31,6 +31,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./Http/equipmentsHttp.js";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import ProtectedRouteAdmin from "./components/ProtectedRouteAdmin.jsx";
+import Profile from "./Pages/Profile/Profile.jsx";
 
 const router = createBrowserRouter([
   {
@@ -154,6 +155,10 @@ const router = createBrowserRouter([
       {
         path: "admin/feedback",
         element: <Feedback />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
       },
     ],
   },
