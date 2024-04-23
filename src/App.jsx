@@ -33,6 +33,8 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import ProtectedRouteAdmin from "./components/ProtectedRouteAdmin.jsx";
 import Profile from "./Pages/Profile/Profile.jsx";
 
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -82,18 +84,16 @@ const router = createBrowserRouter([
       {
         path: "detection",
         element: (
-          <ProtectedRoute>
-            {" "}
-            <DiseaseDetection />{" "}
+          <ProtectedRoute path="/login">
+            <DiseaseDetection />
           </ProtectedRoute>
         ),
       },
       {
         path: "equipments",
         element: (
-          <ProtectedRoute>
-            {" "}
-            <Equipments />{" "}
+          <ProtectedRoute path="/login">
+            <Equipments />
           </ProtectedRoute>
         ),
         children: [
@@ -118,9 +118,8 @@ const router = createBrowserRouter([
       {
         path: "realChat",
         element: (
-          <ProtectedRoute>
-            {" "}
-            <ChatRoot />{" "}
+          <ProtectedRoute path="/login">
+            <ChatRoot />
           </ProtectedRoute>
         ),
         id: "experts",
@@ -143,9 +142,9 @@ const router = createBrowserRouter([
       {
         path: "admin/dashboard",
         element: (
-          // <ProtectedRouteAdmin>
-          <Users />
-          // </ProtectedRouteAdmin>
+          <ProtectedRouteAdmin path="/">
+            <Users />
+          </ProtectedRouteAdmin>
         ),
       },
       {
@@ -163,6 +162,7 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
 
 function App() {
   return (

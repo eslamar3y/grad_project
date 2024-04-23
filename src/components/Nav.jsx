@@ -9,7 +9,7 @@ const NavLinks = () => {
     <>
       <NavLink
         to="/"
-        className={({ isActive }) => (isActive ? " font-bold" : "")}
+        className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
         end
       >
         Home
@@ -17,7 +17,7 @@ const NavLinks = () => {
       {userLogin && (
         <NavLink
           to="/detection"
-          className={({ isActive }) => (isActive ? " font-bold" : "")}
+          className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
         >
           Disease Detection
         </NavLink>
@@ -25,27 +25,27 @@ const NavLinks = () => {
       {userLogin && (
         <NavLink
           to="/equipments"
-          className={({ isActive }) => (isActive ? " font-bold" : "")}
+          className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
         >
           Farm Equipments
         </NavLink>
       )}
       <NavLink
         to="/about"
-        className={({ isActive }) => (isActive ? " font-bold" : "")}
+        className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
       >
         About
       </NavLink>
       <NavLink
         to="/chat"
-        className={({ isActive }) => (isActive ? " font-bold" : "")}
+        className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
       >
         Q&A, Chat
       </NavLink>
       {userLogin && (
         <NavLink
           to="/realChat"
-          className={({ isActive }) => (isActive ? " font-bold" : "")}
+          className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
         >
           Chat
         </NavLink>
@@ -72,7 +72,7 @@ export default function Nav() {
         </button>
       </nav>
       {showMenu && (
-        <menu className="flex flex-col w-full h-[610px] gap-5 mt-10 bg-white p-4 rounded-lg absolute top-5 right-0 z-[9] ">
+        <menu className="menu__style">
           <NavLinks />
           {!userLogin ? (
             <NavLink to="login">
