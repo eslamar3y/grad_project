@@ -32,6 +32,8 @@ import { queryClient } from "./Http/equipmentsHttp.js";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import ProtectedRouteAdmin from "./components/ProtectedRouteAdmin.jsx";
 import Profile from "./Pages/Profile/Profile.jsx";
+import ProtectedForPay from "./components/ProtectedForPay.jsx";
+import Subscribtion from "./Pages/Subscribtion/Subscribtion.jsx";
 
 
 
@@ -118,9 +120,9 @@ const router = createBrowserRouter([
       {
         path: "realChat",
         element: (
-          <ProtectedRoute path="/login">
+          <ProtectedForPay path="/login">
             <ChatRoot />
-          </ProtectedRoute>
+          </ProtectedForPay>
         ),
         id: "experts",
         loader: DiseaseAndExpertsLoader,
@@ -159,6 +161,10 @@ const router = createBrowserRouter([
         path: "profile",
         element: <Profile />,
       },
+      {
+        path: "subscribe",
+        element: <Subscribtion />
+      }
     ],
   },
 ]);

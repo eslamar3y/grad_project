@@ -8,7 +8,9 @@ export default function ProtectedRoute({ children, path }) {
 
     return (
         <>
-            {userLogin ? children : <Navigate to={path} />}
+            {
+                userLogin ? children : <Navigate to={path} />
+            }
         </>
     )
 }
