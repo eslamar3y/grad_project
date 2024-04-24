@@ -32,6 +32,10 @@ import { queryClient } from "./Http/equipmentsHttp.js";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import ProtectedRouteAdmin from "./components/ProtectedRouteAdmin.jsx";
 import Profile from "./Pages/Profile/Profile.jsx";
+import ProtectedForPay from "./components/ProtectedForPay.jsx";
+import Subscribtion from "./Pages/Subscribtion/Subscribtion.jsx";
+
+
 
 const router = createBrowserRouter([
   {
@@ -82,18 +86,16 @@ const router = createBrowserRouter([
       {
         path: "detection",
         element: (
-          <ProtectedRoute>
-            {" "}
-            <DiseaseDetection />{" "}
+          <ProtectedRoute path="/login">
+            <DiseaseDetection />
           </ProtectedRoute>
         ),
       },
       {
         path: "equipments",
         element: (
-          <ProtectedRoute>
-            {" "}
-            <Equipments />{" "}
+          <ProtectedRoute path="/login">
+            <Equipments />
           </ProtectedRoute>
         ),
         children: [
@@ -118,10 +120,9 @@ const router = createBrowserRouter([
       {
         path: "realChat",
         element: (
-          <ProtectedRoute>
-            {" "}
-            <ChatRoot />{" "}
-          </ProtectedRoute>
+          <ProtectedForPay path="/login">
+            <ChatRoot />
+          </ProtectedForPay>
         ),
         id: "experts",
         loader: DiseaseAndExpertsLoader,
@@ -143,9 +144,9 @@ const router = createBrowserRouter([
       {
         path: "admin/dashboard",
         element: (
-          // <ProtectedRouteAdmin>
-          <Users />
-          // </ProtectedRouteAdmin>
+          <ProtectedRouteAdmin path="/">
+            <Users />
+          </ProtectedRouteAdmin>
         ),
       },
       {
@@ -160,9 +161,14 @@ const router = createBrowserRouter([
         path: "profile",
         element: <Profile />,
       },
+      {
+        path: "subscribe",
+        element: <Subscribtion />
+      }
     ],
   },
 ]);
+
 
 function App() {
   return (

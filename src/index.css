@@ -2,3 +2,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .menu__style {
+        @apply 2xl:hidden flex flex-col w-[90%] h-[610px] gap-5 mt-12 me-5 bg-white p-4 rounded-lg rounded-tr-none absolute top-5 right-0 z-[9] before:absolute before:content-[''] before:border-8 before:border-transparent before:border-b-white before:top-[-16px] before:right-0;
+    }
+}

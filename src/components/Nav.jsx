@@ -3,13 +3,35 @@ import { FaBars } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../store/AuthContext";
 
+
 const NavLinks = () => {
   const { userLogin } = useContext(AuthContext);
+  console.log(userLogin.id);
+  // const [isSubscribe, setIsSubscribe] = useState(true);
+  // const { data: isSubscribe, isPending, isError, error } = useQuery({
+  //   queryKey: ["isSubscribed", { userId: userLogin.id }],
+  //   queryFn: ({ signal }) => IsSubscriped({ signal, userId: userLogin.id })
+  // });
+  // console.log(isSubscribe);
+  // if (isError) {
+  //   console.log(error);
+  // }
+  // const { IsSubscribed } = useContext(AuthContext);
+  // useEffect(() => {
+  //   const checkSubscription = async () => {
+  //     const isSub = await IsSubscribed(userLogin.id);
+  //     setIsSubscribe(() => isSub);
+  //     return isSub;
+  //   }
+  //   checkSubscription();
+  // }, [IsSubscribed, userLogin.id]);
+
+
   return (
     <>
       <NavLink
         to="/"
-        className={({ isActive }) => (isActive ? " font-bold" : "")}
+        className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
         end
       >
         Home
@@ -17,7 +39,7 @@ const NavLinks = () => {
       {userLogin && (
         <NavLink
           to="/detection"
-          className={({ isActive }) => (isActive ? " font-bold" : "")}
+          className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
         >
           Disease Detection
         </NavLink>
@@ -25,31 +47,32 @@ const NavLinks = () => {
       {userLogin && (
         <NavLink
           to="/equipments"
-          className={({ isActive }) => (isActive ? " font-bold" : "")}
+          className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
         >
           Farm Equipments
         </NavLink>
       )}
       <NavLink
         to="/about"
-        className={({ isActive }) => (isActive ? " font-bold" : "")}
+        className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
       >
         About
       </NavLink>
       <NavLink
         to="/chat"
-        className={({ isActive }) => (isActive ? " font-bold" : "")}
+        className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
       >
         Q&A, Chat
       </NavLink>
-      {userLogin && (
-        <NavLink
-          to="/realChat"
-          className={({ isActive }) => (isActive ? " font-bold" : "")}
-        >
-          Chat
-        </NavLink>
-      )}
+      {
+        userLogin && (
+          <NavLink
+            to="/realChat"
+            className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
+          >
+            Chat
+          </NavLink>)
+      }
     </>
   );
 };
@@ -72,7 +95,7 @@ export default function Nav() {
         </button>
       </nav>
       {showMenu && (
-        <menu className="flex flex-col w-full h-[610px] gap-5 mt-10 bg-white p-4 rounded-lg absolute top-5 right-0 z-[9] ">
+        <menu className="menu__style">
           <NavLinks />
           {!userLogin ? (
             <NavLink to="login">
