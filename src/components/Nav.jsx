@@ -11,7 +11,7 @@ const NavLinks = () => {
     <>
       <NavLink
         to="/"
-        className={`p-2 ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
+        className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
         end
       >
         Home
@@ -19,7 +19,7 @@ const NavLinks = () => {
       {userLogin && (
         <NavLink
           to="/detection"
-          className={`p-2 ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
+          className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
         >
           Disease Detection
         </NavLink>
@@ -27,20 +27,20 @@ const NavLinks = () => {
       {userLogin && (
         <NavLink
           to="/equipments"
-          className={`p-2 ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
+          className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
         >
           Farm Equipments
         </NavLink>
       )}
       <NavLink
         to="/about"
-        className={`p-2 ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
+        className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
       >
         About
       </NavLink>
       <NavLink
         to="/chat"
-        className={`p-2 ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
+        className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
       >
         Q&A, Chat
       </NavLink>
@@ -48,7 +48,7 @@ const NavLinks = () => {
         userLogin && (
           <NavLink
             to="/realChat"
-            className={`p-2 ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
+            className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
           >
             Chat
           </NavLink>)

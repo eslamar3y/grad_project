@@ -7,7 +7,7 @@ import Nav from "./Nav";
 export default function Head() {
   return (
     <header className="sm:px-28 py-3 xs:px-12 xl:bg-secondColor">
-      <div className="flex flex-nowrap items-center justify-between text-white">
+      <div className="flex flex-nowrap items-center justify-between">
         <NavLink to="/">
           <img src={Logo} alt="logo" />
         </NavLink>
