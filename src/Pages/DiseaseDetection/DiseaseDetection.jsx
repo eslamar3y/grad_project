@@ -64,24 +64,28 @@ const DiseaseDetection = () => {
     }
 
     const formData = new FormData();
-    formData.append("image", selectedImage);
+    formData.append("ImageForDetection", selectedImage);
 
-    // store the image in local storage
-    localStorage.setItem("uploadedImage", selectedImage);
+    const userId = JSON.parse(localStorage.getItem("userData")).id;
 
-    // fetch the result of the image sent with post to https://detect-disease-api.onrender.com/detectApi and display the result key "image"
-    fetch("https://fish-detection-api.onrender.com/detectApi", {
+    fetch(`https://localhost:7289/api/${userId}/Detects`, {
       method: "POST",
       body: formData,
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        // display the result of the image
-        // alert(data.Detection);
-        // store the result and the image in local storage
         localStorage.setItem("resultT", data.Detection);
-        localStorage.setItem("resultimage", data.image);
+
+        // Save the image, name, score, type, and recommendation in local storage
+        const result = {
+          image: data.fishPhoto,
+          name: data.nameOfDisFromAIModel,
+          score: data.score,
+          type: data.disease.type,
+          recommendation: data.disease.recommandationActions[0],
+        };
+        localStorage.setItem("result", JSON.stringify(result));
 
         // navigate to the result page
         window.location.href = "/Result";
