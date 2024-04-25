@@ -3,15 +3,15 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import AuthContextProvider from "./store/AuthContext.jsx";
-import { ChatContextProvider } from "./store/ChatContext.jsx";
+import SubscriptionContextProvider from "./store/SubscriptionContext.jsx";
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthContextProvider>
-    <ChatContextProvider>
+    <SubscriptionContextProvider>
       <React.StrictMode>
         <App />
       </React.StrictMode>
-    </ChatContextProvider>
+    </SubscriptionContextProvider>
   </AuthContextProvider>
 );

@@ -1,4 +1,5 @@
 import { IoSend } from "react-icons/io5";
+import { RiLoader2Fill } from "react-icons/ri";
 import { useEffect, useRef, useState } from "react";
 import styles from "./RealChat.module.css";
 import userImg from "../../assets/user.png";
@@ -18,6 +19,7 @@ export default function ExpertChat() {
     const [img, setImg] = useState({ file: null, url: "" });
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState();
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleUploadImg = (e) => {
         if (e.target.files[0]) {
@@ -30,7 +32,8 @@ export default function ExpertChat() {
 
     const compinedId = user.id > params.id ? user.id + params.id : params.id + user.id;
     async function handleSend() {
-        if (message.trim() !== "") {
+        setIsLoading(true);
+        if (message.trim() !== "" || img.file !== null) {
             let imgUrl = null;
             if (img.file) {
                 imgUrl = await upload(img.file);
@@ -49,6 +52,7 @@ export default function ExpertChat() {
             });
         }
         messageRef.current?.scrollIntoView({ behavior: "smooth" });
+        setIsLoading(false);
         setMessage("");
         setImg({ file: null, url: "" });
     }
@@ -104,7 +108,7 @@ export default function ExpertChat() {
                             }
                             {m.img &&
                                 <div className="shadow-lg w-fit p-4 m-2 rounded-xl bg-mainColor/60 my-3">
-                                    <img src={m.img} alt="person-img" className=" w-56 object-contain" />
+                                    <img src={m.img} alt="person-img" className=" w-56 h-56 object-contain" />
                                 </div>
                             }
                         </div>
@@ -122,13 +126,17 @@ export default function ExpertChat() {
                     className="w-full p-3 rounded-xl shadow-inner"
                     placeholder="Type Your Message"
                     onKeyDown={handleKeyDown}
+                    disabled={isLoading}
                 />
                 <label htmlFor="imgUpload" className=" cursor-pointer">
                     <img src={uploadImg} alt="img-uploader" className="w-10" />
                 </label>
-                <input type="file" id="imgUpload" className=" hidden" onChange={handleUploadImg} />
-                <button onClick={handleSend}>
-                    <IoSend className=" text-4xl text-white p-2 bg-gray-400 rounded-full" />
+                <input type="file" id="imgUpload" className=" hidden" onChange={handleUploadImg} disabled={isLoading} />
+                <button onClick={handleSend} disabled={isLoading}>
+                    {isLoading ?
+                        <RiLoader2Fill className=" text-4xl text-white p-2 bg-gray-400 rounded-full" />
+                        : <IoSend className=" text-4xl text-white p-2 bg-gray-400 rounded-full" />
+                    }
                 </button>
             </section>
         </>

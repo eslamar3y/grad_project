@@ -2,6 +2,7 @@
 import { NavLink } from "react-router-dom";
 import CardSlider from "./CardSlider";
 
+
 export default function ExpertsList({ doctors }) {
     return (
         <CardSlider>
@@ -16,7 +17,7 @@ export default function ExpertsList({ doctors }) {
                                     alt="disease-image"
                                 />
                                 <p className="bg-slate-100 w-full py-3 text-center mx-auto rounded-b-md font-semibold">
-                                    Dr.{doctor.userName}
+                                    Dr. {doctor.userName}
                                 </p>
                             </div>
                         </NavLink>

@@ -33,3 +33,20 @@ export const allUsers = async () => {
     const data = await response.json();
     return data;
 }
+
+export const SendFeedback = async (feedbackData) => {
+    const response = await fetch('https://localhost:7289/api/Feedbacks', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(feedbackData),
+    });
+
+    if (!response.ok) {
+        const error = new Error("failed to send feedback");
+        error.code = response.status;
+        error.info = await response.json();
+        throw error;
+    }
+}

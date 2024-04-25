@@ -7,12 +7,14 @@ import ChatList from "../../components/ChatList";
 import Search from "../../components/Search";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../lib/firebase";
+import ExpertRating from "../../components/ExpertRating";
 
 
 export default function ChatRoot() {
+    const user = JSON.parse(localStorage.getItem("userData"));
     const [expanded, setExpanded] = useState(false);
     const [chats, setChats] = useState([]);
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const [showRate, setShowRate] = useState(false);
     const { id } = useParams();
     console.log(user);
 
@@ -47,6 +49,19 @@ export default function ChatRoot() {
     let selectedUser = getSelectedUser();
     console.log(selectedUser);
 
+    function handleShowRate() {
+        setShowRate(true);
+    }
+    function handleHideRate() {
+        setShowRate(false);
+    }
+    function handleGetIds() {
+        let doctorId = selectedUser.uid;
+        let ownerId = user.id;
+        const ids = { doctorId, ownerId };
+        return ids;
+    }
+
     // bg-chatBot
     return (
         <main className="min-h-svh chat-background bg-secondColor flex">
@@ -60,12 +75,26 @@ export default function ChatRoot() {
                         <FaBars className="text-2xl cursor-pointer" onClick={handleExpand} />
                         {
                             selectedUser &&
-                            <div className="flex gap-2 items-center">
-                                <img src={selectedUser.photoURL} alt="ChatBot" className=" w-12 p-2 rounded-full" />
-                                <div>
-                                    <h1 className="font-semibold">{selectedUser.displayName}</h1>
+                            <>
+                                <div className="flex gap-2 items-center">
+                                    <img src={selectedUser.photoURL} alt="ChatBot" className=" w-12 p-2 rounded-full" />
+                                    <div>
+                                        <h1 className="font-semibold">{selectedUser.displayName}</h1>
+                                    </div>
                                 </div>
-                            </div>
+                                {
+                                    user.role === "FarmOwner" &&
+                                    <>
+                                        <button onClick={handleShowRate} className="bg-secondColor text-white px-4 py-1 shadow rounded ms-5 hover:bg-[#01707c] transition-all duration-300">Rate Me</button>
+                                        {
+                                            showRate &&
+                                            <>
+                                                <ExpertRating showRating={showRate} onCloseRating={handleHideRate} getIds={handleGetIds} />
+                                            </>
+                                        }
+                                    </>
+                                }
+                            </>
                         }
                     </div>
                     <div className="flex gap-6 items-center">
