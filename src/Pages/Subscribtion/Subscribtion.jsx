@@ -5,11 +5,13 @@ import Head from "../../components/SimpleNav";
 import { AuthContext } from "../../store/AuthContext";
 import { SubscriptionContext } from "../../store/SubscriptionContext";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Subscribtion = () => {
     const { Subscribe } = useContext(SubscriptionContext);
     const { userLogin } = useContext(AuthContext);
     const [subscribeError, setSubscribeError] = useState();
+    const navigate = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -22,6 +24,7 @@ const Subscribtion = () => {
                 text: "You have successfully subscribed",
                 icon: "success"
             });
+            navigate("/")
         }
         catch (err) {
             console.log("jlk");

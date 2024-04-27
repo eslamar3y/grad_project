@@ -24,7 +24,7 @@ const NavLinks = () => {
           Disease Detection
         </NavLink>
       )}
-      {userLogin && (
+      {userLogin?.role === "FarmOwner" && (
         <NavLink
           to="/equipments"
           className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
