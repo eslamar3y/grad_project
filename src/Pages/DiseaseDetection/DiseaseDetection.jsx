@@ -92,6 +92,7 @@ const DiseaseDetection = () => {
         // redirect('/Result');
       })
       .catch((err) => {
+        console.log("error");
         console.log(err);
       });
   };
