@@ -1,5 +1,5 @@
 import SimpleNav from "../../components/SimpleNav";
-import DetectedImg from "../../assets/d7.png";
+// import DetectedImg from "../../assets/d7.png";
 import { useEffect, useState } from "react";
 
 const DiseaseDetectionResults = () => {
