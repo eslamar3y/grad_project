@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Logo from "../assets/siteLogo.png";
 import "./Head.css";
 import Nav from "./Nav";
@@ -26,7 +26,9 @@ export default function Head() {
         </NavLink>
         :
         <div className="hidden 2xl:flex items-center gap-5">
-          <img src={userImg} alt="user image" className="w-12 h-12 object-contain border-4 border-white rounded-full" />
+          <Link to="/profile">
+            <img src={userImg} alt="user image" className="w-12 h-12 object-contain border-4 border-white rounded-full" />
+          </Link>
           <button onClick={logout} className="hidden mt-5 shadow-custom px-10 py-2 border-black bg-mainColor font-semibold rounded-2xl 2xl:block 2xl:mt-0">
             Logout
           </button>

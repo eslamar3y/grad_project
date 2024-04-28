@@ -11,7 +11,7 @@ const NavLinks = () => {
     <>
       <NavLink
         to="/"
-        className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
+        className={`py-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
         end
       >
         Home
@@ -19,7 +19,7 @@ const NavLinks = () => {
       {userLogin && (
         <NavLink
           to="/detection"
-          className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
+          className={`py-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
         >
           Disease Detection
         </NavLink>
@@ -27,20 +27,20 @@ const NavLinks = () => {
       {userLogin?.role === "FarmOwner" && (
         <NavLink
           to="/equipments"
-          className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
+          className={`py-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
         >
           Farm Equipments
         </NavLink>
       )}
       <NavLink
         to="/about"
-        className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
+        className={`py-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
       >
         About
       </NavLink>
       <NavLink
         to="/chat"
-        className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
+        className={`py-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
       >
         Q&A, Chat
       </NavLink>
@@ -48,9 +48,18 @@ const NavLinks = () => {
         userLogin && (
           <NavLink
             to="/realChat"
-            className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
+            className={`py-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
           >
             Chat
+          </NavLink>)
+      }
+      {
+        userLogin && (
+          <NavLink
+            to="/profile"
+            className={`py-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
+          >
+            Profile
           </NavLink>)
       }
     </>
@@ -66,7 +75,7 @@ export default function Nav() {
 
   return (
     <>
-      <nav className="2xl:mx-auto">
+      <nav className="2xl:mx-auto 2xl:pr-10">
         <div className="hidden 2xl:flex 2xl:gap-6 2xl:items-center">
           <NavLinks />
         </div>
