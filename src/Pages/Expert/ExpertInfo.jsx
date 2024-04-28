@@ -1,9 +1,28 @@
 import SimpleNav from "../../components/SimpleNav";
 import { json, useLoaderData } from "react-router-dom";
+import { useQuery } from '@tanstack/react-query';
+import { useContext } from "react";
+import { Rating } from "@mui/material";
+import { SubscriptionContext } from "../../store/SubscriptionContext";
 
 const ExpertInfo = () => {
   const expertDetails = useLoaderData();
-  console.log(expertDetails);
+  const { GetRating } = useContext(SubscriptionContext);
+  const { data: expertRating, isPending, isError, error } = useQuery({
+    queryKey: ['rating'],
+    queryFn: ({ signal }) => GetRating({ signal, expertId: expertDetails.id })
+  });
+
+  let Rate;
+  if (isError) {
+    Rate = <p className="flex justify-center items-center text-2xl text-red-500 my-3">{error.info?.message || "Failed to load expert Rating, please try again later"}</p>
+  }
+  else if (isPending) {
+    Rate = <p>Loading ....</p>;
+  }
+  else if (expertRating) {
+    Rate = <Rating name="half-rating-read" size="large" defaultValue={expertRating} precision={0.5} readOnly />;
+  }
 
   return (
     <div className="bg-[#d9d9d9] w-full md:h-lvh">
@@ -29,8 +48,9 @@ const ExpertInfo = () => {
             {expertDetails.moreInfo}
           </p>
         </div>
-        <div className="md:w-1/4 pt-20 ">
+        <div className="md:w-1/4 pt-20 flex flex-col items-center gap-2">
           <img src={expertDetails.personalPhoto} alt="doc name" className="m-auto" />
+          {Rate}
         </div>
       </div>
     </div>

@@ -6,32 +6,12 @@ import { AuthContext } from "../store/AuthContext";
 
 const NavLinks = () => {
   const { userLogin } = useContext(AuthContext);
-  console.log(userLogin.id);
-  // const [isSubscribe, setIsSubscribe] = useState(true);
-  // const { data: isSubscribe, isPending, isError, error } = useQuery({
-  //   queryKey: ["isSubscribed", { userId: userLogin.id }],
-  //   queryFn: ({ signal }) => IsSubscriped({ signal, userId: userLogin.id })
-  // });
-  // console.log(isSubscribe);
-  // if (isError) {
-  //   console.log(error);
-  // }
-  // const { IsSubscribed } = useContext(AuthContext);
-  // useEffect(() => {
-  //   const checkSubscription = async () => {
-  //     const isSub = await IsSubscribed(userLogin.id);
-  //     setIsSubscribe(() => isSub);
-  //     return isSub;
-  //   }
-  //   checkSubscription();
-  // }, [IsSubscribed, userLogin.id]);
-
 
   return (
     <>
       <NavLink
         to="/"
-        className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
+        className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
         end
       >
         Home
@@ -39,28 +19,28 @@ const NavLinks = () => {
       {userLogin && (
         <NavLink
           to="/detection"
-          className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
+          className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
         >
           Disease Detection
         </NavLink>
       )}
-      {userLogin && (
+      {userLogin?.role === "FarmOwner" && (
         <NavLink
           to="/equipments"
-          className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
+          className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
         >
           Farm Equipments
         </NavLink>
       )}
       <NavLink
         to="/about"
-        className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
+        className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
       >
         About
       </NavLink>
       <NavLink
         to="/chat"
-        className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
+        className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
       >
         Q&A, Chat
       </NavLink>
@@ -68,7 +48,7 @@ const NavLinks = () => {
         userLogin && (
           <NavLink
             to="/realChat"
-            className={`p-2 transition ease-in-out delay-150 hover:bg-mainColor duration-300 ${({ isActive }) => (isActive ? " font-bold" : "")}`}
+            className={`p-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
           >
             Chat
           </NavLink>)

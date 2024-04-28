@@ -14,10 +14,7 @@ import Reset from "./Pages/passPages/Reset";
 import Forgot from "./Pages/passPages/forgot";
 import Register from "./Pages/Register/Register";
 import Login from "./Pages/Login/Login";
-import Root, {
-  DiseaseAndExpertsLoader,
-  feedBackAction,
-} from "./Pages/Root/Root.jsx";
+import Root, { DiseaseAndExpertsLoader } from "./Pages/Root/Root.jsx";
 import Users from "./Pages/Admin/UsersPage.jsx";
 import Error from "./Pages/Error/Error.jsx";
 import Disease from "./Pages/Admin/DiseasesPage.jsx";
@@ -34,6 +31,7 @@ import ProtectedRouteAdmin from "./components/ProtectedRouteAdmin.jsx";
 import Profile from "./Pages/Profile/Profile.jsx";
 import ProtectedForPay from "./components/ProtectedForPay.jsx";
 import Subscribtion from "./Pages/Subscribtion/Subscribtion.jsx";
+// import { feedBackAction } from "./components/Footer.jsx";
 
 
 
@@ -42,12 +40,12 @@ const router = createBrowserRouter([
     path: "/",
     element: <Root />,
     errorElement: <Error />,
-    action: feedBackAction,
     children: [
       {
         index: true,
         element: <Home />,
         loader: DiseaseAndExpertsLoader,
+        // action: feedBackAction,
       },
       {
         path: "expert/:expertId",
@@ -86,9 +84,9 @@ const router = createBrowserRouter([
       {
         path: "detection",
         element: (
-          <ProtectedRoute path="/login">
+          <ProtectedForPay path="/login">
             <DiseaseDetection />
-          </ProtectedRoute>
+          </ProtectedForPay>
         ),
       },
       {

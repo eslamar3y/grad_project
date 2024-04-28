@@ -45,28 +45,6 @@ async function loadFeedback() {
     }
 }
 
-export async function feedBackAction({ request }) {
-    const formData = await request.formData();
-    const feedbackObj = {
-        name: formData.get('userName'),
-        email: formData.get('userMail'),
-        message: formData.get('message')
-    }
-    console.log(feedbackObj);
-    const response = await fetch('https://localhost:7289/api/Feedbacks', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(feedbackObj),
-    });
-
-    if (!response.ok) {
-        throw json({ message: "failed to send feedback" }, { status: 500 });
-    }
-
-    return response;
-}
 
 export function DiseaseAndExpertsLoader() {
     return defer({

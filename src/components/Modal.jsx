@@ -5,7 +5,7 @@ export default function Modal({
   open,
   onClose,
   children,
-  backdropOpacity = 50,
+  backdropOpacity = 40,
   width = "w-96", // Default width class
 }) {
   const dialog = useRef();

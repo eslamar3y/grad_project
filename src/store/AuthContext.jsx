@@ -6,7 +6,6 @@ export const AuthContext = createContext({
   login: () => { },
   register: () => { },
   logout: () => { },
-  IsSubscribed: () => { },
   userLogin: null,
   accessToken: null,
 });
@@ -69,22 +68,9 @@ export default function AuthContextProvider({ children }) {
     setUserLogin(null);
   }
 
-  const IsSubscribed = async (userId) => {
-    const response = await fetch(`https://localhost:7289/api/Accounts/farmOwner/IsSubscripted?id=${userId}`);
-    if (!response.ok) {
-      const error = new Error('An error occurred while fetching the expert details, please try again later.');
-      error.code = response.status;
-      error.info = await response.json();
-      throw error;
-    }
-    const data = await response.json();
-    console.log(data);
-    return data;
-  }
-
 
   return (
-    <AuthContext.Provider value={{ login, register, logout, IsSubscribed, userLogin, accessToken }}>
+    <AuthContext.Provider value={{ login, register, logout, userLogin, accessToken }}>
       {children}
     </AuthContext.Provider>
   );

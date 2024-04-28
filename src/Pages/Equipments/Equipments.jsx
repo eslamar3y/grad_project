@@ -98,7 +98,7 @@ export default function Equipments() {
                           <img
                             src={equip.photoPath}
                             alt="equipment"
-                            className=" w-32 mx-auto p-3 rounded-full"
+                            className=" w-32 h-32 object-contain mx-auto p-3 rounded-full"
                           />
                           <span className="absolute top-0 left-[-5px] w-8 h-8 p-2 bg-slate-200 rounded-full shadow-md font-bold flex justify-center items-center">
                             {equip.count}

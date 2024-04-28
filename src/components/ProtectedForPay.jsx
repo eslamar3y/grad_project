@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../store/AuthContext";
+import { SubscriptionContext } from "../store/SubscriptionContext";
 import { Navigate } from "react-router-dom";
 
 
 export default function ProtectedForPay({ children, path }) {
     const { userLogin } = useContext(AuthContext);
-    const { IsSubscribed } = useContext(AuthContext);
+    const { IsSubscribed } = useContext(SubscriptionContext);
     const [isSubscribe, setIsSubscribe] = useState(true);
     useEffect(() => {
         const checkSubscription = async () => {

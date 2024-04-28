@@ -1,8 +1,6 @@
 import rectangleImage from "../../assets/Rectangle.png";
 import rectangleImage5 from "../../assets/Rectangle_5.png";
 import loginandrew from "../../assets/undraw_login_re_4vu21.png";
-import google from "../../assets/google.png";
-import facebook from "../../assets/facebook.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../store/AuthContext";
@@ -87,9 +85,9 @@ export default function Login() {
         }
         if (err.response.status == 500) {
           setLoginError({
-            message: "Server error, Failed to login please try again",
+            message: "Server error, Failed to login please try again or you should register first.",
           });
-          throw new Error("Server error, Failed to login please try again");
+          throw new Error("Server error, Failed to login please try again or you should register first.");
         }
         if (!err.response.ok) {
           setLoginError({
