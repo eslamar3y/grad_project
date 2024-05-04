@@ -11,12 +11,15 @@ export default function ProtectedForPay({ children, path }) {
     const [isSubscribe, setIsSubscribe] = useState(true);
     useEffect(() => {
         const checkSubscription = async () => {
-            const isSub = await IsSubscribed(userLogin.id);
-            setIsSubscribe(() => isSub);
-            return isSub;
+            if (userLogin) {
+                const isSub = await IsSubscribed(userLogin.id);
+                setIsSubscribe(() => isSub);
+                return isSub;
+            }
+            return;
         }
         checkSubscription();
-    }, [IsSubscribed, userLogin.id]);
+    }, [IsSubscribed, userLogin.id, userLogin]);
     console.log(isSubscribe);
 
 
