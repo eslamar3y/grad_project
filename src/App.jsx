@@ -27,13 +27,10 @@ import ChatRoot from "./Pages/RealChat/ChatRoot.jsx";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./Http/equipmentsHttp.js";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
-import ProtectedRouteAdmin from "./components/ProtectedRouteAdmin.jsx";
 import Profile from "./Pages/Profile/Profile.jsx";
 import ProtectedForPay from "./components/ProtectedForPay.jsx";
 import Subscribtion from "./Pages/Subscribtion/Subscribtion.jsx";
 // import { feedBackAction } from "./components/Footer.jsx";
-
-
 
 const router = createBrowserRouter([
   {
@@ -141,11 +138,7 @@ const router = createBrowserRouter([
       },
       {
         path: "admin/dashboard",
-        element: (
-          <ProtectedRouteAdmin path="/">
-            <Users />
-          </ProtectedRouteAdmin>
-        ),
+        element: <Users />,
       },
       {
         path: "admin/diseases",
@@ -161,12 +154,11 @@ const router = createBrowserRouter([
       },
       {
         path: "subscribe",
-        element: <Subscribtion />
-      }
+        element: <Subscribtion />,
+      },
     ],
   },
 ]);
-
 
 function App() {
   return (
