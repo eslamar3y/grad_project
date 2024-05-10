@@ -22,6 +22,7 @@ export default function Login() {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
   const [loginError, setLoginError] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const [inputData, setInputData] = useState({
     Username: "",
     Password: "",
@@ -34,6 +35,7 @@ export default function Login() {
       [input]: value,
     }));
   }
+
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -66,6 +68,7 @@ export default function Login() {
     // Submit the form if there are no errors
     if (Object.keys(errors).length === 0) {
       try {
+        setIsLoading(true);
         await login(Username, Password);
         const user = JSON.parse(localStorage.getItem("userData"));
         console.log(user);
@@ -75,6 +78,7 @@ export default function Login() {
         if (!res2.exists()) {
           await setDoc(doc(db, "userChats", user.id), {});
         }
+        setIsLoading(false);
       } catch (err) {
         console.log(err.response.status);
         if (err.response.status == 401) {
@@ -171,8 +175,8 @@ export default function Login() {
               </NavLink>
             </div>
             <div className="flex flex-col">
-              <button className="SignInButon text-xs font-semibold font-popins mx-auto w-[124px] h-[52px] text-white rounded-2xl p-2">
-                Sign In
+              <button className="SignInButon text-xs font-semibold font-popins mx-auto w-[124px] h-[52px] text-white rounded-2xl p-2" disabled={isLoading}>
+                {isLoading ? "loading ..." : "Sign In"}
               </button>
             </div>
             <div className="flex flex-col">

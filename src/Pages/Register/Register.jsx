@@ -3,8 +3,7 @@ import rectangleImage5 from "../../assets/Rectangle_5.png";
 import registerandrew from "../../assets/undraw_mobile_payments.png";
 import articleimg from "../../assets/articleimg.png";
 import uploadImage from "../../assets/uploadImage.png";
-// import google from "../../assets/google.png";
-// import facebook from "../../assets/facebook.png";
+import imgUpload from "../../assets/upload2.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import phone from "../../assets/Phone.png";
@@ -30,6 +29,7 @@ export default function Register() {
   const ownerRef = useRef();
   const expertRef = useRef();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [registerType, setRegisterType] = useState("owner");
   const { register } = useContext(AuthContext);
   const [errors, setErrors] = useState({});
@@ -67,6 +67,7 @@ export default function Register() {
       confirmPass: data.ConfirmPass,
       phoneNumber: data.PhoneNumber,
       personalPhoto: data.personalPhoto,
+      certificate: data.Certificate,
       moreInfo: data.moreInfo,
       address: data.Address,
     };
@@ -134,10 +135,16 @@ export default function Register() {
       errors.personalPhoto = "Personal photo is required.";
     }
 
+    if (registerType === "expert" && !data.Certificate.name) {
+      errors.Certificate = "Certificate is required.";
+    }
+
     setErrors(errors);
     if (Object.keys(errors).length == 0) {
       try {
+        setIsLoading(true);
         await register(choosenData, registerType);
+        setIsLoading(false);
       } catch (err) {
         if (err.response.status == 400) {
           setLoginError({
@@ -191,7 +198,6 @@ export default function Register() {
                 name="UserName"
                 id="UserName"
                 placeholder="User name"
-                // required
                 className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  px-11 mt-4 rounded-xl font-popins font-normal loginUser "
               />
               <img
@@ -264,28 +270,58 @@ export default function Register() {
                   />
                 </div>
                 <div className="flex flex-col relative w-fit m-auto expert">
-                  <div
-                    placeholder="Personal Photo"
-                    className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc] relative  pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
-                  >
-                    <p className="absolute top-4 px-1 tracking-widest text-white rounded-xl z-0 bg-[#624cef]">
-                      <input
-                        className="absolute top-0 left-0 w-full h-full opacity-0 "
-                        type="file"
-                        name="personalPhoto"
-                        id="personalPhoto"
-                      />
-                      <span style={{ fontSize: "8px" }}>Upload Image</span>
-                    </p>
-                  </div>
                   <img
                     className="w-6 absolute bottom-4 left-[4%]"
                     src={uploadImage}
                     alt="Custom SVG Image"
                   />
+                  <div
+                    className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc] relative pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
+                    placeholder="Personal Photo"
+                  >
+                    <p className="flex justify-start pt-4">personal image</p>
+                    <div className="absolute top-4 right-10 px-1">
+                      <label htmlFor="personalPhoto" className=" font-popins text-sm cursor-pointer">
+                        <img src={imgUpload} alt="uploader" className="w-5" />
+                      </label>
+                      <input
+                        className="absolute top-0 right-0 w-full h-full hidden"
+                        type="file"
+                        name="personalPhoto"
+                        id="personalPhoto"
+                      />
+                    </div>
+                  </div>
                 </div>
                 {errors.personalPhoto && (
                   <p className="text-sm text-red-600">{errors.personalPhoto}</p>
+                )}
+                <div className="flex flex-col relative w-fit m-auto expert">
+                  <img
+                    className="w-6 absolute bottom-4 left-[4%]"
+                    src={uploadImage}
+                    alt="Custom SVG Image"
+                  />
+                  <div
+                    className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc] relative pl-11 pr-3 mt-4 rounded-xl font-popins font-normal loginUser "
+                    placeholder="Certificate"
+                  >
+                    <p className="flex justify-start pt-4">Certificate</p>
+                    <div className="absolute top-4 right-10 px-1">
+                      <label htmlFor="Certificate" className=" font-popins text-sm cursor-pointer">
+                        <img src={imgUpload} alt="uploader" className="w-5" />
+                      </label>
+                      <input
+                        className="absolute top-0 right-0 w-full h-full hidden"
+                        type="file"
+                        name="Certificate"
+                        id="Certificate"
+                      />
+                    </div>
+                  </div>
+                </div>
+                {errors.Certificate && (
+                  <p className="text-sm text-red-600">{errors.Certificate}</p>
                 )}
               </>
             )}
@@ -421,8 +457,8 @@ export default function Register() {
             </div>
 
             <div className="flex flex-col">
-              <button className="SignInButon text-xs font-semibold font-popins mx-auto w-[124px] h-[52px] text-white rounded-2xl p-2 mt-8">
-                Sign Up
+              <button className="SignInButon text-xs font-semibold font-popins mx-auto w-[124px] h-[52px] text-white rounded-2xl p-2 mt-8" disabled={isLoading}>
+                {isLoading ? "loading ..." : "Sign Up"}
               </button>
             </div>
             <div className="flex flex-col pb-10">
@@ -435,19 +471,6 @@ export default function Register() {
                 </NavLink>
               </div>
             </div>
-            {/* <div className="flex flex-col">
-              <p className="text-sm  font-normal font-popins tracking-[0.84px] bg-white z-10 w-[30%] mx-auto mt-7 -mb-7 text-center ">
-                Or sign up with
-              </p>
-              <div className="flex  border-t-2 border-gray-200 xs:w-[260px] md:w-[364px] mx-auto pt-10 justify-center mt-4 mb-8">
-                <button className="flex justify-center items-center  rounded-2xl p-2">
-                  <img src={google} className="mr-2" alt="" />
-                </button>
-                <button className="flex justify-center items-center  rounded-2xl p-2">
-                  <img src={facebook} className="mr-2" alt="" />
-                </button>
-              </div>
-            </div> */}
           </form>
         </div>
       </div>

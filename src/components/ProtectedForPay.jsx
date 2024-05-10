@@ -24,7 +24,7 @@ export default function ProtectedForPay({ children, path }) {
 
 
     let content;
-    if (userLogin && isSubscribe == true) {
+    if ((userLogin && isSubscribe == true) || userLogin?.role == "Doctor") {
         content = children;
     }
     else if (userLogin && isSubscribe == false) {

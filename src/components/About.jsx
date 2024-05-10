@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import about from '../assets/about.png';
 
 export default function About() {
@@ -16,7 +17,9 @@ export default function About() {
                         Nunc mauris diam,
                         ultricies et molestie non, viverra vel enim.
                     </p>
-                    <button className='mt-8 shadow-custom w-[158px] h-[48px] border border-black rounded-2xl bg-mainColor'>Know More</button>
+                    <button className='mt-8 shadow-custom w-[158px] h-[48px] border border-black rounded-2xl bg-mainColor'>
+                        <Link to="/about">Know More</Link>
+                    </button>
                 </div>
             </div>
         </section>

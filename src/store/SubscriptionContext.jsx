@@ -10,7 +10,7 @@ export const SubscriptionContext = createContext({
 
 export default function SubscriptionContextProvider({ children }) {
     const IsSubscribed = async (userId) => {
-        const response = await fetch(`https://localhost:7289/api/Accounts/farmOwner/IsSubscripted?id=${userId}`);
+        const response = await fetch(`https://localhost:7289/api/Accounts/IsSubscripted?id=${userId}`);
         if (!response.ok) {
             const error = new Error('An error occurred while checking for subscribe, please try again later.');
             error.code = response.status;
@@ -23,7 +23,7 @@ export default function SubscriptionContextProvider({ children }) {
     }
 
     const Subscribe = async (userId) => {
-        const response = await fetch(`https://localhost:7289/api/Accounts/farmOwner/subscribe?id=${userId}`, {
+        const response = await fetch(`https://localhost:7289/api/Accounts/subscribe?id=${userId}`, {
             method: "PUT",
         });
         if (response.status === 400 || response.status === 404) {

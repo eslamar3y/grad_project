@@ -21,7 +21,7 @@ const Subscribtion = () => {
             console.log("Subscribed");
             Swal.fire({
                 title: "Good job!",
-                text: "You have successfully subscribed",
+                text: "You have successfully subscribed, You have 3 free attempts during the trial period, after that $18 will be deducted from the subscription price",
                 icon: "success"
             });
             navigate("/")
