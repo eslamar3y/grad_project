@@ -1,6 +1,7 @@
 import { MdOutlineClose } from "react-icons/md";
 import Modal from "./Modal";
 import { useCallback, useState } from "react";
+import imgUpload from "../assets/upload2.png";
 
 export default function AddUser({ onAdd, onClose, showAddModal }) {
   const [userType, setUserType] = useState("");
@@ -82,6 +83,15 @@ export default function AddUser({ onAdd, onClose, showAddModal }) {
         }
       }
 
+      if (!newUser.Certificate) {
+        errors.Certificate = "Certiicate Photo is Required";
+      } else {
+        const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+        if (!allowedExtensions.exec(newUser.Certificate.name)) {
+          errors.Certificate = "Invalid file type";
+        }
+      }
+
       if (!newUser.Address) {
         errors.Address = "Address is Required";
       }
@@ -113,6 +123,7 @@ export default function AddUser({ onAdd, onClose, showAddModal }) {
       specialist.append("Password", newUser.Password);
       specialist.append("ConfirmPass", newUser.ConfirmPass);
       specialist.append("PhoneNumber", newUser.PhoneNumber);
+      specialist.append("Certificate", newUser.Certificate);
       fetch("https://localhost:7289/api/Accounts/doctor", {
         method: "POST",
         body: specialist,
@@ -132,6 +143,7 @@ export default function AddUser({ onAdd, onClose, showAddModal }) {
                 Password: "",
                 ConfirmPass: "",
                 personalPhoto: null,
+                Certificate: null,
                 moreInfo: "",
                 FarmAddress: "",
               });
@@ -230,28 +242,28 @@ export default function AddUser({ onAdd, onClose, showAddModal }) {
               <input
                 type="text"
                 placeholder="User Name"
-                className="p-2 rounded"
+                className="p-3 rounded-xl"
                 onChange={(e) => handleChange("UserName", e.target.value)}
                 value={newUser.UserName}
               />
               <input
                 type="email"
                 placeholder="Email"
-                className="p-2 rounded w-full"
+                className="p-3 rounded-xl w-full"
                 onChange={(e) => handleChange("Email", e.target.value)}
                 value={newUser.Email}
               />
               <input
                 type="text"
                 placeholder="Phone number"
-                className="p-2 rounded w-full"
+                className="p-3 rounded-xl w-full"
                 onChange={(e) => handleChange("PhoneNumber", e.target.value)}
                 value={newUser.PhoneNumber}
               />
               <input
                 type="date"
                 placeholder="Birth Date"
-                className="p-2 rounded"
+                className="p-3 rounded-xl"
                 onChange={(e) => handleChange("BirthDate", e.target.value)}
                 value={newUser.BirthDate}
               />
@@ -259,28 +271,28 @@ export default function AddUser({ onAdd, onClose, showAddModal }) {
               <input
                 type="password"
                 placeholder="Password"
-                className="p-2 rounded"
+                className="p-3 rounded-xl"
                 onChange={(e) => handleChange("Password", e.target.value)}
                 value={newUser.Password}
               />
               <input
                 type="password"
                 placeholder="Confirm Password"
-                className="p-2 rounded"
+                className="p-3 rounded-xl"
                 onChange={(e) => handleChange("ConfirmPass", e.target.value)}
                 value={newUser.ConfirmPass}
               />
               <input
                 type="text"
                 placeholder="Address"
-                className="p-2 rounded"
+                className="p-3 rounded-xl "
                 onChange={(e) => handleChange("Address", e.target.value)}
                 value={newUser.Address}
               />
               {/* Your other input fields */}
               {userType === "Specialist" && (
                 <>
-                  <div>
+                  {/* <div>
                     <input
                       type="file"
                       accept=".jpg,.jpeg,.png"
@@ -288,15 +300,63 @@ export default function AddUser({ onAdd, onClose, showAddModal }) {
                         handleChange("personalPhoto", e.target.files[0])
                       }
                     />
-                  </div>
+                  </div> */}
                   <div>
                     <input
                       type="text"
                       placeholder="More Info"
-                      className="p-2 rounded w-full"
+                      className="p-3 rounded-xl w-full"
                       onChange={(e) => handleChange("moreInfo", e.target.value)}
                       value={newUser.moreInfo}
                     />
+                  </div>
+                  <div
+                    className="m-auto xs:w-[200px] md:w-[285px] h-[52px] text-sm border-none bg-[#f0edffcc] relative pl-11 pr-3 mt-1 rounded-xl font-popins font-normal loginUser "
+                    placeholder="Certificate"
+                  >
+                    <p className="flex justify-start pt-4">Personal Photo</p>
+                    <div className="absolute top-4 right-10 px-1">
+                      <label
+                        htmlFor="personalPhoto"
+                        className=" font-popins text-sm cursor-pointer"
+                      >
+                        <img src={imgUpload} alt="uploader" className="w-5" />
+                      </label>
+                      <input
+                        className="absolute top-0 right-0 w-full h-full hidden"
+                        type="file"
+                        name="personalPhoto"
+                        id="personalPhoto"
+                        accept=".jpg,.jpeg,.png"
+                        onChange={(e) =>
+                          handleChange("personalPhoto", e.target.files[0])
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div
+                    className="m-auto xs:w-[200px] md:w-[285px] h-[52px] text-sm border-none bg-[#f0edffcc] relative pl-11 pr-3 mt-1 rounded-xl font-popins font-normal loginUser "
+                    placeholder="Certificate"
+                  >
+                    <p className="flex justify-start pt-4">Certificate</p>
+                    <div className="absolute top-4 right-10 px-1">
+                      <label
+                        htmlFor="Certificate"
+                        className=" font-popins text-sm cursor-pointer"
+                      >
+                        <img src={imgUpload} alt="uploader" className="w-5" />
+                      </label>
+                      <input
+                        className="absolute top-0 right-0 w-full h-full hidden"
+                        type="file"
+                        name="Certificate"
+                        id="Certificate"
+                        accept=".jpg,.jpeg,.png"
+                        onChange={(e) =>
+                          handleChange("Certificate", e.target.files[0])
+                        }
+                      />
+                    </div>
                   </div>
                 </>
               )}
@@ -305,7 +365,7 @@ export default function AddUser({ onAdd, onClose, showAddModal }) {
                   <input
                     type="text"
                     placeholder="Farm Address"
-                    className="p-2 rounded w-full"
+                    className="p-3 rounded-xl w-full"
                     onChange={(e) =>
                       handleChange("FarmAddress", e.target.value)
                     }
