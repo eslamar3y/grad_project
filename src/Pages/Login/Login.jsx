@@ -89,9 +89,12 @@ export default function Login() {
         }
         if (err.response.status == 500) {
           setLoginError({
-            message: "Server error, Failed to login please try again or you should register first.",
+            message:
+              "Server error, Failed to login please try again or you should register first.",
           });
-          throw new Error("Server error, Failed to login please try again or you should register first.");
+          throw new Error(
+            "Server error, Failed to login please try again or you should register first."
+          );
         }
         if (!err.response.ok) {
           setLoginError({

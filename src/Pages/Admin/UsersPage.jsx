@@ -309,7 +309,7 @@ const UsersPage = () => {
                               </button>
                             ) : (
                               <button
-                                className="bg-[#585EC7] hover:bg-indigo-700 text-white font-bold py-2 w-28 rounded"
+                                className="bg-secondColor hover:bg-[#02717c] text-white font-bold py-2 w-28 rounded"
                                 onClick={() => EnableAndDisableAccount(user.id)}
                               >
                                 Enabled
