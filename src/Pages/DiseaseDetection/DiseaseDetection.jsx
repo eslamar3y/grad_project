@@ -2,9 +2,12 @@ import { useState, useEffect } from "react";
 import SimpleNav from "../../components/SimpleNav";
 import vector from "../../assets/vector.png";
 import Checkmark from "../../assets/Checkmark.png";
+import { Navigate } from "react-router-dom";
 
 const DiseaseDetection = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     // Add event listener for paste events
@@ -63,6 +66,9 @@ const DiseaseDetection = () => {
       return;
     }
 
+    setLoading(true);
+    setError("");
+
     const formData = new FormData();
     formData.append("ImageForDetection", selectedImage);
 
@@ -72,7 +78,13 @@ const DiseaseDetection = () => {
       method: "POST",
       body: formData,
     })
-      .then((res) => res.json())
+      .then((res) => {
+        setLoading(false);
+        if (res.status !== 200) {
+          throw new Error("Failed to fetch results ".res.status);
+        }
+        return res.json();
+      })
       .then((data) => {
         console.log(data);
         localStorage.setItem("resultT", data.Detection);
@@ -88,12 +100,13 @@ const DiseaseDetection = () => {
         localStorage.setItem("result", JSON.stringify(result));
 
         // navigate to the result page
-        window.location.href = "/Result";
-        // redirect('/Result');
+        // window.location.href = "/Result";
+        Navigate("/Result");
       })
       .catch((err) => {
         console.log("error");
         console.log(err);
+        setError("An error occurred. Please try again. ");
       });
   };
 
@@ -124,9 +137,13 @@ const DiseaseDetection = () => {
             </button>
           </p>
           <p className="text-center text-sm font-popins text-gray-500 mt-3 mb-5 imgName"></p>
-          <button className="bg-secondColor hover:bg-secondColor/80  font-popins mx-auto px-12 py-3 text-white rounded absolute -bottom-24 xs:left-[16%] md:left-[42%] ">
-            Show results
+          <button
+            className="bg-secondColor hover:bg-secondColor/80 font-popins mx-auto px-12 py-3 text-white rounded absolute -bottom-24 xs:left-[16%] md:left-[42%]"
+            disabled={loading}
+          >
+            {loading ? "Loading..." : "Show results"}
           </button>
+          {error && <p className="text-center text-red-500 mt-12">{error}</p>}
         </form>
       </div>
     </div>
