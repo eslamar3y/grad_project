@@ -32,6 +32,8 @@ const UsersPage = () => {
   const [handleAd, setHandleAd] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [selectedUserData, setSelectedUserData] = useState(null);
+  const [selectedUserType, setSelectedUserType] = useState(null);
+  const [CertificateImg, SetCertificateImg] = useState("");
 
   useEffect(() => {
     fetch("https://localhost:7289/api/Accounts?PageSize=50")
@@ -147,22 +149,48 @@ const UsersPage = () => {
       setSelectedUserId(null); // Close details if already open
     } else {
       setSelectedUserId(userId); // Open details for clicked user
-
-      // Fetch data for the selected user
-      fetch(`https://localhost:7289/api/${userId}/Detects/generateReportData`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((userData) => {
-          // Update state with fetched user data
-          setSelectedUserData(userData);
-        })
-        .catch((error) => {
-          console.error("Error fetching user data:", error);
-        });
+      // if the user Doctor console.log(doc)
+      // if the user FarmOwner console.log(farm)
+      // if the user Admin console.log(admin)
+      const selectedUser = Users.find((user) => user.id === userId);
+      // setSelectedUserData(selectedUser);
+      if (selectedUser.discriminator === "Doctor") {
+        setSelectedUserType("Doctor");
+        // Fetch data for the selected user
+        fetch(`https://localhost:7289/api/Accounts/doctor/${userId}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((userData) => {
+            // Update state with fetched user data
+            SetCertificateImg(userData.certificate);
+            console.log(userData);
+          })
+          .catch((error) => {
+            console.error("Error fetching user data:", error);
+          });
+      } else if (selectedUser.discriminator === "FarmOwner") {
+        setSelectedUserType("FarmOwner");
+        // Fetch data for the selected user
+        fetch(`https://localhost:7289/api/${userId}/Detects/generateReportData`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((userData) => {
+            // Update state with fetched user data
+            setSelectedUserData(userData);
+            console.log(userData);
+          })
+          .catch((error) => {
+            console.error("Error fetching user data:", error);
+          });
+      }
     }
   };
 
@@ -317,7 +345,8 @@ const UsersPage = () => {
                             )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                            {user.discriminator === "FarmOwner" ? (
+                            {user.discriminator === "FarmOwner" ||
+                            user.discriminator === "Doctor" ? (
                               <button
                                 onClick={() => handleRowClick(user.id)}
                                 className="focus:outline-none"
@@ -360,61 +389,90 @@ const UsersPage = () => {
                             )}
                           </td>
                         </tr>
-                        {selectedUserId === user.id && selectedUserData && (
-                          <tr>
-                            <td
-                              colSpan="7"
-                              className={`text-center details-cell ${
-                                selectedUserId === user.id ? "open" : ""
-                              }`}
-                              style={{ transition: "all 2s ease" }}
-                            >
-                              <div className="flex px-3 mx-3 shadow-xl rounded-lg mb-10">
-                                <div className="w-full text-left leading-10 flex flex-row">
-                                  {/* User details component for {user.name} */}
-                                  <div>
-                                    <div className="DetectionNumber">
-                                      Number of Detections:{" "}
-                                      {selectedUserData.numberOfDetections}
-                                    </div>
+                        {selectedUserId === user.id &&
+                          selectedUserData &&
+                          selectedUserType === "FarmOwner" && (
+                            <tr>
+                              <td
+                                colSpan="7"
+                                className={`text-center details-cell ${
+                                  selectedUserId === user.id ? "open" : ""
+                                }`}
+                                style={{ transition: "all 2s ease" }}
+                              >
+                                <div className="flex px-3 mx-3 shadow-xl rounded-lg mb-10">
+                                  <div className="w-full text-left leading-10 flex flex-row">
+                                    {/* User details component for {user.name} */}
                                     <div>
-                                      Last Detection:{" "}
-                                      {selectedUserData.lastDetection}
+                                      <div className="DetectionNumber">
+                                        Number of Detections:{" "}
+                                        {selectedUserData.numberOfDetections}
+                                      </div>
+                                      <div>
+                                        Last Detection:{" "}
+                                        {selectedUserData.lastDetection}
+                                      </div>
+                                      <div>
+                                        Most Common Disease:{" "}
+                                        {selectedUserData.mostCommonDisease
+                                          ? selectedUserData.mostCommonDisease
+                                          : "No disease detected"}
+                                      </div>
+                                      <div>
+                                        Other Diseases Appeared:{" "}
+                                        {selectedUserData.otherDiseasesAppeared
+                                          ? selectedUserData.otherDiseasesAppeared
+                                          : "No disease detected"}
+                                      </div>
                                     </div>
-                                    <div>
-                                      Most Common Disease:{" "}
-                                      {selectedUserData.mostCommonDisease
-                                        ? selectedUserData.mostCommonDisease
-                                        : "No disease detected"}
-                                    </div>
-                                    <div>
-                                      Other Diseases Appeared:{" "}
-                                      {selectedUserData.otherDiseasesAppeared
-                                        ? selectedUserData.otherDiseasesAppeared
-                                        : "No disease detected"}
-                                    </div>
-                                  </div>
-                                  <div className="ml-96">
-                                    <h2>Detection History:</h2>
+                                    <div className="ml-96">
+                                      <h2>Detection History:</h2>
 
-                                    {selectedUserData.length > 0
-                                      ? selectedUserData.detectionHistory.map(
-                                          (historyItem) => (
-                                            <div key={historyItem.date}>
-                                              <span className="text-gray-300">
-                                                {historyItem.date}
-                                              </span>{" "}
-                                              - {historyItem.disease}
-                                            </div>
+                                      {selectedUserData.length > 0
+                                        ? selectedUserData.detectionHistory.map(
+                                            (historyItem) => (
+                                              <div key={historyItem.date}>
+                                                <span className="text-gray-300">
+                                                  {historyItem.date}
+                                                </span>{" "}
+                                                - {historyItem.disease}
+                                              </div>
+                                            )
                                           )
-                                        )
-                                      : "No data found"}
+                                        : "No data found"}
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </td>
-                          </tr>
-                        )}
+                              </td>
+                            </tr>
+                          )}
+                        {selectedUserId === user.id &&
+                          selectedUserData &&
+                          selectedUserType === "Doctor" && (
+                            <tr>
+                              <td
+                                colSpan="7"
+                                className={`text-center details-cell ${
+                                  selectedUserId === user.id ? "open" : ""
+                                }`}
+                                style={{ transition: "all 2s ease" }}
+                              >
+                                <div className="flex px-3 mx-3 shadow-xl rounded-lg mb-10">
+                                  <div className="w-full text-left leading-10 flex flex-row">
+                                    {/* User details component for {user.name} */}
+                                    <div className="w-full flex justify-around items-center pt-16 pb-16">
+                                      Certificate:
+                                      <img
+                                        src={CertificateImg}
+                                        alt=""
+                                        className="w-72 rounded"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          )}
                       </React.Fragment>
                     );
                   })
