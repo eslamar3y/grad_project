@@ -5,21 +5,21 @@ import uploadImage from '../assets/upload.png';
 
 function ImageUpload({ defaultImage, getImageFile }) {
     const fileInputRef = useRef();
-    const [image, setImage] = useState(null);
+    // const [image, setImage] = useState(defaultImage);
     const [preview, setPreview] = useState(defaultImage);
 
     // Handles image files selected by the user
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setImage(() => file);
+            // setImage(() => file);
             setPreview(URL.createObjectURL(file));
         }
     };
 
     useEffect(() => {
-        getImageFile(image)
-    }, [getImageFile, image])
+        getImageFile(preview)
+    }, [getImageFile, preview])
 
     const handleClickUpload = () => {
         fileInputRef.current.click();
@@ -36,7 +36,6 @@ function ImageUpload({ defaultImage, getImageFile }) {
                 name="PhotoPath"
                 type="file"
                 accept="image/*"
-                // defaultValue={defaultImage}
                 onChange={handleImageChange}
                 ref={fileInputRef}
                 className=' hidden'

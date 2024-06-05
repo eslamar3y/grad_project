@@ -83,9 +83,9 @@ export default function Login() {
         console.log(err.response.status);
         if (err.response.status == 401) {
           setLoginError({
-            message: "Unautherized user",
+            message: "Incorrect username or password",
           });
-          throw new Error("Unautherized user");
+          throw new Error("Incorrect username or password");
         }
         if (err.response.status == 500) {
           setLoginError({
