@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom';
 import about from '../assets/about.png';
 
 export default function About() {
     return (
-        <section className="container pb-8 pt-8 px-8 mx-auto">
+        <section className="container pb-8 pt-8 px-8 mx-auto" id='about'>
             <h1 className="text-center font-bold text-[42px]">About Us</h1>
             <div className='flex gap-8 flex-col xl:flex-row mt-20'>
                 <img className='w-full' src={about} alt="about image" />
@@ -17,9 +16,9 @@ export default function About() {
                         Nunc mauris diam,
                         ultricies et molestie non, viverra vel enim.
                     </p>
-                    <button className='mt-8 shadow-custom w-[158px] h-[48px] border border-black rounded-2xl bg-mainColor'>
+                    {/* <button className='mt-8 shadow-custom w-[158px] h-[48px] border border-black rounded-2xl bg-mainColor'>
                         <Link to="/about">Know More</Link>
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </section>

@@ -3,7 +3,6 @@ import "./App.css";
 import Home from "./Pages/Home/Home";
 import ResetPass from "./Pages/passPages/ResetPass.jsx";
 import PassChanged from "./Pages/passPages/PassChanged.jsx";
-import About from "./Pages/About/About";
 import ChatBot from "./Pages/ChatBot/ChatBot";
 import DiseaseInfo, { diseaseDetailsLoader } from "./Pages/Disease/DiseaseInfo";
 import ExpertInfo, { expertDetailsLoader } from "./Pages/Expert/ExpertInfo";
@@ -30,7 +29,8 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Profile from "./Pages/Profile/Profile.jsx";
 import ProtectedForPay from "./components/ProtectedForPay.jsx";
 import Subscribtion from "./Pages/Subscribtion/Subscribtion.jsx";
-// import { feedBackAction } from "./components/Footer.jsx";
+
+
 
 const router = createBrowserRouter([
   {
@@ -131,10 +131,6 @@ const router = createBrowserRouter([
             element: <ExpertChat />,
           },
         ],
-      },
-      {
-        path: "about",
-        element: <About />,
       },
       {
         path: "admin/dashboard",
