@@ -114,31 +114,31 @@ const Profile = () => {
           });
         });
       // Send request to update personal photo
-      // const id = JSON.parse(localStorage.getItem("userData")).id;
-      // const formData = new FormData();
-      // formData.append("photo", personalPic);
+      const id = JSON.parse(localStorage.getItem("userData")).id;
+      const formData = new FormData();
+      formData.append("photo", personalPic);
 
-      // axios
-      //   .put(
-      //     `https://localhost:7289/api/Accounts/updatePersonalPhoto/${id}`,
-      //     formData,
-      //     {
-      //       headers: {
-      //         "Content-Type": "multipart/form-data", // Set the correct content type for file uploads
-      //       },
-      //     }
-      //   )
-      //   .then((response) => {
-      //     console.log("Personal photo updated:", response.data);
-      //   })
-      //   .catch((error) => {
-      //     console.error("Error updating personal photo:", error);
-      //     Swal.fire({
-      //       title: "Error",
-      //       text: "An error occurred while updating your personal photo.",
-      //       icon: "error",
-      //     });
-      //   });
+      axios
+        .put(
+          `https://localhost:7289/api/Accounts/updatePersonalPhoto/${id}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data", // Set the correct content type for file uploads
+            },
+          }
+        )
+        .then((response) => {
+          console.log("Personal photo updated:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error updating personal photo:", error);
+          Swal.fire({
+            title: "Error",
+            text: "An error occurred while updating your personal photo.",
+            icon: "error",
+          });
+        });
     } else if (role === "Doctor") {
       const data = {
         id: JSON.parse(localStorage.getItem("userData")).id,
@@ -289,7 +289,7 @@ const Profile = () => {
               type="file"
               name="photo"
               id=""
-              className="hidden absolute w-24 h-24 right-0 top-0 cursor-pointer"
+              className="opacity-0 absolute w-24 h-24 right-0 top-0 cursor-pointer"
               onChange={handleImageUpload}
             />
           ) : (
