@@ -15,7 +15,8 @@ export default function Footer() {
   const [feedbackData, setFeedbackData] = useState({
     name: "",
     email: "",
-    message: ""
+    phone: "",
+    message: "",
   });
   const { mutate, isPending, isError, error } = useMutation({
     mutationKey: ["send-feedback"],
@@ -40,6 +41,7 @@ export default function Footer() {
     setFeedbackData({
       name: "",
       email: "",
+      phone: "",
       message: ""
     });
   }
@@ -76,14 +78,16 @@ export default function Footer() {
                 className="border p-2 rounded outline-none"
                 required
               />
-              {/* <input
-                type="number"
-                name="userPhone"
-                id="userPhone"
+              <input
+                type="text"
+                name="phone"
+                id="phone"
                 placeholder="Phone Number"
+                onChange={handleChange}
+                value={feedbackData.phone}
                 className="border p-2 rounded outline-none"
                 required
-              /> */}
+              />
               <textarea
                 name="message"
                 id="message"
