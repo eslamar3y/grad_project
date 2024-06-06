@@ -182,7 +182,9 @@ const Profile = () => {
       axios
         .put(
           `https://localhost:7289/api/Accounts/updatePersonalPhoto/${id}`,
-          formData,
+          {
+            photo: personalPic,
+          },
           {
             headers: {
               "Content-Type": "multipart/form-data", // Set the correct content type for file uploads
