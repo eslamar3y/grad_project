@@ -404,38 +404,55 @@ const UsersPage = () => {
                                   <div className="w-full text-left leading-10 flex flex-row">
                                     {/* User details component for {user.name} */}
                                     <div>
-                                      <div className="DetectionNumber">
-                                        Number of Detections:{" "}
+                                      <div className="DetectionNumber text-gray-500">
+                                        <span className="text-black">
+                                          Number of Detections:{" "}
+                                        </span>
                                         {selectedUserData.numberOfDetections}
                                       </div>
-                                      <div>
-                                        Last Detection:{" "}
+                                      <div className="text-gray-500">
+                                        <span className="text-black">
+                                          Last Detection:{" "}
+                                        </span>
                                         {selectedUserData.lastDetection}
                                       </div>
-                                      <div>
-                                        Most Common Disease:{" "}
+                                      <div className="text-gray-500">
+                                        <span className="text-black">
+                                          Most Common Disease:{" "}
+                                        </span>
                                         {selectedUserData.mostCommonDisease
                                           ? selectedUserData.mostCommonDisease
                                           : "No disease detected"}
                                       </div>
-                                      <div>
-                                        Other Diseases Appeared:{" "}
-                                        {selectedUserData.otherDiseasesAppeared
-                                          ? selectedUserData.otherDiseasesAppeared
+                                      <div className="text-gray-500">
+                                        <span className="text-black">
+                                          Other Diseases Appeared:{" "}
+                                        </span>
+                                        {selectedUserData.otherDiseaseApperred
+                                          ? selectedUserData.otherDiseaseApperred.join(
+                                              ", "
+                                            )
                                           : "No disease detected"}
                                       </div>
                                     </div>
                                     <div className="ml-96">
                                       <h2>Detection History:</h2>
 
-                                      {selectedUserData.length > 0
+                                      {selectedUserData.detectionHistory
                                         ? selectedUserData.detectionHistory.map(
                                             (historyItem) => (
                                               <div key={historyItem.date}>
                                                 <span className="text-gray-300">
-                                                  {historyItem.date}
+                                                  {
+                                                    historyItem.dateTime.split(
+                                                      "."
+                                                    )[0]
+                                                  }
                                                 </span>{" "}
-                                                - {historyItem.disease}
+                                                -{" "}
+                                                {
+                                                  historyItem.nameOfDisFromAIModel
+                                                }
                                               </div>
                                             )
                                           )

@@ -100,11 +100,12 @@ const DiseasesPage = () => {
                       className="w-full h-56 object-cover rounded-t-md p-0"
                     />
                     <h3 className="text-xl font-bold mt-2 px-4">
-                      {disease.name}
+                      {disease.name.split(" ")[0]}...
                     </h3>
                     <p className="text-gray-500 px-4 pb-4">
                       {/* {disease.description.slice(0, 40)}... */}
-                      {disease.description}
+                      {/* {disease.description.split(" ")[3]} */}
+                      {disease.description.split(" ").slice(0, 5).join(" ")}...
                     </p>
                   </div>
                 ))

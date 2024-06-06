@@ -100,8 +100,8 @@ const DiseaseDetection = () => {
         localStorage.setItem("result", JSON.stringify(result));
 
         // navigate to the result page
-        // window.location.href = "/Result";
-        Navigate("/Result");
+        window.location.href = "/Result";
+        // Navigate("/Result");
       })
       .catch((err) => {
         console.log("error");
