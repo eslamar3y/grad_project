@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../store/AuthContext";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../lib/firebase";
+import { ThreeDots } from "react-loader-spinner";
 
 const svgContentUsername = `
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -73,13 +74,12 @@ export default function Login() {
         const user = JSON.parse(localStorage.getItem("userData"));
         console.log(user);
         const res2 = await getDoc(doc(db, "userChats", user.id));
-        // const selectedCompinedId = userChatsArr.find((userChat) => userChat[0] === compinedId);
-        // console.log(selectedCompinedId);
         if (!res2.exists()) {
           await setDoc(doc(db, "userChats", user.id), {});
         }
         setIsLoading(false);
       } catch (err) {
+        setIsLoading(false);
         console.log(err.response.status);
         if (err.response.status == 401) {
           setLoginError({
@@ -103,6 +103,7 @@ export default function Login() {
           throw new Error("Somthing wrong happened please try again");
         }
       }
+
       const userData = localStorage.getItem("userData");
       const parsedUserData = JSON.parse(userData);
       const role = parsedUserData?.role;
@@ -113,6 +114,24 @@ export default function Login() {
         navigate("/");
       }
     }
+  }
+
+  let isLoad;
+  if (loginError) {
+    isLoad = <p className="text-sm text-red-600">{loginError.message}</p>
+  }
+  if (isLoading) {
+    isLoad = <div className="flex items-center justify-center">
+      <ThreeDots
+        visible={true}
+        height="60"
+        width="60"
+        color="#018391"
+        radius="9"
+        ariaLabel="three-dots-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+      /></div>
   }
 
   return (
@@ -166,9 +185,7 @@ export default function Login() {
             {errors.Password && (
               <p className="text-sm text-red-600">{errors.Password}</p>
             )}
-            {loginError && (
-              <p className="text-sm text-red-600">{loginError.message}</p>
-            )}
+            {isLoad}
             <div className="flex flex-col mt-4">
               <NavLink
                 to="/forgot"
@@ -178,8 +195,8 @@ export default function Login() {
               </NavLink>
             </div>
             <div className="flex flex-col">
-              <button className="SignInButon text-xs font-semibold font-popins mx-auto w-[124px] h-[52px] text-white rounded-2xl p-2" disabled={isLoading}>
-                {isLoading ? "loading ..." : "Sign In"}
+              <button className="SignInButon text-xs font-semibold font-popins mx-auto w-[124px] h-[52px] text-white cursor-pointer rounded-2xl p-2" disabled={isLoading}>
+                Sign In
               </button>
             </div>
             <div className="flex flex-col">
@@ -204,7 +221,7 @@ export default function Login() {
           className="text-center md:h-[393px] md:w-[309px] md:my-44 ml:h-[393px] ml:w-[309px] ml:my-44  lg:h-[524px] lg:w-[412px] m-auto lg:my-24 bg-cover bg-center"
           style={{ backgroundImage: `url(${rectangleImage5})` }}
         >
-          <img src={loginandrew} className="m-auto pt-32" alt="" />
+          <img src={loginandrew} className="m-auto pt-32" alt="avatar-img" />
         </div>
       </div>
     </div>

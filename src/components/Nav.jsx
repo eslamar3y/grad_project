@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../store/AuthContext";
+import { Link } from "react-scroll";
 
 
 const NavLinks = () => {
@@ -32,12 +33,16 @@ const NavLinks = () => {
           Farm Equipments
         </NavLink>
       )}
-      <NavLink
-        to="/about"
-        className={`py-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}
+      <Link
+        to="about"
+        spy={true}
+        smooth={true}
+        offset={-100}
+        duration={600}
+        className=" cursor-pointer"
       >
         About
-      </NavLink>
+      </Link>
       <NavLink
         to="/chat"
         className={`py-1 text-lg ${({ isActive }) => (isActive ? " font-semibold" : "")}`}

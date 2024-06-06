@@ -9,6 +9,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import phone from "../../assets/Phone.png";
 import calendar from "../../assets/Calendar.png";
 import { AuthContext } from "../../store/AuthContext";
+import { ThreeDots } from "react-loader-spinner";
 
 const svgContentUsername = `
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -146,6 +147,7 @@ export default function Register() {
         await register(choosenData, registerType);
         setIsLoading(false);
       } catch (err) {
+        setIsLoading(false);
         if (err.response.status == 400) {
           setLoginError({
             message: "User already registered",
@@ -169,6 +171,25 @@ export default function Register() {
     }
   };
 
+  let isLoad;
+  if (loginError) {
+    isLoad = <p className="text-sm text-red-600">{loginError.message}</p>
+  }
+  if (isLoading) {
+    isLoad = <div className="flex items-center justify-center">
+      <ThreeDots
+        visible={true}
+        height="60"
+        width="60"
+        color="#018391"
+        radius="9"
+        ariaLabel="three-dots-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+      /></div>
+  }
+
+
   return (
     <div className="flex">
       <div
@@ -189,9 +210,6 @@ export default function Register() {
             Welcome to FishShield
           </h2>
           <form onSubmit={handleSubmit}>
-            {loginError && (
-              <p className="text-sm text-red-600">{loginError.message}</p>
-            )}
             <div className="flex flex-col relative w-fit m-auto owner">
               <input
                 type="text"
@@ -456,9 +474,10 @@ export default function Register() {
               </div>
             </div>
 
+            <div className="flex justify-center items-center">{isLoad}</div>
             <div className="flex flex-col">
               <button className="SignInButon text-xs font-semibold font-popins mx-auto w-[124px] h-[52px] text-white rounded-2xl p-2 mt-8" disabled={isLoading}>
-                {isLoading ? "loading ..." : "Sign Up"}
+                Sign Up
               </button>
             </div>
             <div className="flex flex-col pb-10">
