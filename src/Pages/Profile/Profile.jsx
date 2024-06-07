@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import profilepng from "../../assets/user.png";
+import coins from "../../assets/coins.png";
 import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -20,6 +21,7 @@ const Profile = () => {
   const [contactNumber, setContactNumber] = useState("");
   const [moreInfo, setMoreInfo] = useState("");
   const [role, setRole] = useState("");
+  const [coin, setCoin] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("userData")) {
@@ -38,6 +40,7 @@ const Profile = () => {
             setAddress(data.address);
             setContactNumber(data.phoneNumber);
             setMoreInfo(data.moreInfo);
+            setCoin(data.points);
           })
           .catch((error) => {
             console.log("Error fetching doctor data:", error);
@@ -261,7 +264,7 @@ const Profile = () => {
       </div>
       {/* Input Fields */}
       <div className="md:w-1/2  ml-44 pt-10 pl-12 flex flex-col">
-        <div className="imgcon relative">
+        <div className="imgcon relative flex items-center">
           {uploadedImage ? (
             <img
               src={uploadedImage}
@@ -276,12 +279,18 @@ const Profile = () => {
               // onClick={handleImageClick}
             />
           ) : (
-            <img
-              src={personalPic ? personalPic : profilepng}
-              alt="Image"
-              className="w-24 h-24 mb-4 ml-auto rounded-full cursor-pointer"
-              // onClick={handleImageClick}
-            />
+            <>
+              <div className="flex item-center w-3/4 flex-row-reverse">
+                <span className="ml-2">{coin}</span>
+                <img src={coins} alt="" className="mb-4" />
+              </div>
+              <img
+                src={personalPic ? personalPic : profilepng}
+                alt="Image"
+                className="w-24 h-24 mb-4 ml-auto rounded-full cursor-pointer"
+                // onClick={handleImageClick}
+              />
+            </>
           )}
 
           {/* Hidden input file field */}
