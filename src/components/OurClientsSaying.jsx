@@ -3,13 +3,13 @@ import 'react-slideshow-image/dist/styles.css'
 
 const slideOpinions = [
     {
-        opinion: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque quis hendrerit urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vestibulum nisi diam, scelerisque maximus massa rhoncus a. Fusce sollicitudin efficitur lectus. Nunc mauris diam, ultricies et molestie non, viverra vel enim."
+        opinion: "This application has been a game-changer for our fish farming operations, allowing us to detect and address diseases early, saving us both time and money."
     },
     {
-        opinion: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque quis hendrerit urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vestibulum nisi diam, scelerisque maximus massa rhoncus a. Fusce sollicitudin efficitur lectus. Nunc mauris diam, ultricies et molestie non, viverra vel enim."
+        opinion: "The ability to chat with specialists in real-time has provided us with invaluable insights and timely advice, helping us maintain the health of our fish stocks."
     },
     {
-        opinion: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque quis hendrerit urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vestibulum nisi diam, scelerisque maximus massa rhoncus a. Fusce sollicitudin efficitur lectus. Nunc mauris diam, ultricies et molestie non, viverra vel enim."
+        opinion: "Thanks to the comprehensive disease information and periodic follow-ups, we have significantly reduced the spread of infections and improved the overall health of our fish population."
     },
 ];
 

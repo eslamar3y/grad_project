@@ -1,4 +1,4 @@
-import { IoSend } from "react-icons/io5";
+import { IoCheckmarkDoneCircle, IoSend } from "react-icons/io5";
 import { RiLoader2Fill } from "react-icons/ri";
 import { useEffect, useRef, useState } from "react";
 import styles from "./RealChat.module.css";
@@ -116,7 +116,7 @@ export default function ExpertChat() {
                 })}
             </article>
 
-            <section className="bg-mainColor px-4 py-3 flex items-center gap-4">
+            <section className="bg-mainColor px-4 py-3 flex items-center gap-4 relative">
                 <input
                     type="text"
                     name="chat-text"
@@ -132,6 +132,7 @@ export default function ExpertChat() {
                     <img src={uploadImg} alt="img-uploader" className="w-10" />
                 </label>
                 <input type="file" id="imgUpload" className=" hidden" onChange={handleUploadImg} disabled={isLoading} />
+                {img.file && <IoCheckmarkDoneCircle className=" text-secondColor text-2xl absolute right-[90px] top-2" />}
                 <button onClick={handleSend} disabled={isLoading}>
                     {isLoading ?
                         <RiLoader2Fill className=" text-4xl text-white p-2 bg-gray-400 rounded-full" />
