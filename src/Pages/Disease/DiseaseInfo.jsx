@@ -21,7 +21,7 @@ const DiseaseInfo = () => {
           <img
             src={diseaseDetails.photoPath}
             alt="disease image"
-            className="m-auto w-[682px] h-[366px] md:w-[682px] md:h-[366px] xs:w-[300px] xs:h-[200px] sm:w-[500px] sm:h-[300px] mb-4"
+            className="m-auto w-[682px] h-[366px] md:w-[682px] md:h-[366px] xs:w-[300px] xs:h-[200px] sm:w-[500px] sm:h-[300px] mb-4 rounded-2xl border-2 border-teal-700 shadow-xl"
           />
         </div>
         {/* <div className=" ml-32 mr-44 pr-0  pt-12 md:pl-28 xs:pl-8 xs:pr-8 xs:pb-10 sm:pl-8 sm:pr-8 sm:pb-10"> */}

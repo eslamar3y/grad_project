@@ -9,6 +9,7 @@ export default function ProtectedForPay({ children, path }) {
     const { userLogin } = useContext(AuthContext);
     const { IsSubscribed } = useContext(SubscriptionContext);
     const [isSubscribe, setIsSubscribe] = useState(true);
+
     useEffect(() => {
         const checkSubscription = async () => {
             if (userLogin) {

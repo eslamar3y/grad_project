@@ -20,7 +20,7 @@ export default function DeseaseList({ diseases }) {
                                     <h2 className="font-semibold text-xl mb-2">
                                         {disease.name}
                                     </h2>
-                                    <p className=' text-sm'>{disease.description}</p>
+                                    {/* <p className=' text-sm'>{disease.description}</p> */}
                                 </div>
                             </div>
                         </NavLink>

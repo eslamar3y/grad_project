@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import axios from "axios";
 import { createContext } from "react";
 
 export const SubscriptionContext = createContext({
@@ -6,6 +7,7 @@ export const SubscriptionContext = createContext({
     Subscribe: () => { },
     RateExpert: () => { },
     GetRating: () => { },
+    CheckOut: () => { },
 });
 
 export default function SubscriptionContextProvider({ children }) {
@@ -58,9 +60,19 @@ export default function SubscriptionContextProvider({ children }) {
         return rating;
     }
 
+    const CheckOut = async (ownerId) => {
+        axios.post(`https://localhost:7289/api/Accounts/create-checkout-session?ownerId=${ownerId}`)
+            .then((response) => {
+                console.log(response.data);
+                window.location.href = response.data;
+            }).catch((error) => {
+                console.log(error);
+            })
+    }
+
 
     return (
-        <SubscriptionContext.Provider value={{ IsSubscribed, Subscribe, RateExpert, GetRating }}>
+        <SubscriptionContext.Provider value={{ IsSubscribed, Subscribe, RateExpert, GetRating, CheckOut }}>
             {children}
         </SubscriptionContext.Provider>
     );

@@ -235,7 +235,6 @@ export default function Register() {
                 name="Email"
                 id="Email"
                 placeholder="Email"
-                required
                 className="m-auto xs:w-[260px] md:w-[364px] h-[52px] text-sm border-none bg-[#f0edffcc]  px-11 mt-4 rounded-xl font-popins font-normal loginUser "
               />
               <img

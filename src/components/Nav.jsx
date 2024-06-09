@@ -39,7 +39,7 @@ const NavLinks = () => {
         smooth={true}
         offset={-100}
         duration={600}
-        className=" cursor-pointer"
+        className=" cursor-pointer text-lg"
       >
         About
       </Link>
